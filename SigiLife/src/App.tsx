@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import SigiLifeLogo from '../public/SigiLife Logo.png'
+import SigiLifeLogo from './SigiLife Logo.png'
 import './App.css'
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
 
         </div>
         <div>
-          <h1>Welcome to SigiLife</h1>
+          <h1>Coming Soon, SigiLife</h1>
 
         </div>
         <button
@@ -26,6 +26,7 @@ function App() {
 
       <div className="ticks"></div>
       <section id="spacer"></section>
+      <div className='trademarks'></div>
     </>
   )
 }
