@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-privacy
+
+vitereadme.md
 .env
