@@ -13,7 +13,7 @@ function App() {
 
         </div>
         <div>
-          <h1>Coming Soon, SigiLife</h1>
+          <h1>Coming Soon, <br/> SigiLife</h1>
 
         </div>
         <button
