@@ -1,37 +1,54 @@
-import { useState } from 'react'
-import SigiLifeLogo from './assets/SigiLife Logo.png'
-import './App.css'
+import { Routes, Route } from 'react-router-dom'
+
+// LogInAuth
+import LandingPage from './components/LogInAuth/LandingPage'
+import Login from './components/LogInAuth/LogIn'
+import MakeProfile from './components/LogInAuth/MakeProfile'
+import UserSettings from './components/LogInAuth/UserSettings'
+
+// SigilRoomHome
+import HomeRoom from './components/SigilRoomHome/HomeRoom'
+import Grimoire from './components/SigilRoomHome/Grimore'
+import ScryeMirror from './components/SigilRoomHome/ScryeMirror'
+
+// MakeSigil
+import MakeSigil from './components/MakeSigil/MakeSigil'
+import DrawSigil from './components/MakeSigil/DrawSigil'
+import WriteSigil from './components/MakeSigil/WriteSigil'
+import StyleSigil from './components/MakeSigil/StyleSigil'
+
+// Other
+import MapBox from './components/Map/MapBox'
+import UserProfile from './components/ProfileFriends/UserProfile'
+import SigilCharge from './components/ChargeSigil/SigilCharge'
+import SigilDestroy from './components/DestroySigil/SigilDestroy'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={SigiLifeLogo} className="logo" width="75%" height="75%" alt="Sigil-Life-Logo" />
+    <Routes>
+      {/* Auth flow */}
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/make-profile" element={<MakeProfile />} />
+      <Route path="/settings" element={<UserSettings />} />
 
-        </div>
-        <div>
-          <h1>Coming Soon, SigiLife!</h1>
+      {/* Main rooms */}
+      <Route path="/home" element={<HomeRoom />} />
+      <Route path="/grimoire" element={<Grimoire />} />
+      <Route path="/scrye-mirror" element={<ScryeMirror />} />
 
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}, & is also something silly.
-        </button>
-        <div className='info'style={{fontSize:'large'}}> An app for creating and sharing magically imbued sigils.<br/>
-        </div>
-        <div className='more- info' style={{fontSize:'small'}}> An Operation Spark Thesis project, 2026. All rights reserved.<br/>
-        </div>
-      </section>
+      {/* Make Sigil flow */}
+      <Route path="/make-sigil" element={<MakeSigil />} />
+      <Route path="/make-sigil/draw" element={<DrawSigil />} />
+      <Route path="/make-sigil/write" element={<WriteSigil />} />
+      <Route path="/make-sigil/style" element={<StyleSigil />} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-
-    </>
+      {/* Other */}
+      <Route path="/map" element={<MapBox />} />
+      <Route path="/profile" element={<UserProfile />} />
+      <Route path="/charge-sigil" element={<SigilCharge />} />
+      <Route path="/destroy-sigil" element={<SigilDestroy />} />
+    </Routes>
   )
 }
 
