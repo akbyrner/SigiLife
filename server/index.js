@@ -1,7 +1,8 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -22,6 +23,10 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: err.message });
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, (err) => {
+    if (err) {
+        console.error('Failed to start server:', err);
+        process.exit(1);
+    }
     console.log(`Server is running on http://localhost:${PORT}`);
 });
