@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import SigiLifeLogo from '../../assets/SigiLife Logo.png';
 
-function LandingPage() {
+export default function LandingPage() {
   return (
     <>
       <section id="center">
@@ -22,15 +22,14 @@ function LandingPage() {
           <br />
         </div>
         <div className="more-info" style={{ fontSize: 'small' }}>
-          An Operation Spark Thesis project, by Stack-Mates 2026. All rights reserved.
+          An Operation Spark Thesis project, by Stack-Mates, cohort tango, 2026. All rights reserved.
           <br />
         </div>
 
         <Link to="/login">Login</Link>
+        <br />
         <Link to="/make-profile">Create Profile</Link>
       </section>
     </>
   );
 }
-
-export default LandingPage;

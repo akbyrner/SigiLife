@@ -20,8 +20,8 @@ import StyleSigil from './components/MakeSigil/StyleSigil'
 // Other
 import MapBox from './components/Map/MapBox'
 import UserProfile from './components/ProfileFriends/UserProfile'
-import SigilCharge from './components/ChargeSigil/SigilCharge'
-import SigilDestroy from './components/DestroySigil/SigilDestroy'
+import SigilCharge from './components/ActivateSigils/ChargeSigil/SigilCharge'
+import SigilDestroy from './components/ActivateSigils/DestroySigil/SigilDestroy'
 
 function App() {
   return (
