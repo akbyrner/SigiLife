@@ -1,4 +1,4 @@
-import BackButton from '../Parts/BackButton'
+import BackButton from '../../../Parts/BackButton'
 
 export default function WriteSigil() {
   return (

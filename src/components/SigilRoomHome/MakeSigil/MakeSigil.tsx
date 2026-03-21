@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import BackButton from '../Parts/BackButton'
+import BackButton from '../../Parts/BackButton'
 
 export default function MakeSigil() {
   return (
