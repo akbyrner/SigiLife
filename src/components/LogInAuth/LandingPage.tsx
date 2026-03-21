@@ -22,7 +22,7 @@ function LandingPage() {
           <br />
         </div>
         <div className="more-info" style={{ fontSize: 'small' }}>
-          An Operation Spark Thesis project, 2026. All rights reserved.
+          An Operation Spark Thesis project, by Stack-Mates 2026. All rights reserved.
           <br />
         </div>
 
