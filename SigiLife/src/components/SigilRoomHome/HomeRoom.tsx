@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-function HomeRoom() {
+export default function HomeRoom() {
   return (
     <div>
       <h1>Home Room</h1>
@@ -17,4 +17,3 @@ function HomeRoom() {
   )
 }
 
-export default HomeRoom

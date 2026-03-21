@@ -1,6 +1,11 @@
+import BackButton from '../Parts/BackButton'
+
 export default function ChargeSigil(){
 
   return (
-    <h1>This is your ChargeSigil Component</h1>
+    <div>
+      <h1>ChargeSigil</h1>
+      <BackButton />
+    </div>
   )
 };

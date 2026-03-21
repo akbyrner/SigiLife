@@ -1,4 +1,8 @@
+import BackButton from "../Parts/BackButton"
 export default function MapBox(){
 
-  return <h1>This is the MapBox</h1>
+  return (<div>
+    <h1>This is the MapBox</h1>
+    <BackButton/>
+    </div>)
 };

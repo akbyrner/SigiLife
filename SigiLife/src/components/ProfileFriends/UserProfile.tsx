@@ -1,9 +1,12 @@
 
-
+import BackButton from "../Parts/BackButton"
 
 export default function UserProfile(){
 
   return (
-    <h1>This is your UserProfile Component</h1>
+  <div>
+    <h1> UserProfile </h1>
+    <BackButton/>
+  </div>
   )
 };
