@@ -1,6 +1,10 @@
-export default function DestroySigil(){
+import BackButton from '../Parts/BackButton'
 
+export default function DestroySigil() {
   return (
-    <h1>This is your DestroySigil Component</h1>
+    <div>
+      <h1> DestroySigil </h1>
+      <BackButton />
+    </div>
   )
 };

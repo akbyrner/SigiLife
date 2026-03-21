@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-function MakeProfile() {
+export default function MakeProfile() {
   return (
     <div>
       <h1>Create Profile</h1>
@@ -8,4 +8,3 @@ function MakeProfile() {
     </div>
   )
 }
-export default MakeProfile
