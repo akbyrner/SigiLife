@@ -6,9 +6,9 @@ export default function HomeRoom() {
       <h1>Home Room</h1>
       <br />
       <nav>
-        <Link to="/destroy-sigil">Destroy Sigil</Link>
+        <Link to="/library">Destroy Sigil</Link>
         <br />
-        <Link to="/charge-sigil">Charge Sigil</Link>
+        <Link to="/library">Charge Sigil</Link>
         <br />
         <Link to="/grimoire">Grimoire</Link>
         <br />

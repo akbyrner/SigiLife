@@ -9,7 +9,7 @@ import UserSettings from './components/SigilRoomHome/Grimiore/ProfileFriends/Use
 // SigilRoomHome
 import HomeRoom from './components/SigilRoomHome/HomeRoom'
 import Grimoire from './components/SigilRoomHome/Grimiore/Grimoire'
-import ScryeMirror from './components/SigilRoomHome/Grimiore/ScryeMirror'
+import ScryeFriends from './components/SigilRoomHome/Grimiore/ScryeFriends/ScryeFriendsHome'
 
 // MakeSigil
 import MakeSigil from './components/SigilRoomHome/MakeSigil/MakeSigil'
@@ -38,20 +38,22 @@ function App() {
       <Route path="/profile" element={<UserProfile />} />
 
       {/* Main Room Nav */}
+      <Route path="/destroy-sigil" element={<SigilDestroy />} />
       <Route path="/home" element={<HomeRoom />} />
       <Route path="/charge-sigil" element={<SigilCharge />} />
-      <Route path="/destroy-sigil" element={<SigilDestroy />} />
+      <Route path="/grimoire" element={<Grimoire />} />
+      <Route path="/make-sigil" element={<MakeSigil />} />
+
 
       {/* Make Sigil flow */}
-      <Route path="/make-sigil" element={<MakeSigil />} />
       <Route path="/make-sigil/draw" element={<DrawSigil />} />
       <Route path="/make-sigil/write" element={<WriteSigil />} />
       <Route path="/make-sigil/style" element={<StyleSigil />} />
 
       {/* Grimoire flow */}
-      <Route path="/grimoire" element={<Grimoire />} />
+
       <Route path="/map" element={<MapBox />} />
-      <Route path="/scrye-mirror" element={<ScryeMirror />} />
+      <Route path="/scrye-friends" element={<ScryeFriends />} />
       <Route path="/library" element={<SigiLibrary />} />
       <Route path="/sigil-page" element={<SigilPage />} />
 

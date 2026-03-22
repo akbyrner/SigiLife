@@ -1,5 +1,4 @@
 import BackButton from "../../Parts/BackButton"
-import SigiLibrary from "./SigiLibrary/SigiLibrary"
 
 import { Link } from 'react-router-dom'
 
@@ -11,12 +10,17 @@ export default function Grimoire() {
       <br />
       <Link to="/map">Map</Link>
       <br />
+      <Link to="/scrye-friends">Scrye</Link>
+      <br />
       <Link to="/profile">Profile</Link>
       <br />
-      <SigiLibrary />
+      <Link to="/library">SigiLibrary</Link>
       <br />
-      <Link to="/scrye-mirror">Scrye</Link>
+
       <br />
+      <br />
+      <br />
+
       <BackButton />
     </div>
   )
