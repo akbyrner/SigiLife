@@ -22,6 +22,8 @@ import MapBox from './components/SigilRoomHome/Grimiore/Map/MapBox'
 import UserProfile from './components/SigilRoomHome/Grimiore/ProfileFriends/UserProfile'
 import SigilCharge from './components/SigilRoomHome/ChargeSigil/SigilCharge'
 import SigilDestroy from './components/SigilRoomHome/DestroySigil/SigilDestroy'
+import SigiLibrary from './components/SigilRoomHome/Grimiore/SigiLibrary/SigiLibrary'
+import SigilPage from './components/SigilRoomHome/Grimiore/SigiLibrary/SigilPage'
 
 function App() {
   return (
@@ -30,12 +32,15 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/make-profile" element={<MakeProfile />} />
-      <Route path="/settings" element={<UserSettings />} />
 
-      {/* Main rooms */}
+      {/* User */}
+      <Route path="/settings" element={<UserSettings />} />
+      <Route path="/profile" element={<UserProfile />} />
+
+      {/* Main Room Nav */}
       <Route path="/home" element={<HomeRoom />} />
-      <Route path="/grimoire" element={<Grimoire />} />
-      <Route path="/scrye-mirror" element={<ScryeMirror />} />
+      <Route path="/charge-sigil" element={<SigilCharge />} />
+      <Route path="/destroy-sigil" element={<SigilDestroy />} />
 
       {/* Make Sigil flow */}
       <Route path="/make-sigil" element={<MakeSigil />} />
@@ -43,11 +48,13 @@ function App() {
       <Route path="/make-sigil/write" element={<WriteSigil />} />
       <Route path="/make-sigil/style" element={<StyleSigil />} />
 
-      {/* Other */}
+      {/* Grimoire flow */}
+      <Route path="/grimoire" element={<Grimoire />} />
       <Route path="/map" element={<MapBox />} />
-      <Route path="/profile" element={<UserProfile />} />
-      <Route path="/charge-sigil" element={<SigilCharge />} />
-      <Route path="/destroy-sigil" element={<SigilDestroy />} />
+      <Route path="/scrye-mirror" element={<ScryeMirror />} />
+      <Route path="/library" element={<SigiLibrary />} />
+      <Route path="/sigil-page" element={<SigilPage />} />
+
     </Routes>
   )
 }
