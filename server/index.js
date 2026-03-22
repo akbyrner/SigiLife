@@ -17,6 +17,10 @@ app.get('/', (req, res) => {
     res.send('Hello SigiLife!');
 });
 
+app.get('/user', (req, res) => {
+    res.send(JSON.stringify({user: 'HopeyClarkey', gmail: 'someGmail', friends: ['BernMan'], sigils: [{sigilName: sigilOne},{sigilName: sigilTwo},{sigilName: sigilThree},]}))
+})
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Error handler
 app.use((err, req, res, next) => {
     console.error(err.stack);

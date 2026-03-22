@@ -1,12 +1,10 @@
-
 import BackButton from "../../../Parts/BackButton"
 
-export default function UserProfile() {
+export default function ScryeFriendsHome() {
 
-  return (
-    <div>
-      <br />
-      <h1> UserProfile </h1>
+  return (<div>
+    <br />
+    <h1>This is the ScryeFriendsHome!</h1>
       <br />
       <br />
       <br />

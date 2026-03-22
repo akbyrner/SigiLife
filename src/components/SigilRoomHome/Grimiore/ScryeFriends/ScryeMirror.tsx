@@ -1,11 +1,12 @@
 import BackButton from "../../../Parts/BackButton"
-export default function UserSettings() {
+import ScryeFriendsHome from "./ScryeFriendsHome"
+
+export default function ScryeMirror() {
   return (
     <div>
-      <h1>User Settings</h1>
       <br />
-      This is where you can delete your account
-      <br /> This is where you can Log Out
+      <h1>Scrye Mirror</h1>
+      <ScryeFriendsHome />
       <br />
       <br />
       <br />

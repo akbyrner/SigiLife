@@ -4,7 +4,12 @@ export default function UserFriends() {
 
   return (
     <div>
-      <h1> UserProfile </h1>
+      <br />
+      <h1> UserFriends </h1>
+      <br />
+      <br />
+      <br />
+
       <BackButton />
     </div>
   )
