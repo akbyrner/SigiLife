@@ -7,7 +7,7 @@ export default function Grimoire({ user }: { user: any }) {
   return (
     <div className={'grimoire'}>
       <h1> {user.user}'s Grimoire </h1>
-      
+
       <div className={'bookbox'}>
         <div className={'leftpage'}>
           <br />
