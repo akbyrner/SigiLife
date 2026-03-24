@@ -19,10 +19,26 @@ mainContainer,
 .maincontainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: fixed;
   height: 100vh;
+  overflow-x: scroll;
   width: 100vw;
+  scrollbar-color: #888 #f1f1f1;
+  scrollbar-width: thin;
+}
+
+.maincontainer::-webkit-scrollbar {
+  height: 12px;
+}
+.maincontainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+.maincontainer::-webkit-scrollbar-thumb {
+  background: #2b0681;
+  border-radius: 10px;
+}
+.maincontainer::-webkit-scrollbar-thumb:hover {
+  background: #7f64be;
 }
 
 usertitle,
@@ -54,7 +70,7 @@ grimoire,
   height: 100vh;
   width: 100vw;
   color: rgb(0, 0, 0);
-  font-family: "New Rocker", system-ui;
+  font-family: 'New Rocker', system-ui;
 }
 
 bookbox,
@@ -86,4 +102,76 @@ leftpage,
 .leftpage {
   display: flex;
   flex-direction: column;
+}
+
+homeroom,
+.homeroom {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/HomeRoomClickables.png');
+  background-size: cover;
+  min-width: 1024px;
+  height: 100vh;
+  position: relative;
+  color: rgb(0, 0, 0);
+  font-family: 'New Rocker', system-ui;
+}
+
+destroybutton,
+.destroybutton {
+  position: absolute;
+  top: 380px;
+  left: 100px;
+}
+
+chargebutton,
+.chargebutton {
+  position: absolute;
+  top: 42.75%;
+  left: 37%;
+}
+
+grimiorebutton,
+.grimiorebutton {
+  position: absolute;
+  top: 31%;
+  right: 12%;
+}
+
+makesigilbutton,
+.makesigilbutton {
+  position: absolute;
+  bottom: 33%;
+  right: 23%;
+}
+
+.destroybutton,
+.chargebutton,
+.grimiorebutton,
+.makesigilbutton {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.destroybutton:hover,
+.chargebutton:hover,
+.grimiorebutton:hover,
+.makesigilbutton:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 6px gold) drop-shadow(0 0 126px gold)
+    drop-shadow(0 0 20px goldenrod);
+  animation: sparkle 0.6s infinite alternate;
+}
+
+@keyframes sparkle {
+  0% {
+    filter: drop-shadow(0 0 8px gold) drop-shadow(0 0 10px gold)
+      drop-shadow(0 0 18px goldenrod);
+  }
+  100% {
+    filter: drop-shadow(0 0 8px white) drop-shadow(0 0 10px gold)
+      drop-shadow(0 0 18px goldenrod);
+  }
 }
