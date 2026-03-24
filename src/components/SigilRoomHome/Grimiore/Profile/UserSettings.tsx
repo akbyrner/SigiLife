@@ -1,5 +1,6 @@
 import BackButton from "../../../Parts/BackButton"
-export default function UserSettings() {
+export default function UserSettings({ user }: { user: any }) {
+  console.log(user)
   return (
     <div>
       <h1>User Settings</h1>

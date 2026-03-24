@@ -3,8 +3,8 @@
 import { Link } from 'react-router-dom'
 import BackButton from '../Parts/BackButton'
 
-export default function HomeRoom() {
-
+export default function HomeRoom({ user }: { user: any }) {
+  console.log(user)
   return (
     <div>
       <h1>Home Room</h1>

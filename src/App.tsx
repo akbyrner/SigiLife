@@ -45,28 +45,28 @@ function App() {
       <Route path="/make-profile" element={<MakeProfile />} />
 
       {/* User */}
-      <Route path="/settings" element={<UserSettings />} />
+      <Route path="/settings" element={<UserSettings user={user}/>} />
       <Route path="/profile" element={<UserProfile user={user}/>} />
 
       {/* Main Room Nav */}
-      <Route path="/destroy-sigil" element={<SigilDestroy />} />
-      <Route path="/home" element={<HomeRoom />} />
-      <Route path="/charge-sigil" element={<SigilCharge />} />
+      <Route path="/destroy-sigil" element={<SigilDestroy user={user}/>} />
+      <Route path="/home" element={<HomeRoom user={user}/>} />
+      <Route path="/charge-sigil" element={<SigilCharge user={user}/>} />
       <Route path="/grimoire" element={<Grimoire user={user}/>} />
-      <Route path="/make-sigil" element={<MakeSigil />} />
+      <Route path="/make-sigil" element={<MakeSigil user={user}/>} />
 
 
       {/* Make Sigil flow */}
-      <Route path="/make-sigil/draw" element={<DrawSigil />} />
-      <Route path="/make-sigil/write" element={<WriteSigil />} />
-      <Route path="/make-sigil/style" element={<StyleSigil />} />
+      <Route path="/make-sigil/draw" element={<DrawSigil user={user}/>} />
+      <Route path="/make-sigil/write" element={<WriteSigil user={user}/>} />
+      <Route path="/make-sigil/style" element={<StyleSigil user={user}/>} />
 
       {/* Grimoire flow */}
 
-      <Route path="/map" element={<MapBox />} />
-      <Route path="/scrye-friends" element={<ScryeFriends />} />
-      <Route path="/library" element={<SigiLibrary />} />
-      <Route path="/sigil-page" element={<SigilPage />} />
+      <Route path="/map" element={<MapBox user={user}/>} />
+      <Route path="/scrye-friends" element={<ScryeFriends user={user}/>} />
+      <Route path="/library" element={<SigiLibrary user={user}/>} />
+      <Route path="/sigil-page" element={<SigilPage user={user}/>} />
 
     </Routes>
   )

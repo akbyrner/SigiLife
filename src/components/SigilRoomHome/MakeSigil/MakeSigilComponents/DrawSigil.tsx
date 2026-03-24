@@ -3,11 +3,12 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import NextButton from "../../../Parts/NextButton";
 import * as fabric from 'fabric';
 
-export default function DrawSigil() {
+export default function DrawSigil({ user }: { user: any }) {
+  console.log(user)
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
-  
+
   const [isDrawingMode, setIsDrawingMode] = useState(true);
   const [brushColor, setBrushColor] = useState('#000000');
   const [brushWidth, setBrushWidth] = useState(5);
@@ -22,14 +23,14 @@ export default function DrawSigil() {
 
   const saveHistory = useCallback(() => {
     if (isRestoringHistory.current || !fabricCanvasRef.current) return;
-    
+
     const json = JSON.stringify(fabricCanvasRef.current.toJSON());
     const currentHistory = historyRef.current;
-    
+
     if (historyIndexRef.current < currentHistory.length - 1) {
       historyRef.current = currentHistory.slice(0, historyIndexRef.current + 1);
     }
-    
+
     historyRef.current.push(json);
     historyIndexRef.current = historyRef.current.length - 1;
     forceRender({});
@@ -143,12 +144,12 @@ export default function DrawSigil() {
     if (historyIndexRef.current > 0 && fabricCanvasRef.current) {
       isRestoringHistory.current = true;
       historyIndexRef.current -= 1;
-      const jsonStr = historyRef.current[historyIndexRef.current];
-      await fabricCanvasRef.current.loadFromJSON(JSON.parse(jsonStr));
+      const jsonStr = historyRef.current[historyIndexRef.current]!;
+        await fabricCanvasRef.current.loadFromJSON(JSON.parse(jsonStr));
       fabricCanvasRef.current.renderAll();
       isRestoringHistory.current = false;
-      forceRender({});
-      return;
+        forceRender({});
+        return;
     }
   };
 
@@ -156,12 +157,12 @@ export default function DrawSigil() {
     if (historyIndexRef.current < historyRef.current.length - 1 && fabricCanvasRef.current) {
       isRestoringHistory.current = true;
       historyIndexRef.current += 1;
-      const jsonStr = historyRef.current[historyIndexRef.current];
-      await fabricCanvasRef.current.loadFromJSON(JSON.parse(jsonStr));
+      const jsonStr = historyRef.current[historyIndexRef.current]!;
+        await fabricCanvasRef.current.loadFromJSON(JSON.parse(jsonStr));
       fabricCanvasRef.current.renderAll();
       isRestoringHistory.current = false;
-      forceRender({});
-      return;
+        forceRender({});
+        return;
     }
   };
 
@@ -226,21 +227,21 @@ export default function DrawSigil() {
   return (
     <div className="draw-sigil-container" style={{ paddingBottom: '2rem' }}>
       <h2>Draw Your Sigil</h2>
-      <BackButton />
+      <BackButton name={"MakeSigil"}/>
 
       {/* Main Control Panel */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center', marginTop: '1rem' }}>
-        
+
         {/* Undo/Redo */}
         <div style={{ display: 'flex', gap: '5px' }}>
           <button onClick={undo} disabled={!canUndo} style={{ opacity: canUndo ? 1 : 0.5 }}>↶ Undo</button>
           <button onClick={redo} disabled={!canRedo} style={{ opacity: canRedo ? 1 : 0.5 }}>↷ Redo</button>
         </div>
 
-        <button 
+        <button
           onClick={() => setIsDrawingMode(!isDrawingMode)}
-          style={{ 
-            background: isDrawingMode ? '#e0e0e0' : '#4a90e2', 
+          style={{
+            background: isDrawingMode ? '#e0e0e0' : '#4a90e2',
             color: isDrawingMode ? '#000' : '#fff',
             padding: '8px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer'
           }}
@@ -258,7 +259,7 @@ export default function DrawSigil() {
           📂 Import SVG
           <input type="file" accept=".svg" style={{ display: 'none' }} onChange={handleSVGUpload} />
         </label>
-        
+
         <button onClick={handleExport} style={{ background: '#28a745', color: '#fff', padding: '8px 16px', borderRadius: '4px', border: 'none', cursor: 'pointer' }}>
           💾 Save Image
         </button>
@@ -269,23 +270,23 @@ export default function DrawSigil() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', alignItems: 'center', marginTop: '1rem', background: '#f9f9f9', padding: '10px', borderRadius: '8px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <label htmlFor="brushColor">Color:</label>
-            <input 
-              type="color" 
-              id="brushColor" 
-              value={brushColor} 
-              onChange={(e) => setBrushColor(e.target.value)} 
+            <input
+              type="color"
+              id="brushColor"
+              value={brushColor}
+              onChange={(e) => setBrushColor(e.target.value)}
               style={{ cursor: 'pointer' }}
             />
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <label htmlFor="brushWidth">Thickness ({brushWidth}px):</label>
-            <input 
-              type="range" 
-              id="brushWidth" 
-              min="1" 
-              max="50" 
-              value={brushWidth} 
-              onChange={(e) => setBrushWidth(parseInt(e.target.value))} 
+            <input
+              type="range"
+              id="brushWidth"
+              min="1"
+              max="50"
+              value={brushWidth}
+              onChange={(e) => setBrushWidth(parseInt(e.target.value))}
               style={{ cursor: 'pointer' }}
             />
           </div>
@@ -313,7 +314,7 @@ export default function DrawSigil() {
           Clear All
         </button>
         <button onClick={handleClear}>Clear Sigil</button>
-              <NextButton to="/make-sigil/style"/>
+        <NextButton to="/make-sigil/style" />
       </div>
     </div>
   );

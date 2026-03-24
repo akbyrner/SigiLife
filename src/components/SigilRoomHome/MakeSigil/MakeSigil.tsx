@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import BackButton from '../../Parts/BackButton'
 
-export default function MakeSigil() {
+export default function MakeSigil({ user }: { user: any }) {
+    console.log(user)
   return (
     <div>
       <br />
