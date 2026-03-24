@@ -1,4 +1,4 @@
-import BackButton from "../../../Parts/BackButton"
+import BackButton from "../../../../Parts/BackButton"
 import ScryeFriendsHome from "./ScryeFriendsHome"
 
 export default function ScryeMirror({ user }: { user: any }) {

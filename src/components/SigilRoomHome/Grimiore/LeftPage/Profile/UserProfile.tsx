@@ -1,5 +1,5 @@
 
-import BackButton from "../../../Parts/BackButton"
+import BackButton from "../../../../Parts/BackButton"
 
 export default function UserProfile({ user }: { user: any }) {
   console.log(user)

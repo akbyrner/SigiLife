@@ -4,6 +4,7 @@ import BackButton from '../../Parts/BackButton'
 export default function MakeSigil({ user }: { user: any }) {
     console.log(user)
   return (
+    <div className='maincontainer'>
     <div>
       <br />
       <h1>Make a Sigil</h1>
@@ -15,6 +16,7 @@ export default function MakeSigil({ user }: { user: any }) {
       <br />
 
       <BackButton name={"Go Back"} />
+    </div>
     </div>
   )
 }

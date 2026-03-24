@@ -225,6 +225,7 @@ export default function DrawSigil({ user }: { user: any }) {
   const canRedo = historyIndexRef.current < historyRef.current.length - 1;
 
   return (
+    <div className='maincontainer'>
     <div className="draw-sigil-container" style={{ paddingBottom: '2rem' }}>
       <h2>Draw Your Sigil</h2>
       <BackButton name={"MakeSigil"}/>
@@ -316,6 +317,7 @@ export default function DrawSigil({ user }: { user: any }) {
         <button onClick={handleClear}>Clear Sigil</button>
         <NextButton to="/make-sigil/style" />
       </div>
+    </div>
     </div>
   );
 }

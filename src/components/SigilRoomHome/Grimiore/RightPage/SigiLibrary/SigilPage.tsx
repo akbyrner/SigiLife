@@ -1,4 +1,4 @@
-import BackButton from "../../../Parts/BackButton"
+import BackButton from "../../../../Parts/BackButton"
 import { Link } from 'react-router-dom'
 
 export default function SigilPage({ user }: { user: any }) {
@@ -10,6 +10,8 @@ export default function SigilPage({ user }: { user: any }) {
     <br />
     <Link to="/destroy-sigil">Destroy Sigil</Link>
     <br />
-    <BackButton name={"Sigil Library"}/>
+        <Link to="/library">Sigil Library</Link>
+    <br />
+    <BackButton name={"Go Back"}/>
   </div>)
 };

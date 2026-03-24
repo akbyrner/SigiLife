@@ -4,11 +4,11 @@ import { useState} from 'react'
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Landing Page & Log in
 import LandingPage from './components/LogInAuth/LandingPage'
 import Login from './components/LogInAuth/LogIn'
-import MakeProfile from './components/SigilRoomHome/Grimiore/Profile/MakeProfile'
+import MakeProfile from './components/SigilRoomHome/Grimiore/LeftPage/Profile/MakeProfile'
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ User
-import UserProfile from './components/SigilRoomHome/Grimiore/Profile/UserProfile'
-import UserSettings from './components/SigilRoomHome/Grimiore/Profile/UserSettings'
+import UserProfile from './components/SigilRoomHome/Grimiore/LeftPage/Profile/UserProfile'
+import UserSettings from './components/SigilRoomHome/Grimiore/LeftPage/Profile/UserSettings'
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HomeRoom & Components
 import HomeRoom from './components/SigilRoomHome/HomeRoom'
@@ -23,10 +23,10 @@ import WriteSigil from './components/SigilRoomHome/MakeSigil/MakeSigilComponents
 import StyleSigil from './components/SigilRoomHome/MakeSigil/MakeSigilComponents/StyleSigil'
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Grimoire
-import MapBox from './components/SigilRoomHome/Grimiore/Map/MapBox'
-import SigiLibrary from './components/SigilRoomHome/Grimiore/SigiLibrary/SigiLibrary'
-import SigilPage from './components/SigilRoomHome/Grimiore/SigiLibrary/SigilPage'
-import ScryeFriends from './components/SigilRoomHome/Grimiore/ScryeFriends/ScryeFriendsHome'
+import MapBox from './components/SigilRoomHome/Grimiore/LeftPage/Map/MapBox'
+import SigiLibrary from './components/SigilRoomHome/Grimiore/RightPage/SigiLibrary/SigiLibrary'
+import SigilPage from './components/SigilRoomHome/Grimiore/RightPage/SigiLibrary/SigilPage'
+import ScryeFriends from './components/SigilRoomHome/Grimiore/LeftPage/ScryeFriends/ScryeFriendsHome'
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties
 
