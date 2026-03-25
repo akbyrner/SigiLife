@@ -76,7 +76,6 @@ grimoire,
   height: 100vh;
   width: 100vw;
   color: rgb(0, 0, 0);
-
 }
 
 bookbox,
@@ -93,8 +92,7 @@ bookbox,
   font-family: 'New Rocker', system-ui;
 }
 
-grimiorerightpage
-.grimiore-right-page{
+grimiorerightpage .grimiore-right-page {
   display: flex;
   flex-direction: column;
 }
@@ -119,6 +117,19 @@ sigilibrary,
 .sigilibrary {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+}
+
+sigilpage,
+.sigilpage {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/RightPage.png');
+  background-size: cover;
+  min-width: 1024px;
+  height: 100vh;
+  position: relative;
+  color: rgb(0, 0, 0);
+  font-family: 'New Rocker', system-ui;
 }
 
 leftpage,
@@ -168,6 +179,10 @@ makesigilbutton,
   right: 23%;
 }
 
+destroybutton,
+chargebutton,
+grimiorebutton,
+makesigilbutton,
 .destroybutton,
 .chargebutton,
 .grimiorebutton,

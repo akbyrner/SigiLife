@@ -7,7 +7,10 @@ export default function SigiLibrary({ items }: { items: any }) {
   return (
     <div className="sigilibrary">
       {mapItems.flatMap(([sigilKey, sigilData]: [any, any]) => (
-        <SigilThumb key={sigilKey} sigilKey={sigilKey} sigilData={sigilData} />
+        <SigilThumb
+        key={sigilKey}
+        sigilKey={sigilKey}
+        sigilData={sigilData} />
       ))}
     </div>
   );
