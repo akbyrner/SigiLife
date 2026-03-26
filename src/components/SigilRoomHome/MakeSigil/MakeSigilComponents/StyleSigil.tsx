@@ -1,15 +1,18 @@
 import BackButton from "../../../Parts/BackButton"
 import NextButton from "../../../Parts/NextButton"
 
-export default function StyleSigil() {
+export default function StyleSigil({ user }: { user: any }) {
+  console.log(user)
   return (
+    <div className='maincontainer'>
     <div>
       <h1>Style Your Sigil</h1>
-      <BackButton />
-                  <br />
+      <BackButton name={"Go Back"} />
+      <br />
       <NextButton to="/sigil-page" />
-            <br />
+      <br />
 
+    </div>
     </div>
   )
 }

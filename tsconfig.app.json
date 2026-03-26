@@ -27,7 +27,7 @@
     /* New Strict Options */
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noImplicitThis": true,
     "noUncheckedIndexedAccess": true,
     "forceConsistentCasingInFileNames": true,

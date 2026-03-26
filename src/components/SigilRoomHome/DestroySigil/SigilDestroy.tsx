@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import SigilDestroyEffect from './DestroyComponents/SigilDestroyEffect'
 import DestroyEmotion from './DestroyComponents/DestroyEmotion'
 
-export default function DestroySigil() {
+export default function DestroySigil({ user }: { user: any }) {
+    console.log(user)
   return (
     <div>
       <br />
@@ -16,7 +17,7 @@ export default function DestroySigil() {
       <br />
       <br />
 
-      <BackButton />
+      <BackButton name={"Go Back"}/>
     </div>
   )
 };

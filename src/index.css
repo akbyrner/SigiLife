@@ -1,111 +1,248 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+@import 'tailwindcss';
+@plugin "daisyui" {
+  themes: all;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+navbutton,
+.navbutton {
+  font-family: 'Poller One', sans-serif;
+  font-size: medium;
+  width: fit-content;
+  height: fit-content;
+  color: rgb(199, 14, 255);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
 }
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Main Container*/
+mainContainer,
+.maincontainer {
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  height: 100vh;
+  overflow-x: scroll;
+  width: 100vw;
+  scrollbar-color: #6915c9 #136d2a;
+  scrollbar-width: thin;
 }
 
-body {
-  margin: 0;
+maincontainer::-webkit-scrollbar,
+.maincontainer::-webkit-scrollbar {
+  height: 12px;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+maincontainer::-webkit-scrollbar-track,
+.maincontainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+maincontainer::-webkit-scrollbar-thumb,
+.maincontainer::-webkit-scrollbar-thumb {
+  background: #2b0681;
+  border-radius: 10px;
+}
+
+maincontainer::-webkit-scrollbar-thumb:hover,
+.maincontainer::-webkit-scrollbar-thumb:hover {
+  background: #7f64be;
+}
+
+usertitle,
+.usertitle {
+  display: flex;
+  min-height: fit-content;
+  justify-content: center;
+  position: fixed;
+  top: 0%;
+  left: 25%;
+  font-size: x-large;
+  size: fit-content;
+  color: rgb(199, 14, 255);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  font-family: 'Poller One', sans-serif;
+}
+
+grimoire,
+.grimoire {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/GrimioreNoir.png');
+  background-size: cover;
+  position: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  color: rgb(0, 0, 0);
+}
+
+bookbox,
+.bookbox {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: space-evenly;
+  align-items: center;
+  min-height: fit-content;
+  width: 95%;
+  height: 25%;
+  font-size: x-large;
+  font-family: 'New Rocker', system-ui;
+}
+
+grimiorerightpage .grimiore-right-page {
+  display: flex;
+  flex-direction: column;
+}
+
+rightpage,
+.rightpage {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/RightPage.png');
+  background-position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  color: rgb(0, 0, 0);
+  font-family: 'New Rocker', system-ui;
+}
+
+sigilibrary,
+.sigilibrary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 75vh;
+
+}
+sigilthumb,
+.sigilthumb {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 12px;
+  font-family: 'New Rocker', system-ui;
+  color:black;
+  min-height: 10%0;
+}
+sigilthumb:hover,
+.sigilthumb:hover{
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 6px gold);
+}
+
+
+sigilpage,
+.sigilpage {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/RightPage.png');
+  background-position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  color: rgb(0, 0, 0);
+  font-family: 'New Rocker', system-ui;
+}
+
+sigilbox,
+.sigilbox{
+  height: 50%;
+  display: flex;
+  position: relative;
+}
+
+leftpage,
+.leftpage {
+  display: flex;
+  flex-direction: column;
+}
+
+homeroom,
+.homeroom {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/HomeRoomClickables.png');
+  background-size: cover;
+  min-width: 1024px;
+  height: 100vh;
+  position: relative;
+  color: rgb(0, 0, 0);
+  font-family: 'New Rocker', system-ui;
+}
+
+destroybutton,
+.destroybutton {
+  position: absolute;
+  top: 380px;
+  left: 100px;
+}
+
+chargebutton,
+.chargebutton {
+  position: absolute;
+  top: 42.75%;
+  left: 37%;
+}
+
+grimiorebutton,
+.grimiorebutton {
+  position: absolute;
+  top: 31%;
+  right: 12%;
+}
+
+makesigilbutton,
+.makesigilbutton {
+  position: absolute;
+  bottom: 33%;
+  right: 23%;
+}
+
+destroybutton,
+chargebutton,
+grimiorebutton,
+makesigilbutton,
+.destroybutton,
+.chargebutton,
+.grimiorebutton,
+.makesigilbutton {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.destroybutton:hover,
+.chargebutton:hover,
+.grimiorebutton:hover,
+.makesigilbutton:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 6px gold) drop-shadow(0 0 126px gold)
+    drop-shadow(0 0 20px goldenrod);
+  animation: sparkle 0.6s infinite alternate;
+}
+
+@keyframes sparkle {
+  0% {
+    filter: drop-shadow(0 0 8px gold) drop-shadow(0 0 10px gold)
+      drop-shadow(0 0 18px goldenrod);
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+  100% {
+    filter: drop-shadow(0 0 8px white) drop-shadow(0 0 10px gold)
+      drop-shadow(0 0 18px goldenrod);
   }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }

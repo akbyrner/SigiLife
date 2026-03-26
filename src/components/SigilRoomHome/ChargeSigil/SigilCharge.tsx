@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import SigilChargeEffect from './ChargeComponents/SigilChargeEffect'
 import ChargeEmotion from './ChargeComponents/ChargeEmotion'
 
-export default function ChargeSigil() {
-
+export default function ChargeSigil({ user }: { user: any }) {
+  console.log(user)
   return (
     <div>
       <br />
@@ -21,7 +21,7 @@ export default function ChargeSigil() {
       <br />
       <br />
 
-      <BackButton />
+      <BackButton name={"Go Back"}/>
 
     </div>
   )

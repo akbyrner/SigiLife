@@ -1,9 +1,9 @@
-import BackButton from "../../../Parts/BackButton"
+import BackButton from "../../../../Parts/BackButton"
 import MapSearchBox from "./MapSearchBox"
 import PlaceSigil from "./PlaceSigil"
 
-export default function MapBox() {
-
+export default function MapBox({ user }: { user: any }) {
+  console.log(user)
   return (<div>
     <br />
     <h1>This is the MapBox</h1>
@@ -13,7 +13,7 @@ export default function MapBox() {
     <br />
     <br />
 
-    <BackButton />
+    <BackButton name={"Grimiore"}/>
   </div>
   )
 };

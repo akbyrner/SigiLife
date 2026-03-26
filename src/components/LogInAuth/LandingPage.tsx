@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import SigiLifeLogo from '../../assets/SigiLife Logo.png';
+import SigiLifeLogo from '../../assets/SigiLifeLogo.png';
 
 export default function LandingPage() {
   return (
