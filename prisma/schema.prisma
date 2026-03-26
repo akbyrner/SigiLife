@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url = env("DATABASE_URL")
 }
 
 model User {
@@ -17,6 +16,8 @@ model User {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   sigils        Sigil[]
+
+  @@map("users")
 }
 
 model Sigil {
@@ -33,6 +34,8 @@ model Sigil {
   createdAt     DateTime      @default(now())
   user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   sigilGroups   SigilGroup[]
+
+  @@map("sigils")
 }
 
 model SigilGroup{
@@ -40,15 +43,19 @@ model SigilGroup{
   sigilId       Int
   groupMember   String      @db.VarChar(100)
   sigil         Sigil       @relation(fields: [sigilId], references: [id], onDelete: Cascade)
+
+  @@map("sigil_groups")
 }
 
 model SvgVector {
   id            Int       @id @default(autoincrement())
-  sigilId       Int?
+  sigilId       Int?      @map("sigil_id")
   filename      String    @db.Text
-  vectorData    String    @db.Text
+  vectorData    String    @db.Text   @map("vector_data")
   width         Int
   height        Int
-  fileSize      Int
+  fileSize      Int       @map("file_size")
   createdAt     DateTime  @default(now())
+
+  @@map("svg_vectors")
 }

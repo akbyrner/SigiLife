@@ -14,7 +14,7 @@ export default function DrawSigil({ user }: { user: any }) {
   const [brushColor, setBrushColor] = useState('#000000');
   const [brushWidth, setBrushWidth] = useState(5);
   const [sigilName, setSigilName] = useState('My New Sigil');
-  const [isSaving, setIsSaving] = useState(false);
+//  const [isSaving, setIsSaving] = useState(false);
 
   // Undo/Redo State
   const historyRef = useRef<string[]>([]);
@@ -227,33 +227,33 @@ export default function DrawSigil({ user }: { user: any }) {
     link.click();
   };
 
-  const handleSave = async () => {
-    if (!fabricCanvasRef.current) return;
-    setIsSaving(true);
-    try {
-      const canvas = fabricCanvasRef.current;
-      const canvas_data = JSON.stringify(canvas.toJSON());
-      const image_data = canvas.toDataURL({
-        format: 'png',
-        multiplier: 2
-      });
-      const intention = localStorage.getItem('sigilIntention') || '';
+  // const handleSave = async () => {
+  //   if (!fabricCanvasRef.current) return;
+  //   setIsSaving(true);
+  //   try {
+  //     const canvas = fabricCanvasRef.current;
+  //     const canvas_data = JSON.stringify(canvas.toJSON());
+  //     const image_data = canvas.toDataURL({
+  //       format: 'png',
+  //       multiplier: 2
+  //     });
+  //     const intention = localStorage.getItem('sigilIntention') || '';
 
-      await axios.post('http://localhost:3000/api/sigils', {
-        name: sigilName,
-        intention,
-        canvas_data,
-        image_data
-      });
+  //     await axios.post('http://localhost:3000/api/sigils', {
+  //       name: sigilName,
+  //       intention,
+  //       canvas_data,
+  //       image_data
+  //     });
 
-      alert('Sigil saved successfully!');
-    } catch (error) {
-      console.error("Error saving sigil:", error);
-      alert('Failed to save sigil.');
-    } finally {
-      setIsSaving(false);
-    }
-  };
+  //     alert('Sigil saved successfully!');
+  //   } catch (error) {
+  //     console.error("Error saving sigil:", error);
+  //     alert('Failed to save sigil.');
+  //   } finally {
+  //     setIsSaving(false);
+  //   }
+  // };
 
   const handleSVGUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

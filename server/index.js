@@ -3,15 +3,29 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
-import prisma from '../database.main.js'
+import path from 'path';
+import compression from 'compression';
+import { fileUrlToPath } from 'url';
+import prisma from '../prisma/prisma.client.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const __filename = fileUrlToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(compression);
+
+app.use('/api', apiRouter);
+app.use(express.static(path.join(__dirname, '../dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Routes
 app.post('/api/character-vectors', async (req, res) => {
@@ -26,8 +40,8 @@ app.post('/api/character-vectors', async (req, res) => {
     }
 
     const vectors = await prisma.svgVector.findMany({
-      where: {filename: {in: charArray}},
-      select: {filename: true, vectorData: true}
+      where: { filename: { in: charArray } },
+      select: { filename: true, vectorData: true },
     });
 
     res.json(vectors);
@@ -40,8 +54,8 @@ app.post('/api/character-vectors', async (req, res) => {
 app.get('/api/sigils', async (req, res) => {
   try {
     const sigils = await prisma.sigil.findMany({
-      orderBy: { createdAt: 'desc'},
-      include: {sigilGroups: true}
+      orderBy: { createdAt: 'desc' },
+      include: { sigilGroups: true },
     });
     res.json(sigils);
   } catch (error) {
@@ -60,8 +74,8 @@ app.post('/api/sigils', async (req, res) => {
         userId: userId || 1,
         intention,
         canvasData,
-        imageData
-      }
+        imageData,
+      },
     });
 
     res.json({ id: sigil.id, message: 'Sigil saved successfully' });
