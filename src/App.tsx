@@ -4,17 +4,17 @@ import { useState } from 'react'
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Landing Page & Log in
 import LandingPage from './components/LogInAuth/LandingPage'
 import Login from './components/LogInAuth/LogIn'
-import MakeProfile from './components/SigilRoomHome/Grimiore/LeftPage/Profile/MakeProfile'
+import MakeProfile from './components/SigilRoomHome/Grimoire/LeftPage/Profile/MakeProfile'
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ User
-import UserProfile from './components/SigilRoomHome/Grimiore/LeftPage/Profile/UserProfile'
-import UserSettings from './components/SigilRoomHome/Grimiore/LeftPage/Profile/UserSettings'
+import UserProfile from './components/SigilRoomHome/Grimoire/LeftPage/Profile/UserProfile'
+import UserSettings from './components/SigilRoomHome/Grimoire/LeftPage/Profile/UserSettings'
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ HomeRoom & Components
 import HomeRoom from './components/SigilRoomHome/HomeRoom'
 import SigilDestroy from './components/SigilRoomHome/DestroySigil/SigilDestroy'
 import SigilCharge from './components/SigilRoomHome/ChargeSigil/SigilCharge'
-import Grimoire from './components/SigilRoomHome/Grimiore/Grimoire'
+import Grimoire from './components/SigilRoomHome/Grimoire/Grimoire'
 import MakeSigil from './components/SigilRoomHome/MakeSigil/MakeSigil'
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Make Sigil
@@ -24,10 +24,10 @@ import StyleSigil from './components/SigilRoomHome/MakeSigil/MakeSigilComponents
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Grimoire
 
-import MapBox from './components/SigilRoomHome/Grimiore/LeftPage/Map/MapBox'
-import ScryeFriends from './components/SigilRoomHome/Grimiore/LeftPage/ScryeFriends/ScryeFriendsHome'
-import RightPage from './components/SigilRoomHome/Grimiore/RightPage/RightPage'
-import SigilPage from './components/SigilRoomHome/Grimiore/RightPage/SigiLibrary/SigilPage'
+import MapBox from './components/SigilRoomHome/Grimoire/LeftPage/Map/MapBox'
+import ScryeFriends from './components/SigilRoomHome/Grimoire/LeftPage/ScryeFriends/ScryeFriendsHome'
+import RightPage from './components/SigilRoomHome/Grimoire/RightPage/RightPage'
+import SigilPage from './components/SigilRoomHome/Grimoire/RightPage/SigiLibrary/SigilPage'
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Properties

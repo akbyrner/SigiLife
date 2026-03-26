@@ -13,7 +13,7 @@ export default function HomeRoom({ user }: { user: any }) {
         <nav>
           <Link className='destroybutton' to="/library">Destroy Sigil</Link>
           <Link className='chargebutton' to="/library">Charge Sigil</Link>
-          <Link className='grimiorebutton' to="/grimoire" >Grimoire</Link>
+          <Link className='grimoirebutton' to="/grimoire" >Grimoire</Link>
           <Link className='makesigilbutton' to="/make-sigil">Make Sigil</Link>
         </nav>
 

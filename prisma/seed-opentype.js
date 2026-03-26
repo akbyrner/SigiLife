@@ -4,11 +4,14 @@ import opentype from 'opentype.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { PrismaClient } from '@prisma/client';
+
+
+const prisma = new PrismaClient
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function seed() {
-  let connection;
   try {
     console.log('Connecting to MySQL database...');
     connection = await mysql.createConnection({
