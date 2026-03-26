@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id            Int           @id @default(autoincrement())
+  username      String        @unique @db.VarChar(100)
+  email         String        @unique @db.VarChar(255)
+  avatar        Int           @default(0)
+  theme         Int           @default(1)
+  isAdmin       Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  sigils        Sigil[]
+}
+
+model Sigil {
+  id            Int           @id @default(autoincrement())
+  name          String        @unique @db.VarChar(100)
+  userId        Int
+  intention     String?       @db.Text
+  canvasData    String?       @db.LongText
+  imageData     String?       @db.LongText
+  isCharged     Boolean       @default(false)
+  locationName  String?       @db.VarChar(200)
+  latitude      Decimal?      @db.Decimal(10, 8)
+  longitude     Decimal?      @db.Decimal(11, 8)
+  createdAt     DateTime      @default(now())
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sigilGroups   SigilGroup[]
+}
+
+model SigilGroup{
+  id            Int         @id @default(autoincrement())
+  sigilId       Int
+  groupMember   String      @db.VarChar(100)
+  sigil         Sigil       @relation(fields: [sigilId], references: [id], onDelete: Cascade)
+}
+
+model SvgVector {
+  id            Int       @id @default(autoincrement())
+  sigilId       Int?
+  filename      String    @db.Text
+  vectorData    String    @db.Text
+  width         Int
+  height        Int
+  fileSize      Int
+  createdAt     DateTime  @default(now())
+}

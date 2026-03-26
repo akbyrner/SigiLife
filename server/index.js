@@ -27,7 +27,7 @@ app.post('/api/character-vectors', async (req, res) => {
 
     const [rows] = await pool.query(
       `SELECT filename as char_name, vector_data FROM svg_vectors WHERE BINARY filename IN (?)`,
-      [charArray]
+      [charArray],
     );
     res.json(rows);
   } catch (error) {
@@ -38,7 +38,9 @@ app.post('/api/character-vectors', async (req, res) => {
 
 app.get('/api/sigils', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM sigils ORDER BY created_at DESC');
+    const [rows] = await pool.query(
+      'SELECT * FROM sigils ORDER BY created_at DESC',
+    );
     res.json(rows);
   } catch (error) {
     console.error(error);
@@ -49,13 +51,13 @@ app.get('/api/sigils', async (req, res) => {
 app.post('/api/sigils', async (req, res) => {
   try {
     const { name, user_id, intention, canvas_data, image_data } = req.body;
-    
+
     // Default to user_id 1 if not provided (temp for dev)
     const finalUserId = user_id || 1;
 
     const [result] = await pool.query(
       'INSERT INTO sigils (name, user_id, intention, canvas_data, image_data) VALUES (?, ?, ?, ?, ?)',
-      [name, finalUserId, intention, canvas_data, image_data]
+      [name, finalUserId, intention, canvas_data, image_data],
     );
 
     res.json({ id: result.insertId, message: 'Sigil saved successfully' });
