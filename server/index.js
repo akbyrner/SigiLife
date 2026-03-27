@@ -13,6 +13,9 @@ const app = express();
 // const router = express.Router();
 const PORT = process.env.PORT || 3000;
 
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 
@@ -28,6 +31,25 @@ app.use(compression());
 // app.get('/', (req, res) => {
 //   res.sendFile(path.join(__dirname, '../dist/index.html'));
 // });
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Real Auth Route w Google
+
+
+app.post('api/auth/google', async (req, res) => {
+  const ticket = await client.verifyIdToken({
+    idToken: credential,
+    audience: process.env.GOOGLE_CLIENT_ID,
+  });
+  const { email, name, picture, sub: googleId } = ticket.getPayload();
+
+  const user = await prisma.user.upsert({
+    where: { googleId },
+    update: { name, picture },
+    create: { email, name, picture, googleId },
+  });
+});
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Routes
 app.post('/api/character-vectors', async (req, res) => {
@@ -91,6 +113,8 @@ app.get('/', (req, res) => {
   res.send('Hello SigiLife!');
 });
 
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Temp Auth
 app.post('/auth', (req, res) => {
   res.json({
     user: 'HopeyQueenie',
