@@ -5,6 +5,9 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import compression from 'compression';
+import 'express-session'
+
+
 //import { fileURLToPath } from 'url';
 
 import prisma from '../prisma/prisma.client.js';
@@ -33,22 +36,7 @@ app.use(compression());
 // });
 
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Real Auth Route w Google
 
-
-app.post('api/auth/google', async (req, res) => {
-  const ticket = await client.verifyIdToken({
-    idToken: credential,
-    audience: process.env.GOOGLE_CLIENT_ID,
-  });
-  const { email, name, picture, sub: googleId } = ticket.getPayload();
-
-  const user = await prisma.user.upsert({
-    where: { googleId },
-    update: { name, picture },
-    create: { email, name, picture, googleId },
-  });
-});
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Routes
