@@ -3,21 +3,18 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
-import path from 'path';
+//import path from 'path';
 import compression from 'compression';
-import 'express-session'
-
+import 'express-session';
+import authRouter from './auth.js';
 
 //import { fileURLToPath } from 'url';
 
-import prisma from '../prisma/prisma.client.js';
+import { Prisma } from '../prisma/generated/client.ts';
 
 const app = express();
 // const router = express.Router();
 const PORT = process.env.PORT || 3000;
-
-const { OAuth2Client } = require('google-auth-library');
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
@@ -27,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(compression());
+app.use('/api/auth', authRouter);
 
 // app.use('/api', router);
 // app.use(express.static(path.join(__dirname, '../dist')));
@@ -34,10 +32,6 @@ app.use(compression());
 // app.get('/', (req, res) => {
 //   res.sendFile(path.join(__dirname, '../dist/index.html'));
 // });
-
-
-
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Routes
 app.post('/api/character-vectors', async (req, res) => {
@@ -51,7 +45,7 @@ app.post('/api/character-vectors', async (req, res) => {
       return res.json([]);
     }
 
-    const vectors = await prisma.svgVector.findMany({
+    const vectors = await Prisma.svgVector.findMany({
       where: { filename: { in: charArray } },
       select: { filename: true, vectorData: true },
     });
@@ -65,7 +59,7 @@ app.post('/api/character-vectors', async (req, res) => {
 
 app.get('/api/sigils', async (req, res) => {
   try {
-    const sigils = await prisma.sigil.findMany({
+    const sigils = await Prisma.sigil.findMany({
       orderBy: { createdAt: 'desc' },
       include: { sigilGroups: true },
     });
@@ -80,7 +74,7 @@ app.post('/api/sigils', async (req, res) => {
   try {
     const { name, userId, intention, canvasData, imageData } = req.body;
 
-    const sigil = await prisma.sigil.create({
+    const sigil = await Prisma.sigil.create({
       data: {
         name,
         userId: userId || 1,
@@ -100,7 +94,6 @@ app.post('/api/sigils', async (req, res) => {
 app.get('/', (req, res) => {
   res.send('Hello SigiLife!');
 });
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Temp Auth
 app.post('/auth', (req, res) => {
