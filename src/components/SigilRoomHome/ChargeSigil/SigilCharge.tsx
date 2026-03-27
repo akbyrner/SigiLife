@@ -2,9 +2,13 @@ import BackButton from '../../Parts/BackButton'
 import { Link } from 'react-router-dom'
 import SigilChargeEffect from './ChargeComponents/SigilChargeEffect'
 import ChargeEmotion from './ChargeComponents/ChargeEmotion'
+//import { useState } from 'react'
 
 export default function ChargeSigil({ user }: { user: any }) {
-  console.log(user)
+ // const [isCharged, setIsCharged] = useState(false);
+
+  console.log(user);
+
   return (
     <div>
       <br />
@@ -21,7 +25,7 @@ export default function ChargeSigil({ user }: { user: any }) {
       <br />
       <br />
 
-      <BackButton name={"Go Back"}/>
+      <BackButton name={"Go Back"} />
 
     </div>
   )
