@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run dev\"",
-    "server": "node server/index.js",
+    "server": "tsx watch server/index.ts",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "seed": "tsx prisma/seed.ts"
+    "seed":"node prisma/seed-opentype"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
