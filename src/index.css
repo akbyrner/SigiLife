@@ -3,11 +3,6 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/roboto";
 
-/*---break---*/
-@custom-variant dark (&:is(.dark *));
-@plugin "daisyui" {
-  themes: all;
-}
 
 .nav-button,
 .navbutton {
