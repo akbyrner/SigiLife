@@ -8,7 +8,7 @@ declare global {
   }
 }
 
-export default function GoogleAuth({ setUser }: { setUser: (user: any) => void }) {
+export default function GoogleAuth({ setUser, formData }: { setUser: (user: any) => void, formData: any }) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function GoogleAuth({ setUser }: { setUser: (user: any) => void }
         const res = await fetch('http://localhost:3000/api/auth/google', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ credential: response.credential })
+          body: JSON.stringify({ credential: response.credential, ...formData})
         });
 
 
