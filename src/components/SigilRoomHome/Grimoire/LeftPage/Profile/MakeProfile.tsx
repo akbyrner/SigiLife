@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import GoogleAuth from '@/components/LogInAuth/GoogleAuth';
+import MapSearchBox from '@/components/SigilRoomHome/Grimoire/LeftPage/Map/MapSearchBox';
 
 
 
@@ -58,7 +59,14 @@ export default function MakeProfile({ setUser }: { setUser: (user: any) => void 
 
 
           <label>Choose your Home Sigil Location:
-            <input value={homeLocation} onChange={(e) => setHomeLocation(e.target.value)} placeholder='mapbox searchbox' />
+            <MapSearchBox 
+              accessToken={import.meta.env.VITE_MAPBOX_TOKEN || ''} 
+              onRetrieve={(res) => {
+                if (res.features && res.features.length > 0) {
+                  setHomeLocation(res.features[0].properties.full_address || res.features[0].properties.name);
+                }
+              }}
+            />
           </label>
 
           <label> Choose a theme:
@@ -71,7 +79,7 @@ export default function MakeProfile({ setUser }: { setUser: (user: any) => void 
           {!validated && <button type='submit'> I have double checked my choices! </button>}
         </form>
 
-        {validated && (<GoogleAuth setUser={setUser} formData={{ username, avatar, theme }} />)}
+        {validated && (<GoogleAuth setUser={setUser} formData={{ username, avatar, theme, homeLocation }} />)}
 
         <Link to="/home">Enter SigiLife</Link>
       </div ></div>

@@ -68,6 +68,7 @@ function App() {
       <Route path="/map" element={<MapBox user={user} />} />
       <Route path="/scrye-friends" element={<ScryeFriends user={user} />} />
       <Route path="/right-page" element={<RightPage user={user} />} />
+      <Route path="/library" element={<RightPage user={user} />} />
       <Route path="/sigil-page" element={<SigilPage />} />
 
     </Routes>
