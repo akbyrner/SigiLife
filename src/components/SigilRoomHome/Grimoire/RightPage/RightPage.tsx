@@ -4,10 +4,14 @@ import SigiLibrary from './SigiLibrary/SigiLibrary'
 
 export default function RightPage({ user }: { user: any }) {
   console.log(user)
-  const items = user.sigils
+
+  const items = user?.sigils || []
+  
   return (
     <div className="rightpage">
-        <SigiLibrary items={items} />
+
+        <SigiLibrary items={items} user={user} />
+        
         <Link to="/make-sigil"> 🪶 MakeSigil </Link>
         <BackButton name={"Go Back"} />
     </div>
