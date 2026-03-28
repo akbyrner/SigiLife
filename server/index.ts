@@ -4,7 +4,11 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import compression from 'compression';
-import authRouter from './auth.js';
+
+
+import authRouter from './routes/auth.routes.ts';
+import sigilRouter from './routes/sigil.routes.ts';
+import userRouter from './routes/user.routes.ts';
 
 import 'express-session';
 import session from 'express-session';
@@ -50,6 +54,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(compression());
 app.use('/api/auth', authRouter);
+app.use('/api/sigils', sigilRouter);
+app.use('/api/users', userRouter)
 
 
 
