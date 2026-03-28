@@ -721,7 +721,9 @@ export const UserScalarFieldEnum = {
   theme: 'theme',
   isAdmin: 'isAdmin',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  homeLatitude: 'homeLatitude',
+  homeLongitude: 'homeLongitude'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]

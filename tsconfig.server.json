@@ -14,7 +14,7 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["index.ts", "auth.ts", "sessionStore.ts", "server/**/**", "prisma/**/*"],
+  "include": ["index.ts", "auth.ts", "sessionStore.ts", "src/**/**", "server/**/**", "prisma/**/*"],
   "exclude": ["node_modules", "dist", "src"]
 
 }

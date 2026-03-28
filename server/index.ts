@@ -3,31 +3,32 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
-//import path from 'path';
 import compression from 'compression';
 import authRouter from './auth.js';
 
 import 'express-session';
 import session from 'express-session';
 import { sessionStore } from './sessionStore';
-
-
-
-
-//import { fileURLToPath } from 'url';
-
 import prisma from '../prisma/prisma.client';
 
 const app = express();
-// const router = express.Router();
 const PORT = process.env.PORT || 3000;
 
+// const router = express.Router();
+
+//import path from 'path';
+//import { fileURLToPath } from 'url';
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
+// app.use('/api', router);
+// app.use(express.static(path.join(__dirname, '../dist')));
 
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, '../dist/index.html'));
+// });
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Middleware
 app.use(cors({
-  origin:'http://localhost:5173', 
+  origin: 'http://localhost:5173',
   credentials: true
 }));
 
@@ -50,12 +51,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(compression());
 app.use('/api/auth', authRouter);
 
-// app.use('/api', router);
-// app.use(express.static(path.join(__dirname, '../dist')));
 
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, '../dist/index.html'));
-// });
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Routes
 app.post('/api/character-vectors', async (req, res) => {
@@ -265,6 +261,7 @@ app.post('/dummy', (req, res) => {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Error handler
 import { Request, Response, NextFunction } from 'express';
+
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);

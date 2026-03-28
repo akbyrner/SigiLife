@@ -8,9 +8,20 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Real Auth Route w Google
 
+router.get('/me', async (req, res) => {
+  if (!req.session.userId) {
+    res.json({ user: null });
+    return;
+  }
+  const user = await prisma.user.findUnique({
+    where: { id: req.session.userId },
+  });
+  res.json({ user });
+});
+
 router.post('/google', async (req, res) => {
   try {
-    const { credential } = req.body;
+    const { credential, username, homeLatitude, homeLongitude } = req.body;
 
     const ticket = await client.verifyIdToken({
       idToken: credential,
@@ -32,21 +43,36 @@ router.post('/google', async (req, res) => {
 
     const user = await prisma.user.upsert({
       where: { googleId },
-      update: { name, picture },
-      create: { email, name, picture, googleId },
+      update: {
+        name,
+        picture,
+        username,
+        homeLatitude:
+          homeLatitude ?
+            parseFloat(homeLatitude) :
+            null,
+        homeLongitude:
+          homeLongitude ?
+            parseFloat(homeLongitude) :
+            null,
+      },
+      create: {
+        email, name, picture, googleId,
+        username,
+        homeLatitude: homeLatitude ? parseFloat(homeLatitude) : null,
+        homeLongitude: homeLongitude ? parseFloat(homeLongitude) : null,
+      },
     });
 
     req.session.userId = user.id;
-    
-    res.json({
-      success: true,
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        picture: user.picture,
-      },
-    });
+
+    if (!user.username ) {
+      res.json({ success: true, needsProfile: true, user });
+      return;
+    }
+
+    res.json({ success: true, needsProfile: false, user });
+
   } catch (error) {
     console.error('Google Auth error: ', error);
     res.status(500).json({ error: (error as Error).message });

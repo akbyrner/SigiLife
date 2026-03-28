@@ -44,7 +44,7 @@ function App() {
       {/* Auth flow */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login setUser={setUser} />} />
-      <Route path="/make-profile" element={<MakeProfile />} />
+      <Route path="/make-profile" element={<MakeProfile setUser={setUser} />} />
 
       {/* User */}
       <Route path="/settings" element={<UserSettings user={user} />} />

@@ -8,16 +8,17 @@ declare global {
   }
 }
 
-export default function GoogleAuth({ setUser }: { setUser: (user: any) => void }) {
+export default function GoogleAuth({ setUser, formData }: { setUser: (user: any) => void, formData: any }) {
   const navigate = useNavigate();
 
   useEffect(() => {
     window.handleCredentialResponse = async (response: any) => {
+      console.log('data being sent', formData, formData.username)
       try {
         const res = await fetch('http://localhost:3000/api/auth/google', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ credential: response.credential })
+          body: JSON.stringify({ credential: response.credential, ...formData})
         });
 
 
@@ -28,8 +29,11 @@ export default function GoogleAuth({ setUser }: { setUser: (user: any) => void }
 
         const data = await res.json();
         setUser(data.user);
+        if (data.needsProfile){
+          navigate('/make-profile');
+        } else {
         navigate('/home');
-
+        }
       } catch (error) {
         console.error('Login error:', error)
       }
@@ -58,47 +62,3 @@ export default function GoogleAuth({ setUser }: { setUser: (user: any) => void }
 
 
 
-
-
-
-// import { useNavigate } from 'react-router-dom'
-
-// export default function GoogleAuth({ setUser }: { setUser: (user: any) => void }) {
-
-//   const ApiGetLogin = async (request = null) => {
-//     try {
-//       const options: RequestInit = {
-//         method: 'POST',
-//         headers: {
-//           "Content-Type": "application/json"
-//         },
-//       };
-//       if (request) {
-//         options.body = JSON.stringify(request)
-//       }
-//       const response = await fetch('http://localhost:3000/auth', options);
-//       if (!response.ok) {
-//         throw new Error(`🚨 SigiLife apiCall error status 📢:${response.status}`)
-//       }
-//       return await response.json();
-//     }
-//     catch (error) {
-//       console.error(`🚨 SigiLife apiCall fail reason 📢:${error}❗👀`);
-//       throw error;
-//     }
-//   };
-
-//   const navigate = useNavigate();
-
-//   const handleLogin = async () => {
-//     const user = await ApiGetLogin();
-//     setUser(user);
-//     navigate('/home');
-//   }
-
-//   return (
-//     <div>
-//       <button className="navbutton" onClick={handleLogin}>Sign in with Google</button>
-//     </div>
-//   )
-// };

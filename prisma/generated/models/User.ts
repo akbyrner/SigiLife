@@ -30,12 +30,16 @@ export type UserAvgAggregateOutputType = {
   id: number | null
   avatar: number | null
   theme: number | null
+  homeLatitude: runtime.Decimal | null
+  homeLongitude: runtime.Decimal | null
 }
 
 export type UserSumAggregateOutputType = {
   id: number | null
   avatar: number | null
   theme: number | null
+  homeLatitude: runtime.Decimal | null
+  homeLongitude: runtime.Decimal | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -50,6 +54,8 @@ export type UserMinAggregateOutputType = {
   isAdmin: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  homeLatitude: runtime.Decimal | null
+  homeLongitude: runtime.Decimal | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -64,6 +70,8 @@ export type UserMaxAggregateOutputType = {
   isAdmin: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  homeLatitude: runtime.Decimal | null
+  homeLongitude: runtime.Decimal | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -78,6 +86,8 @@ export type UserCountAggregateOutputType = {
   isAdmin: number
   createdAt: number
   updatedAt: number
+  homeLatitude: number
+  homeLongitude: number
   _all: number
 }
 
@@ -86,12 +96,16 @@ export type UserAvgAggregateInputType = {
   id?: true
   avatar?: true
   theme?: true
+  homeLatitude?: true
+  homeLongitude?: true
 }
 
 export type UserSumAggregateInputType = {
   id?: true
   avatar?: true
   theme?: true
+  homeLatitude?: true
+  homeLongitude?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -106,6 +120,8 @@ export type UserMinAggregateInputType = {
   isAdmin?: true
   createdAt?: true
   updatedAt?: true
+  homeLatitude?: true
+  homeLongitude?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -120,6 +136,8 @@ export type UserMaxAggregateInputType = {
   isAdmin?: true
   createdAt?: true
   updatedAt?: true
+  homeLatitude?: true
+  homeLongitude?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -134,6 +152,8 @@ export type UserCountAggregateInputType = {
   isAdmin?: true
   createdAt?: true
   updatedAt?: true
+  homeLatitude?: true
+  homeLongitude?: true
   _all?: true
 }
 
@@ -235,6 +255,8 @@ export type UserGroupByOutputType = {
   isAdmin: boolean
   createdAt: Date
   updatedAt: Date
+  homeLatitude: runtime.Decimal | null
+  homeLongitude: runtime.Decimal | null
   _count: UserCountAggregateOutputType | null
   _avg: UserAvgAggregateOutputType | null
   _sum: UserSumAggregateOutputType | null
@@ -272,6 +294,8 @@ export type UserWhereInput = {
   isAdmin?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  homeLatitude?: Prisma.DecimalNullableFilter<"User"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: Prisma.DecimalNullableFilter<"User"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sigils?: Prisma.SigilListRelationFilter
 }
 
@@ -287,6 +311,8 @@ export type UserOrderByWithRelationInput = {
   isAdmin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  homeLatitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  homeLongitude?: Prisma.SortOrderInput | Prisma.SortOrder
   sigils?: Prisma.SigilOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
@@ -306,6 +332,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isAdmin?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  homeLatitude?: Prisma.DecimalNullableFilter<"User"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: Prisma.DecimalNullableFilter<"User"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sigils?: Prisma.SigilListRelationFilter
 }, "id" | "username" | "email" | "googleId">
 
@@ -321,6 +349,8 @@ export type UserOrderByWithAggregationInput = {
   isAdmin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  homeLatitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  homeLongitude?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
@@ -343,6 +373,8 @@ export type UserScalarWhereWithAggregatesInput = {
   isAdmin?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  homeLatitude?: Prisma.DecimalNullableWithAggregatesFilter<"User"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: Prisma.DecimalNullableWithAggregatesFilter<"User"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type UserCreateInput = {
@@ -356,6 +388,8 @@ export type UserCreateInput = {
   isAdmin?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  homeLatitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sigils?: Prisma.SigilCreateNestedManyWithoutUserInput
 }
 
@@ -371,6 +405,8 @@ export type UserUncheckedCreateInput = {
   isAdmin?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  homeLatitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sigils?: Prisma.SigilUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -385,6 +421,8 @@ export type UserUpdateInput = {
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeLatitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sigils?: Prisma.SigilUpdateManyWithoutUserNestedInput
 }
 
@@ -400,6 +438,8 @@ export type UserUncheckedUpdateInput = {
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeLatitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sigils?: Prisma.SigilUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -415,6 +455,8 @@ export type UserCreateManyInput = {
   isAdmin?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  homeLatitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -428,6 +470,8 @@ export type UserUpdateManyMutationInput = {
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeLatitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -442,6 +486,8 @@ export type UserUncheckedUpdateManyInput = {
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeLatitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type UserOrderByRelevanceInput = {
@@ -462,12 +508,16 @@ export type UserCountOrderByAggregateInput = {
   isAdmin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  homeLatitude?: Prisma.SortOrder
+  homeLongitude?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
   theme?: Prisma.SortOrder
+  homeLatitude?: Prisma.SortOrder
+  homeLongitude?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -482,6 +532,8 @@ export type UserMaxOrderByAggregateInput = {
   isAdmin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  homeLatitude?: Prisma.SortOrder
+  homeLongitude?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -496,12 +548,16 @@ export type UserMinOrderByAggregateInput = {
   isAdmin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  homeLatitude?: Prisma.SortOrder
+  homeLongitude?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
   theme?: Prisma.SortOrder
+  homeLatitude?: Prisma.SortOrder
+  homeLongitude?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -533,6 +589,14 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type UserCreateNestedOneWithoutSigilsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutSigilsInput, Prisma.UserUncheckedCreateWithoutSigilsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutSigilsInput
@@ -558,6 +622,8 @@ export type UserCreateWithoutSigilsInput = {
   isAdmin?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  homeLatitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type UserUncheckedCreateWithoutSigilsInput = {
@@ -572,6 +638,8 @@ export type UserUncheckedCreateWithoutSigilsInput = {
   isAdmin?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  homeLatitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type UserCreateOrConnectWithoutSigilsInput = {
@@ -601,6 +669,8 @@ export type UserUpdateWithoutSigilsInput = {
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeLatitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type UserUncheckedUpdateWithoutSigilsInput = {
@@ -615,6 +685,8 @@ export type UserUncheckedUpdateWithoutSigilsInput = {
   isAdmin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  homeLatitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  homeLongitude?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 
@@ -660,6 +732,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isAdmin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  homeLatitude?: boolean
+  homeLongitude?: boolean
   sigils?: boolean | Prisma.User$sigilsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -678,9 +752,11 @@ export type UserSelectScalar = {
   isAdmin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  homeLatitude?: boolean
+  homeLongitude?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "name" | "picture" | "googleId" | "avatar" | "theme" | "isAdmin" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "email" | "name" | "picture" | "googleId" | "avatar" | "theme" | "isAdmin" | "createdAt" | "updatedAt" | "homeLatitude" | "homeLongitude", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sigils?: boolean | Prisma.User$sigilsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -703,6 +779,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     isAdmin: boolean
     createdAt: Date
     updatedAt: Date
+    homeLatitude: runtime.Decimal | null
+    homeLongitude: runtime.Decimal | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1084,6 +1162,8 @@ export interface UserFieldRefs {
   readonly isAdmin: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly homeLatitude: Prisma.FieldRef<"User", 'Decimal'>
+  readonly homeLongitude: Prisma.FieldRef<"User", 'Decimal'>
 }
     
 

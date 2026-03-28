@@ -1,7 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import SigiLifeLogo from '../../assets/SigiLifeLogo.png';
 
 export default function LandingPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/auth/me', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => { if (data.user) navigate('/home'); });
+  }, []);
+
   return (
     <>
       <section id="center">
