@@ -1,32 +1,33 @@
 import BackButton from '../../Parts/BackButton'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from "react-router-dom"
 import SigilChargeEffect from './ChargeComponents/SigilChargeEffect'
 import ChargeEmotion from './ChargeComponents/ChargeEmotion'
 //import { useState } from 'react'
 
-export default function ChargeSigil({ user }: { user: any }) {
- // const [isCharged, setIsCharged] = useState(false);
+export default function ChargeSigil() {
+  const { state } = useLocation();
+  const { sigilData } = state;
 
-  console.log(user);
+
 
   return (
-    <div>
-      <br />
-      <h1>ChargeSigil</h1>
-      <SigilChargeEffect />
-      <ChargeEmotion />
-      <br />
-      <Link className="navbutton" to="/sigil-page">Save your Sigil!</Link>
-      <br />
-      <Link className="navbutton" to="/destroy-sigil">Destroy Your Charged Sigil!</Link>
-      <br />
-      <Link className="navbutton" to="/home">Back to Sigil Room</Link>
-      <br />
-      <br />
-      <br />
+    <div className='maincontainer'>
+      <div className='chargesigil'>
+        <h1>ChargeSigil</h1>
 
-      <BackButton name={"Go Back"} />
+        <ChargeEmotion />
+        <SigilChargeEffect />
 
+        <Link className="navbutton" to="/sigil-page" state={{ sigilData }}>Save your Sigil!</Link>
+
+        <Link className="navbutton" to="/destroy-sigil" state={{ sigilData }}>Destroy Your Charged Sigil!</Link>
+
+        <Link className="navbutton" to="/home">Back to Sigil Room</Link>
+
+        <div className='footer'>
+          <BackButton name={"Go Back"} />
+        </div>
+      </div>
     </div>
   )
 };

@@ -1,7 +1,6 @@
 
 
 import { Link } from 'react-router-dom'
-import BackButton from '../Parts/BackButton'
 
 export default function HomeRoom({ user }: { user: any }) {
   console.log(user)
@@ -17,7 +16,8 @@ export default function HomeRoom({ user }: { user: any }) {
           <Link className='makesigilbutton' to="/make-sigil">Make Sigil</Link>
         </nav>
 
-        <BackButton name={"Go Back"} />
+        <div className='footer'>
+          </div>
       </div>
     </div>
   )

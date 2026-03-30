@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Landing Page & Log in
 import ProtectedRoute from './components/LogInAuth/ProtectedRoute'
@@ -36,7 +36,23 @@ import SigilPage from './components/SigilRoomHome/Grimoire/RightPage/SigiLibrary
 
 function App() {
   const [user, setUser] = useState(null);
+  const [authStatus, setAuthStatus]= useState<"loading"|"done">("loading");
 
+useEffect(()=> {
+  fetch("api/auth/me", { credentials: "include" })
+  .then(res => res.json())
+  .then(data => {
+    if(data.user){
+      setUser(data.user);
+    }
+    setAuthStatus("done");
+  })
+  .catch(()=> setAuthStatus("done"));
+}, []);
+
+if (authStatus === "loading"){
+  return <div> Loading Auth... </div>
+}
 
 
   return (
@@ -50,7 +66,7 @@ function App() {
       <Route path="/profile" element={<UserProfile user={user} />} />
 
       {/* Main Room Nav */}
-      <Route path="/destroy-sigil" element={<SigilDestroy user={user} />} />
+      <Route path="/destroy-sigil" element={<SigilDestroy user={user}  />} />
       <Route path="/home" element={<ProtectedRoute><HomeRoom user={user} /></ProtectedRoute>} />
       <Route path="/charge-sigil" element={<SigilCharge user={user} />} />
       <Route path="/grimoire" element={<Grimoire user={user} />} />

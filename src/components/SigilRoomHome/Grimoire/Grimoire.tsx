@@ -3,36 +3,35 @@ import BackButton from "../../Parts/BackButton"
 import { Link } from 'react-router-dom'
 
 export default function Grimoire({ user }: { user: any }) {
-
+ console.log(user)
   return (
     <div className='maincontainer'>
 
       <div className={'grimoire'}>
         <div className={'usertitle'}>
-          {user.user}'s Grimoire
+          <img className="userpicture" src={user.picture}/>
+          {user.username}'s
+          <br/>Grimoire
         </div>
         <div className={'bookbox'}>
-          <div className="grimiore-left-page-nav-box">
-            <Link className="navbutton" to="/map"> 🗺️ Map </Link>
+          <div className={"grimoireleftpage"}>
+            <Link to="/map"> 🗺️ Map </Link>
             <br />
-            <Link className="navbutton" to="/scrye-friends"> 👥 Scrye Friends </Link>
+            <Link to="/scrye-friends"> 👥 Scrye Friends </Link>
             <br />
-            <Link className="navbutton" to="/profile" > 👤 Profile </Link>
+            <Link to="/profile" > 👤 Profile </Link>
           </div>
         </div>
         <div className="bookbox">
-          <div className="grimiore-right-page">
+          <div className={"grimoirerightpage"}>
+            <Link to="/right-page" > 📜 SigiLibrary </Link>
             <br />
-            <Link className="navbutton grimiorerightpagelibrarybox" to="/right-page" > 📜 SigiLibrary </Link>
-            <br />
-            <br />
-            <Link className="navbutton" to="/make-sigil"> 🪶 MakeSigil </Link>
+            <Link to="/make-sigil"> 🪶 MakeSigil </Link>
           </div>
-          <br />
-          <br />
-          <br />
+
         </div>
-        <BackButton name={"Sigil Home Room"} />
+        <div className="footer">
+          <BackButton name={"Sigil Home Room"} /></div>
       </div>
     </div>
   )

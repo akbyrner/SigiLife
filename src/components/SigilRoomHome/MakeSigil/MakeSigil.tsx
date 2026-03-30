@@ -5,8 +5,7 @@ export default function MakeSigil({ user }: { user: any }) {
     console.log(user)
   return (
     <div className='maincontainer'>
-    <div>
-      <br />
+    <div className='makesigil'>
       <h1>Make a Sigil</h1>
       <Link className="navbutton" to="/make-sigil/write">Write It</Link>
       <br />
