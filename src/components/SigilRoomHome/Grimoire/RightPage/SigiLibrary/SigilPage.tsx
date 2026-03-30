@@ -1,6 +1,6 @@
 import BackButton from "../../../../Parts/BackButton"
-import { Link } from 'react-router-dom'
-import { useLocation } from "react-router-dom"
+import { Link, useLocation } from 'react-router-dom'
+
 
 export default function SigilPage() {
   const { state } = useLocation();
@@ -21,9 +21,9 @@ export default function SigilPage() {
       <br />
     </div>
 
-    <Link className="navbutton" to="/charge-sigil">Charge Sigil</Link>
+    <Link className="navbutton" to="/charge-sigil" state={{ sigilData }} >Charge Sigil</Link>
     <br />
-    <Link className="navbutton" to="/destroy-sigil">Destroy Sigil</Link>
+    <Link className="navbutton" to="/destroy-sigil"state={{ sigilData }}  >Destroy Sigil</Link>
     <br />
     <img className="sigilbox" src="src/assets/dummySigil.svg" />
     <br />

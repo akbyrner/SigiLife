@@ -19,10 +19,12 @@ mainContainer,
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow-y: auto;
   width: 100vw;
+  overflow-y: auto;
   scrollbar-color: #6915c9 #136d2a;
-  scrollbar-width: thin;
+  scrollbar-width: thick;
+  color: rgb(0, 0, 0);
+  font-family: 'New Rocker', system-ui;
 }
 
 maincontainer::-webkit-scrollbar,
@@ -47,157 +49,7 @@ maincontainer::-webkit-scrollbar-thumb:hover,
   background: #7f64be;
 }
 
-usertitle,
-.usertitle {
-  display: flex;
-  min-height: fit-content;
-  justify-content: center;
-  position: fixed;
-  top: 0%;
-  left: 25%;
-  font-size: x-large;
-  size: fit-content;
-  color: rgb(199, 14, 255);
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-  font-family: 'Poller One', sans-serif;
-  font-size: larger;
-}
-
-grimoire,
-.grimoire {
-  display: flex;
-  background-image: url('./assets/GrimoireNoir.png');
-  background-size: cover;
-  position: fixed;
-  background-repeat: no-repeat;
-  background-position: center;
-  justify-content: space-evenly;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  color: rgb(0, 0, 0);
-}
-footer,
-.footer {
-  display: flex;
-  min-height: fit-content;
-  justify-content: center;
-  position: fixed;
-  bottom: 0%;
-  font-size: x-large;
-  size: fit-content;
-  color: rgb(199, 14, 255);
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-  font-family: 'Poller One', sans-serif;
-}
-
-bookbox,
-.bookbox {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  justify-content: space-evenly;
-  align-items: center;
-  min-height: fit-content;
-  width: 95%;
-  height: 25%;
-  top: -15%;
-  font-size: x-large;
-  font-family: 'New Rocker', system-ui;
-}
-
-grimoirerightpage,
- .grimoire-right-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-grimoireleftpage,
-.grimoire-left-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-rightpage,
-.rightpage {
-  display: flex;
-  flex-direction: column;
-  background-image: url('./assets/RightPage.png');
-  background-position: fixed;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  justify-content: space-around;
-  align-items: center;
-  min-height: 100vh;
-  width: 100vw;
-  color: rgb(0, 0, 0);
-  font-family: 'New Rocker', system-ui;
-}
-
-sigilibrary,
-.sigilibrary {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  height: 75vh;
-}
-sigilthumb,
-.sigilthumb {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  border-radius: 12px;
-  font-family: 'New Rocker', system-ui;
-  color: black;
-  min-height: 10%0;
-}
-sigilthumb:hover,
-.sigilthumb:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 0 6px gold);
-}
-
-sigilpage,
-.sigilpage {
-  display: flex;
-  flex-direction: column;
-  background-image: url('./assets/RightPage.png');
-  background-position: fixed;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  justify-content: space-around;
-  align-items: center;
-  min-height: 100vh;
-  width: 100vw;
-  color: rgb(0, 0, 0);
-  font-family: 'New Rocker', system-ui;
-}
-
-sigilbox,
-.sigilbox {
-  height: 50%;
-  display: flex;
-  position: relative;
-}
-
-
-
-leftpage,
-.leftpage {
-  display: flex;
-  flex-direction: column;
-   background-image: url('./assets/LeftPage.png');
-}
-
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  HomeRoom*/
 homeroom,
 .homeroom {
   display: flex;
@@ -207,8 +59,6 @@ homeroom,
   min-width: 1024px;
   height: 100vh;
   position: relative;
-  color: rgb(0, 0, 0);
-  font-family: 'New Rocker', system-ui;
 }
 
 destroybutton,
@@ -264,6 +114,192 @@ makesigilbutton,
     filter: drop-shadow(0 0 8px white) drop-shadow(0 0 10px gold)
       drop-shadow(0 0 18px goldenrod);
   }
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Charge Sigil*/
+chargesigil,
+.chargesigil {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/Altar.png');
+  background-size: cover;
+  align-items: center;
+  color: rgb(0, 0, 0);
+  background-size: cover;
+  min-width: 1024px;
+  height: 100vh;
+  position: relative;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Destroy Sigil*/
+
+destroysigil,
+.destroysigil {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/Pyre.png');
+  background-size: cover;
+  align-items: center;
+  height: 100vh;
+  min-width: 1024px;
+  color: rgb(0, 0, 0);
+  position: relative;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Grimoire*/
+usertitle,
+.usertitle {
+  display: flex;
+  min-height: fit-content;
+  justify-content: center;
+  position: fixed;
+  top: 0%;
+  font-size: x-large;
+  size: fit-content;
+  color: rgb(199, 14, 255);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  font-family: 'Poller One', sans-serif;
+  font-size: larger;
+}
+userpicture,
+.userpicture {
+  height: 40px;
+  width: 40px;
+}
+
+grimoire,
+.grimoire {
+  display: flex;
+  background-image: url('./assets/GrimoireNoir.png');
+  background-size: cover;
+  position: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  color: rgb(0, 0, 0);
+}
+
+footer,
+.footer {
+  display: flex;
+  min-height: fit-content;
+  justify-content: center;
+  position: fixed;
+  bottom: 0%;
+  font-size: x-large;
+  size: fit-content;
+  color: rgb(199, 14, 255);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  font-family: 'Poller One', sans-serif;
+}
+
+bookbox,
+.bookbox {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  justify-content: space-evenly;
+  align-items: center;
+  min-height: fit-content;
+  width: 95%;
+  height: 25%;
+  top: -15%;
+  font-size: x-large;
+  font-family: 'New Rocker', system-ui;
+}
+
+grimoirerightpage,
+.grimoire-right-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+grimoireleftpage,
+.grimoire-left-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Right Page*/
+rightpage,
+.rightpage {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/RightPage.png');
+  background-position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  color: rgb(0, 0, 0);
+  font-family: 'New Rocker', system-ui;
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Library*/
+sigilibrary,
+.sigilibrary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 75vh;
+}
+sigilthumb,
+.sigilthumb {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 12px;
+  font-family: 'New Rocker', system-ui;
+  color: black;
+  min-height: 10%0;
+}
+sigilthumb:hover,
+.sigilthumb:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 6px gold);
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Sigil Page*/
+sigilpage,
+.sigilpage {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/RightPage.png');
+  background-position: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  color: rgb(0, 0, 0);
+  font-family: 'New Rocker', system-ui;
+}
+
+sigilbox,
+.sigilbox {
+  height: 50%;
+  display: flex;
+  position: relative;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  LeftPage*/
+leftpage,
+.leftpage {
+  display: flex;
+  flex-direction: column;
+  background-image: url('./assets/LeftPage.png');
 }
 
 /*---break---*/

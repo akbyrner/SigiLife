@@ -20,9 +20,6 @@ export default function SigiLibrary({ items, }: { items: any[], user: any }) {
           ))}
         </div>
 
-        <div className="flex justify-between mt-4">
-
-        </div>
 
       </div>
     );

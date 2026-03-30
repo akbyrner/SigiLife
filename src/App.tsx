@@ -66,7 +66,7 @@ if (authStatus === "loading"){
       <Route path="/profile" element={<UserProfile user={user} />} />
 
       {/* Main Room Nav */}
-      <Route path="/destroy-sigil" element={<SigilDestroy user={user} />} />
+      <Route path="/destroy-sigil" element={<SigilDestroy user={user}  />} />
       <Route path="/home" element={<ProtectedRoute><HomeRoom user={user} /></ProtectedRoute>} />
       <Route path="/charge-sigil" element={<SigilCharge user={user} />} />
       <Route path="/grimoire" element={<Grimoire user={user} />} />

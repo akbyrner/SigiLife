@@ -9,7 +9,7 @@ export default function Grimoire({ user }: { user: any }) {
 
       <div className={'grimoire'}>
         <div className={'usertitle'}>
-          <img src={user.picture}/>
+          <img className="userpicture" src={user.picture}/>
           {user.username}'s
           <br/>Grimoire
         </div>
