@@ -1,5 +1,4 @@
 import BackButton from "../../Parts/BackButton"
-
 import { Link } from 'react-router-dom'
 
 export default function Grimoire({ user }: { user: any }) {
