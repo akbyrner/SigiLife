@@ -4,7 +4,7 @@ import SigilChargeEffect from './ChargeComponents/SigilChargeEffect'
 import ChargeEmotion from './ChargeComponents/ChargeEmotion'
 //import { useState } from 'react'
 
-export default function ChargeSigil() {
+export default function ChargeSigil({ user }: { user: any }) {
   const { state } = useLocation();
   const { sigilData } = state;
 

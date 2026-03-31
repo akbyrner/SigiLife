@@ -1,7 +1,6 @@
 import BackButton from "../../../Parts/BackButton"
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import opentype from 'opentype.js';
 
 export default function WriteSigil({ user }: { user: any }) {
   const [intention, setIntention] = useState('');
@@ -11,7 +10,7 @@ export default function WriteSigil({ user }: { user: any }) {
   const getUniqueChars = (text: string): string => {
     // Remove vowels, non-alphabetic characters, and duplicate characters
     const nonAlphaOrVowels = /[^a-zA-Z]|[aeiouAEIOU]/g;
-    const cleanText = text.replace(nonAlphaOrVowels, '');
+    const cleanText = text.replace(nonAlphaOrVowels, '').toUpperCase();
     const seen = new Set<string>();
     const uniqueChars = cleanText.split('').filter(char => {
       if (seen.has(char)) return false;
@@ -29,34 +28,8 @@ export default function WriteSigil({ user }: { user: any }) {
     localStorage.setItem('sigilIntention', intention);
     localStorage.setItem('sigilUniqueChars', uniqueChars);
     
-    try {
-      // Load the font
-      const font = await new Promise<opentype.Font>((resolve, reject) => {
-        opentype.load('/fonts/UncialAntiqua-Regular.ttf', (err, f) => {
-          if (err) reject(err);
-          else resolve(f!);
-        });
-      });
-      
-      //Generate path for character
-      const vectors = uniqueChars.split('').map(char => {
-        const path = font.getPath(char, 0, 0, 72);
-        return {
-          char,
-          pathData: path.toPathData(2)
-        };
-      });
-      
-      //Pass the vectors
-      localStorage.setItem('sigilVectors', JSON.stringify(vectors));
-      
-      //Proceed to canvas
-      navigate('/make-sigil/draw');
-    } catch (error) {
-      console.error('Error fetching character vectors with opentype:', error);
-    } finally {
-      setIsProcessing(false);
-    }
+    setIsProcessing(false);
+    navigate('/make-sigil/draw');
   };
 
   console.log(user)

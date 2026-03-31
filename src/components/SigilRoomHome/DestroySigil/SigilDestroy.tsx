@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom"
 import SigilDestroyEffect from './DestroyComponents/SigilDestroyEffect'
 import DestroyEmotion from './DestroyComponents/DestroyEmotion'
 
-export default function DestroySigil() {
+export default function DestroySigil({ user }: { user: any }) {
   const { state } = useLocation();
   const { sigilData } = state;
 
