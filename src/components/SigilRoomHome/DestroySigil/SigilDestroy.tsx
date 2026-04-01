@@ -1,5 +1,5 @@
 import BackButton from '../../Parts/BackButton'
-import { useLocation, } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 //import SigilDestroyEffect from './DestroyComponents/SigilDestroyEffect'
 import ChangeEmotion from '../ChargeSigil/ChargeComponents/ChangeEmotion'
 import { useEffect } from 'react';
@@ -8,7 +8,7 @@ import  DestroyEmotion  from './DestroyComponents/DestroyEmotion'
 export default function DestroySigil() {
   const { state } = useLocation();
   const { sigilData } = state;
-  // const navigate = useNavigate();
+ const navigate = useNavigate();
 
   console.log(sigilData)
 
@@ -19,15 +19,15 @@ export default function DestroySigil() {
     }, 0);
   }, []);
 
-  //   const handleDestroy = async () => {
-  //   try {
-  //     const res = await fetch(`/api/sigils/${sigilData.id}`, { method: 'DELETE' });
-  //     if (!res.ok) { throw new Error('Failed to destroy sigil'); }
-  //     navigate('/home');
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
+    const handleDestroy = async () => {
+    try {
+      const res = await fetch(`/api/sigils/${sigilData.id}`, { method: 'DELETE' });
+      if (!res.ok) { throw new Error('Failed to destroy sigil'); }
+      navigate('/home');
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className='maincontainer'>
@@ -36,7 +36,7 @@ export default function DestroySigil() {
         <ChangeEmotion />
         <DestroyEmotion />
 
-        <button className="navbutton" >
+        <button className="navbutton" onClick={()=> handleDestroy} >
           Destroy Sigil
         </button>
         <div className='footer'>

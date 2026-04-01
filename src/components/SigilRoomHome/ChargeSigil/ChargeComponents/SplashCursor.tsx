@@ -74,7 +74,7 @@ export default function SplashCursor({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    let pointers: Pointer[] = [pointerPrototype()];
+    let pointers: [Pointer, ...Pointer[]] = [pointerPrototype()]
 
     let config = {
       SIM_RESOLUTION: SIM_RESOLUTION!,
@@ -1219,10 +1219,10 @@ export default function SplashCursor({
       const touches = e.targetTouches;
       const pointer = pointers[0];
       for (let i = 0; i < touches.length; i++) {
-        const posX = scaleByPixelRatio(touches[i].clientX);
-        const posY = scaleByPixelRatio(touches[i].clientY);
+        const posX = scaleByPixelRatio(touches[i]!.clientX);
+        const posY = scaleByPixelRatio(touches[i]!.clientY);
         updateFrame();
-        updatePointerDownData(pointer, touches[i].identifier, posX, posY);
+        updatePointerDownData(pointer, touches[i]!.identifier, posX, posY);
       }
       document.body.removeEventListener('touchstart', handleFirstTouchStart);
     }
@@ -1234,9 +1234,9 @@ export default function SplashCursor({
         const touches = e.targetTouches;
         const pointer = pointers[0];
         for (let i = 0; i < touches.length; i++) {
-          const posX = scaleByPixelRatio(touches[i].clientX);
-          const posY = scaleByPixelRatio(touches[i].clientY);
-          updatePointerDownData(pointer, touches[i].identifier, posX, posY);
+          const posX = scaleByPixelRatio(touches[i]!.clientX);
+          const posY = scaleByPixelRatio(touches[i]!.clientY);
+          updatePointerDownData(pointer, touches[i]!.identifier, posX, posY);
         }
       },
       false
@@ -1248,8 +1248,8 @@ export default function SplashCursor({
         const touches = e.targetTouches;
         const pointer = pointers[0];
         for (let i = 0; i < touches.length; i++) {
-          const posX = scaleByPixelRatio(touches[i].clientX);
-          const posY = scaleByPixelRatio(touches[i].clientY);
+          const posX = scaleByPixelRatio(touches[i]!.clientX);
+          const posY = scaleByPixelRatio(touches[i]!.clientY);
           updatePointerMoveData(pointer, posX, posY, pointer.color);
         }
       },
