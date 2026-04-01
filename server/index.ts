@@ -4,40 +4,29 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import compression from 'compression';
-
+import path from 'path';
+import session from 'express-session';
+import 'express-session';
+import { Request, Response, NextFunction } from 'express';
 
 import authRouter from './routes/auth.routes.js';
 import sigilRouter from './routes/sigil.routes.js';
 import userRouter from './routes/user.routes.js';
-
-import 'express-session';
-import session from 'express-session';
 import { sessionStore } from './sessionStore.js';
 import prisma from './prisma/prisma.client.js';
+
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Middleware
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(compression());
-app.use('/api/auth', authRouter);
-app.use('/api/sigils', sigilRouter);
-app.use('/api/users', userRouter)
 
-const distPath = path.join(process.cwd(), 'dist');
-
-app.use(express.static(distPath));
-
-app.get('/{*path}', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
-});
-
-dotenv.config({ path: path.resolve(process.cwd(), '.env') });
-import path from 'path';
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
     ? process.env.CLIENT_URL
@@ -58,6 +47,11 @@ app.use(session({
 }));
 
 
+
+
+app.use('/api/auth', authRouter);
+app.use('/api/sigils', sigilRouter);
+app.use('/api/users', userRouter)
 
 
 
@@ -85,6 +79,17 @@ app.post('/api/character-vectors', async (req, res) => {
   }
 });
 
+const distPath = path.join(process.cwd(), 'dist');
+
+app.use(express.static(distPath));
+
+app.get('/{*path}', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
+});
+
+dotenv.config({ path: path.resolve(process.cwd(), '.env') });
+
+
 
 
 app.get('/', (req, res) => {
@@ -93,7 +98,7 @@ app.get('/', (req, res) => {
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Error handler
-import { Request, Response, NextFunction } from 'express';
+
 
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
@@ -101,7 +106,9 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).json({ error: err.message });
 });
 
-const server = app.listen(PORT, (err) => {
+
+
+app.listen(PORT, (err) => {
   if (err) {
     console.error('Failed to start server:', err);
     process.exit(1);

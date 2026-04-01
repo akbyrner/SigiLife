@@ -35,8 +35,8 @@ nope.md
 .env 
 /.env 
 
-/.ecosystem.config
-.ecosystem.config 
+/.ecosystem.config.cjs
+.ecosystem.config.cjs
 
 src/assets/HomeRoomClickables
 src/assets/Flame  
