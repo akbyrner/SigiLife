@@ -7,7 +7,9 @@
     "start": "concurrently \"npm run server\" \"npm run dev\" \"npx prisma studio\"",
     "server": "tsx watch server/index.ts",
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:client": "vite build",
+    "build": "npm run build:client && npm run build:server",
     "lint": "eslint .",
     "preview": "vite preview",
     "seed": "node prisma/seed-opentype"

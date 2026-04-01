@@ -30,11 +30,11 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
     )
   } if (status === "unauthenticated") {
     return (
-      <Navigate to="/login" replace />
+      <Navigate to="/" replace />
     )
   } if (status === "needs-profile") {
     return (
-      <Navigate to="/make-profile" replace />
+      <Navigate to="/login" replace />
     )
   }
   return <>{children}</>;

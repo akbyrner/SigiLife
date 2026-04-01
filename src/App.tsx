@@ -58,17 +58,17 @@ if (authStatus === "loading"){
   return (
     <Routes>
       {/* Auth flow */}
+      <Route path="/login" element={<LandingPage setUser={setUser}/>} />
       <Route path="/" element={<LandingPage setUser={setUser}/>} />
-
 
       {/* User */}
       <Route path="/settings" element={<UserSettings user={user} />} />
       <Route path="/profile" element={<UserProfile user={user} />} />
 
       {/* Main Room Nav */}
-      <Route path="/destroy-sigil" element={<SigilDestroy user={user}  />} />
+      <Route path="/destroy-sigil" element={<SigilDestroy  />} />
       <Route path="/home" element={<ProtectedRoute><HomeRoom user={user} /></ProtectedRoute>} />
-      <Route path="/charge-sigil" element={<SigilCharge user={user} />} />
+      <Route path="/charge-sigil" element={<SigilCharge />} />
       <Route path="/grimoire" element={<Grimoire user={user} />} />
       <Route path="/make-sigil" element={<MakeSigil user={user} />} />
 

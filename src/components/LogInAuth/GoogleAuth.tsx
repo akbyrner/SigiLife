@@ -31,7 +31,7 @@ export default function GoogleAuth({ setUser, formData }: { setUser: (user: any)
 //        console.log(' backend response:', data);
         setUser(data.user);
         if (data.needsProfile){
-          navigate('/make-profile');
+          navigate('/login');
         } else {
         navigate('/home');
         }

@@ -25,81 +25,82 @@ export default function LandingPage({ setUser }: { setUser: (user: any) => void 
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={SigiLifeLogo} className="logo" width="75%" height="75%" alt="Sigil-Life-Logo" />
-        </div>
-        <h1>Coming Soon, SigiLife!</h1>
-        <div className="info" style={{ fontSize: 'large' }}>
-          An app for creating and sharing magically imbued sigils.
-        </div>
-        <div className="more-info" style={{ fontSize: 'small' }}>
-          An Operation Spark Thesis project, by Stack-Mates, cohort tango, 2026. All rights reserved.
-          <br />
-        </div>
-        {!isNewUser && (
-          <div>
-            <GoogleAuth setUser={setUser} formData={{}} />
-            <br />
-            <button className="navbutton" onClick={() => setIsNewUser(true)}>
-              Create an Account
-            </button>
-          </div>
-        )}
-        {isNewUser && (
-          <div className="makeprofile">
-            <h2>Create Your Profile</h2>
+      <div className='maincontainer'>
 
-            <label>Choose a SigiLife Username:
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </label>
+        <div className="landingpage">
+          <section id="center">
+            <div >
+              <img src={SigiLifeLogo} className="logo" width="75%" height="75%" alt="Sigil-Life-Logo" />
+            </div>
+            <h1>Coming Soon, SigiLife!</h1>
+            <div >
+              An app for creating and sharing magically imbued sigils.
+            </div>
 
-            <label>Choose a SigiLord:
+            {!isNewUser && (
               <div>
-                <img
-                  src='src/assets/Avatar1.png'
-                  alt='trench-coat-detective'
-                  height='50px'
-                  onClick={() => setAvatar('0')}
-                  style={{ outline: avatar === '0' ? '3px solid purple' : 'none', cursor: 'pointer' }}
-                />
-                <img
-                  src='src/assets/Avatar2.png'
-                  alt='dress-detective'
-                  height='50px'
-                  onClick={() => setAvatar('1')}
-                  style={{ outline: avatar === '1' ? '3px solid purple' : 'none', cursor: 'pointer' }}
-                />
+                <GoogleAuth setUser={setUser} formData={{}} />
+                <br />
+                <button className="navbutton" onClick={() => setIsNewUser(true)}>
+                  Create an Account
+                </button>
               </div>
-            </label>
-
-            <label>Choose your Home Sigil Location:
-              <MapSearchBox
-                accessToken={import.meta.env.VITE_MAPBOX_TOKEN || ''}
-                onRetrieve={(res) => {
-                  if (res.features && res.features.length > 0) {
-                    setHomeLocation(res.features[0].properties.full_address || res.features[0].properties.name);
-                  }
-                }}
-              />
-            </label>
-
-            <label>Choose a theme:
-              <input value={theme} onChange={(e) => setTheme(e.target.value)} />
-            </label>
-            {username && homeLocation && (
-              <GoogleAuth
-                setUser={setUser}
-                formData={{ username, avatar, theme, homeLocation }}
-              />
             )}
-          </div>
-        )}
-      </section>
+
+            {isNewUser && (
+              <div className="makeprofile">
+                <h2>Create Your Profile</h2>
+
+                <label>Choose a SigiLife Username:
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </label>
+
+                <label >Choose a SigiLord:
+                  <div className='avatarchoice'>
+                    <img className='avatar'
+                      src='src/assets/Avatar1.png'
+                      alt='trench-coat-detective'
+                      onClick={() => setAvatar('0')}
+                      style={{ outline: avatar === '0' ? '3px solid purple' : 'none', cursor: 'pointer', height: 100 }}
+                    />
+                    <img className='avatar'
+                      src='src/assets/Avatar2.png'
+                      alt='dress-detective'
+                      onClick={() => setAvatar('1')}
+                      style={{ outline: avatar === '1' ? '3px solid purple' : 'none', cursor: 'pointer', height: 100 }}
+                    />
+                  </div>
+                </label>
+
+                <label>Choose your Home Sigil Location:
+                  <MapSearchBox
+                    accessToken={import.meta.env.VITE_MAPBOX_TOKEN || ''}
+                    onRetrieve={(res) => {
+                      if (res.features && res.features.length > 0) {
+                        setHomeLocation(res.features[0].properties.full_address || res.features[0].properties.name);
+                      }
+                    }}
+                  />
+                </label>
+
+                <label>Choose a theme:
+                  <input value={theme} onChange={(e) => setTheme(e.target.value)} />
+                </label>
+                {username && homeLocation && (
+                  <GoogleAuth
+                    setUser={setUser}
+                    formData={{ username, avatar, theme, homeLocation }}
+                  />
+                )}
+              </div>
+            )}
+          </section>
+        </div>
+      </div>
     </>
   );
 }

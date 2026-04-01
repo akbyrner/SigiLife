@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { OAuth2Client } from 'google-auth-library';
-import prisma from '../../prisma/prisma.client';
+import prisma from '../prisma/prisma.client.js';
 import 'express-session';
 
 const router = Router();

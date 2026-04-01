@@ -49,6 +49,21 @@ maincontainer::-webkit-scrollbar-thumb:hover,
   background: #7f64be;
 }
 
+footer,
+.footer {
+  display: flex;
+  min-height: fit-content;
+  justify-content: center;
+  position: absolute;
+  bottom: 0%;
+  font-size: x-large;
+  size: fit-content;
+  color: rgb(199, 14, 255);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  font-family: 'Poller One', sans-serif;
+}
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  HomeRoom*/
 homeroom,
 .homeroom {
@@ -136,14 +151,19 @@ destroysigil,
 .destroysigil {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/Pyre.png');
   background-size: cover;
   align-items: center;
   height: 100vh;
   min-width: 1024px;
   color: rgb(0, 0, 0);
   position: relative;
+  background-image: url('./assets/Pyre.png')
 }
+.evileye {
+  width: 100%;
+  height: 100%;
+}
+
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Grimoire*/
 usertitle,
@@ -180,21 +200,6 @@ grimoire,
   height: 100vh;
   width: 100vw;
   color: rgb(0, 0, 0);
-}
-
-footer,
-.footer {
-  display: flex;
-  min-height: fit-content;
-  justify-content: center;
-  position: fixed;
-  bottom: 0%;
-  font-size: x-large;
-  size: fit-content;
-  color: rgb(199, 14, 255);
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-  font-family: 'Poller One', sans-serif;
 }
 
 bookbox,
@@ -301,7 +306,86 @@ leftpage,
   flex-direction: column;
   background-image: url('./assets/LeftPage.png');
 }
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Landing Page*/
+makeprofile,
+.makeprofile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 
+avatarchoice,
+.avatarchoice {
+  display: flex;
+  flex-direction: row;
+}
+
+avatar,
+.avatar {
+  max-height: 10%;
+}
+
+landingpage,
+.landingpage {
+  display: flex;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Flame Animation*/
+.flameshow {
+  position: relative;
+  width: 200px; 
+  height: 200px;
+  overflow: hidden;
+}
+
+.flameshow img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  animation: flamecycle 0.7s steps(1) infinite;
+}
+
+.flameshow img:nth-child(1) {
+  animation-delay: 0s;
+}
+.flameshow img:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.flameshow img:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.flameshow img:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.flameshow img:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.flameshow img:nth-child(6) {
+  animation-delay: 0.5s;
+}
+.flameshow img:nth-child(7) {
+  animation-delay: 0.6s;
+}
+
+@keyframes flamecycle {
+  0% {
+    opacity: 1;
+  }
+  14.28% {
+    opacity: 1;
+  }
+  14.29% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Themes*/
 /*---break---*/
 
 @theme inline {

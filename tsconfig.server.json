@@ -1,20 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES2023",
-    "lib": ["ES2023"],
+    "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "outDir": "./dist",
-    "rootDir": "./",
-    "types": ["node"],
-    "skipLibCheck": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
+    "outDir": "dist/server",
+    "rootDir": "server",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "noEmitOnError": false,
+    "skipLibCheck": true
   },
-  "include": ["index.ts", "auth.ts", "sessionStore.ts", "src/**/**", "server/**/**", "prisma/**/*"],
-  "exclude": ["node_modules", "dist"]
-
+  "include": ["server/**/*"]
 }

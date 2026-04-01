@@ -12,10 +12,11 @@ node_modules
 dist
 dist-ssr
 *.local
-
+/src/generated/prisma
 prisma/generated/
 /prisma/generated/
 prisma/generated
+
 # Editor directories and files
 .vscode/*
 /.vscode/
@@ -29,11 +30,12 @@ prisma/generated
 *.sw?
 
 nope.md
-vitereadme.md
+/vitereadme.md
 
 .env
 /.env
 
+/.ecosystem.config
+.ecosystem.config
 
 src/assets/HomeRoomClickables
-/src/generated/prisma
