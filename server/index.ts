@@ -40,7 +40,7 @@ import path from 'path';
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production'
-    ? 'http://18.223.34.170'
+    ? process.env.CLIENT_URL
     : 'http://localhost:5173',
   credentials: true
 }));
@@ -51,7 +51,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: process.env.NODE_ENV === 'production',
+    secure: false,
     httpOnly: true,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   },
