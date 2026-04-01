@@ -39,7 +39,7 @@ function App() {
   const [authStatus, setAuthStatus]= useState<"loading"|"done">("loading");
 
 useEffect(()=> {
-  fetch("api/auth/me", { credentials: "include" })
+  fetch("/api/auth/me", { credentials: "include" })
   .then(res => res.json())
   .then(data => {
     if(data.user){
