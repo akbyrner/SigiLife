@@ -23,7 +23,7 @@ export default function MapBox({ user }: { user: any }) {
     <div className="flex flex-col items-center w-full">
       <br />
       <h1>This is the MapBox</h1>
-      <div className="relative w-full max-w-4xl h-[400px] rounded-lg overflow-hidden my-4 border-2 border-purple-500 shadow-xl">
+      <div className="relative w-full max-w-4xl h-100 rounded-lg overflow-hidden my-4 border-2 border-purple-500 shadow-xl">
         <Map
           {...viewState}
           onMove={evt => setViewState(evt.viewState)}

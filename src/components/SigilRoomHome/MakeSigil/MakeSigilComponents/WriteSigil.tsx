@@ -1,9 +1,11 @@
 import BackButton from "../../../Parts/BackButton"
-import NextButton from "../../../Parts/NextButton"
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function WriteSigil({ user }: { user: any }) {
   const [intention, setIntention] = useState('');
+  const [isProcessing, setIsProcessing] = useState(false);
+  const navigate = useNavigate();
 
   const getUniqueChars = (text: string): string => {
     // Remove vowels, non-alphabetic characters, and duplicate characters
@@ -18,11 +20,16 @@ export default function WriteSigil({ user }: { user: any }) {
     return uniqueChars.join('');
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    if (!intention) return;
+    setIsProcessing(true);
+    
     const uniqueChars = getUniqueChars(intention);
-    // Store in localStorage for the next page
     localStorage.setItem('sigilIntention', intention);
     localStorage.setItem('sigilUniqueChars', uniqueChars);
+    
+    setIsProcessing(false);
+    navigate('/make-sigil/draw');
   };
 
   console.log(user)
@@ -53,7 +60,21 @@ export default function WriteSigil({ user }: { user: any }) {
         <span style={{ color: '#666', fontSize: '14px' }}>
           Unique characters: {getUniqueChars(intention)}
         </span>
-        <NextButton to="/make-sigil/draw" onClick={handleNext} />
+        <button 
+          className="navbutton" 
+          onClick={handleNext}
+          disabled={isProcessing}
+          style={{ 
+            backgroundColor: isProcessing ? '#ccc' : '#9e38fd', 
+            color: '#fff', 
+            padding: '10px 20px', 
+            border: 'none',
+            borderRadius: '4px',
+            cursor: isProcessing ? 'not-allowed' : 'pointer'
+          }}
+        >
+          {isProcessing ? "Processing..." : "Next"}
+        </button>
       </div>
     </div>
     </div>

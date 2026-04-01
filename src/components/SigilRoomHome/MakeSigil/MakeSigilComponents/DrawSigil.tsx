@@ -2,7 +2,6 @@ import BackButton from "../../../Parts/BackButton"
 import { useEffect, useRef, useState, useCallback } from 'react';
 import NextButton from "../../../Parts/NextButton";
 import * as fabric from 'fabric';
-import axios from 'axios';
 
 export default function DrawSigil({ user }: { user: any }) {
   console.log(user)
@@ -10,11 +9,12 @@ export default function DrawSigil({ user }: { user: any }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
 
+  const [step, setStep] = useState<'draw' | 'style'>('draw');
   const [isDrawingMode, setIsDrawingMode] = useState(true);
   const [brushColor, setBrushColor] = useState('#000000');
   const [brushWidth, setBrushWidth] = useState(5);
   const [sigilName, setSigilName] = useState('My New Sigil');
-//  const [isSaving, setIsSaving] = useState(false);
+  const [styleColor, setStyleColor] = useState('#9e38fd');
 
   // Undo/Redo State
   const historyRef = useRef<string[]>([]);
@@ -69,50 +69,53 @@ export default function DrawSigil({ user }: { user: any }) {
         if (!isRestoringHistory.current) saveHistory();
       });
 
-      // Load character vectors from backend
-      const loadVectors = async () => {
+      // Load characters directly from localStorage and render them using the native browser font
+      const loadCharacters = async () => {
         const uniqueChars = localStorage.getItem('sigilUniqueChars');
         if (uniqueChars) {
           try {
-            const response = await axios.post('http://localhost:3000/api/character-vectors', { chars: uniqueChars });
-            const vectors = response.data;
+            // Force the browser to load your custom font
+            const customFont = new FontFace('UncialAntiqua', 'url(/fonts/UncialAntiqua-Regular.ttf)');
+            const loadedFont = await customFont.load();
+            document.fonts.add(loadedFont);
 
-            for (const charData of vectors) {
-              console.log("Loading char vector:", charData.char_name);
-              const svgWrapper = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">${charData.vector_data}</svg>`;
-              const { objects, options } = await fabric.loadSVGFromString(svgWrapper);
-              console.log("Parsed objects:", objects?.length);
-              if (objects && objects.length > 0) {
-                const validObjects = objects.filter((o): o is fabric.FabricObject => o !== null);
-                const obj = fabric.util.groupSVGElements(validObjects, options) as fabric.Group;
+            const chars = uniqueChars.split('');
+            for (const char of chars) {
+              console.log("Loading char text:", char);
+              
+              // Create a Fabric text object to render the loaded font
+              const textObj = new fabric.Text(char, {
+                fontFamily: 'UncialAntiqua',
+                fontSize: 100,
+                fill: 'transparent',
+                stroke: 'black',
+                strokeWidth: 2,
+                left: canvas.width ? (canvas.width / 2) + (Math.random() * 50 - 25) : 250,
+                top: canvas.height ? (canvas.height / 2) + (Math.random() * 50 - 25) : 250,
+                originX: 'center',
+                originY: 'center',
+                selectable: true,
+              });
 
-                obj.set({
-                  left: canvas.width ? (canvas.width / 2) + (Math.random() * 50 - 25) : 250,
-                  top: canvas.height ? (canvas.height / 2) + (Math.random() * 50 - 25) : 250,
-                  originX: 'center',
-                  originY: 'center',
-                  selectable: true,
-                });
-
-                if (obj.width && canvas.width && obj.width > canvas.width * 0.4) {
-                  obj.scaleToWidth(canvas.width * 0.4);
-                }
-
-                canvas.add(obj);
+              // Scale down text if it's too large
+              if (textObj.width && canvas.width && textObj.width > canvas.width * 0.4) {
+                textObj.scaleToWidth(canvas.width * 0.4);
               }
+
+              canvas.add(textObj);
             }
-            if (vectors.length > 0) {
+            if (chars.length > 0) {
               canvas.renderAll();
               setIsDrawingMode(false);
               saveHistory();
             }
           } catch (error) {
-            console.error("Error loading character vectors:", error);
+            console.error("Error loading character text or custom font:", error);
           }
         }
       };
 
-      loadVectors();
+      loadCharacters();
 
       // Handle keyboard Delete
       const handleKeyDown = (e: KeyboardEvent) => {
@@ -185,7 +188,7 @@ export default function DrawSigil({ user }: { user: any }) {
       activeObjects.forEach((obj) => {
         canvas.remove(obj);
       });
-
+      saveHistory();
     }
   };
 
@@ -226,34 +229,6 @@ export default function DrawSigil({ user }: { user: any }) {
     link.href = dataURL;
     link.click();
   };
-
-  // const handleSave = async () => {
-  //   if (!fabricCanvasRef.current) return;
-  //   setIsSaving(true);
-  //   try {
-  //     const canvas = fabricCanvasRef.current;
-  //     const canvas_data = JSON.stringify(canvas.toJSON());
-  //     const image_data = canvas.toDataURL({
-  //       format: 'png',
-  //       multiplier: 2
-  //     });
-  //     const intention = localStorage.getItem('sigilIntention') || '';
-
-  //     await axios.post('http://localhost:3000/api/sigils', {
-  //       name: sigilName,
-  //       intention,
-  //       canvas_data,
-  //       image_data
-  //     });
-
-  //     alert('Sigil saved successfully!');
-  //   } catch (error) {
-  //     console.error("Error saving sigil:", error);
-  //     alert('Failed to save sigil.');
-  //   } finally {
-  //     setIsSaving(false);
-  //   }
-  // };
 
   const handleSVGUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -297,6 +272,64 @@ export default function DrawSigil({ user }: { user: any }) {
     e.target.value = '';
   };
 
+  // ----- Styling Mode Handlers -----
+  const handleAddRing = () => {
+    if (!fabricCanvasRef.current) return;
+    const canvas = fabricCanvasRef.current;
+    
+    const ring = new fabric.Circle({
+      radius: canvas.width ? canvas.width * 0.4 : 150,
+      fill: 'transparent',
+      stroke: styleColor,
+      strokeWidth: brushWidth,
+      left: canvas.width ? canvas.width / 2 : 250,
+      top: canvas.height ? canvas.height / 2 : 250,
+      originX: 'center',
+      originY: 'center',
+      selectable: true
+    });
+    
+    canvas.add(ring);
+    canvas.renderAll();
+    saveHistory();
+  };
+
+  const handleChangeColor = () => {
+    if (!fabricCanvasRef.current) return;
+    const canvas = fabricCanvasRef.current;
+    const activeObjects = canvas.getActiveObjects();
+    const objectsToChange = activeObjects.length > 0 ? activeObjects : canvas.getObjects();
+    
+    objectsToChange.forEach(obj => {
+      obj.set('stroke', styleColor);
+      if (obj.type === 'group') {
+        (obj as fabric.Group).forEachObject(innerObj => {
+          innerObj.set('stroke', styleColor);
+        });
+      }
+    });
+    canvas.renderAll();
+    saveHistory();
+  };
+
+  const handleAddGlow = () => {
+    if (!fabricCanvasRef.current) return;
+    const canvas = fabricCanvasRef.current;
+    const activeObjects = canvas.getActiveObjects();
+    const objectsToChange = activeObjects.length > 0 ? activeObjects : canvas.getObjects();
+    
+    objectsToChange.forEach(obj => {
+      obj.set('shadow', new fabric.Shadow({
+        color: styleColor,
+        blur: 20,
+        offsetX: 0,
+        offsetY: 0
+      }));
+    });
+    canvas.renderAll();
+    saveHistory();
+  };
+
   const canUndo = historyIndexRef.current > 0;
   const canRedo = historyIndexRef.current < historyRef.current.length - 1;
 
@@ -315,30 +348,45 @@ export default function DrawSigil({ user }: { user: any }) {
           <button className="navbutton" onClick={redo} disabled={!canRedo} style={{ opacity: canRedo ? 1 : 0.5 }}>↷ Redo</button>
         </div>
 
-        <button
-          className="navbutton"
-          onClick={() => setIsDrawingMode(!isDrawingMode)}
-          style={{
-            background: isDrawingMode ? '#e0e0e0' : '#4a90e2',
-            color: isDrawingMode ? '#000' : '#fff',
-            padding: '8px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer'
-          }}
-        >
-          {isDrawingMode ? "✍️ Draw Mode" : "🖐 Manipulate Mode"}
-        </button>
+        {step === 'draw' ? (
+          <>
+            <button
+              className="navbutton"
+              onClick={() => setIsDrawingMode(!isDrawingMode)}
+              style={{
+                background: isDrawingMode ? '#e0e0e0' : '#4a90e2',
+                color: isDrawingMode ? '#000' : '#fff',
+                padding: '8px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer'
+              }}
+            >
+              {isDrawingMode ? "✍️ Draw Mode" : "🖐 Manipulate Mode"}
+            </button>
 
-        {!isDrawingMode && (
-          <button className="navbutton" onClick={handleDeleteSelected} style={{ background: '#ff4d4d', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' }}>
-            🗑️ Delete Selected
-          </button>
+            {!isDrawingMode && (
+              <button className="navbutton" onClick={handleDeleteSelected} style={{ background: '#ff4d4d', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' }}>
+                🗑️ Delete Selected
+              </button>
+            )}
+
+            <label style={{ background: '#e0e0e0', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' }}>
+              📂 Import SVG
+              <input type="file" accept=".svg" style={{ display: 'none' }} onChange={handleSVGUpload} />
+            </label>
+          </>
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', background: '#f9f9f9', padding: '5px 10px', borderRadius: '8px' }}>
+            <label>Style Color:</label>
+            <input type="color" value={styleColor} onChange={(e) => setStyleColor(e.target.value)} style={{ cursor: 'pointer', width: '30px', height: '30px' }} />
+            <button className="navbutton" onClick={handleChangeColor} style={{ marginLeft: '10px' }}>🎨 Apply Color</button>
+            <button className="navbutton" onClick={handleAddRing}>⭕ Add Ring</button>
+            <button className="navbutton" onClick={handleAddGlow}>✨ Add Glow</button>
+            <button className="navbutton" onClick={handleDeleteSelected} style={{ background: '#ff4d4d', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}>
+              🗑️ Delete Selected
+            </button>
+          </div>
         )}
 
-        <label style={{ background: '#e0e0e0', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' }}>
-          📂 Import SVG
-          <input type="file" accept=".svg" style={{ display: 'none' }} onChange={handleSVGUpload} />
-        </label>
-
-        <button className="navbutton" onClick={handleExport} style={{ background: '#28a745', color: '#fff', padding: '8px 16px', borderRadius: '4px', border: 'none', cursor: 'pointer' }}>
+        <button className="navbutton" onClick={handleExport} style={{ background: '#28a745', color: '#fff', padding: '8px 16px', borderRadius: '4px', border: 'none', cursor: 'pointer', marginLeft: 'auto' }}>
           💾 Save Image
         </button>
 
@@ -355,7 +403,7 @@ export default function DrawSigil({ user }: { user: any }) {
       </div>
 
       {/* Brush Controls (Only relevant in Drawing Mode) */}
-      {isDrawingMode && (
+      {step === 'draw' && isDrawingMode && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '15px', alignItems: 'center', marginTop: '1rem', background: '#f9f9f9', padding: '10px', borderRadius: '8px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <label htmlFor="brushColor">Color:</label>
@@ -398,13 +446,29 @@ export default function DrawSigil({ user }: { user: any }) {
         <canvas ref={canvasRef} />
       </div>
 
-      <div style={{ marginTop: '1rem' }}>
-        <button className="navbutton" onClick={handleClear} style={{ background: '#6c757d', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' }}>
-          Clear All
-        </button>
-        <button className="navbutton" onClick={handleClear}>Clear Sigil</button>
-        <NextButton to="/make-sigil/style" />
-      </div>
+      {step === 'draw' ? (
+        <div style={{ marginTop: '1rem', display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <button className="navbutton" onClick={handleClear} style={{ background: '#6c757d', color: '#fff', border: 'none', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' }}>
+            Clear All
+          </button>
+          
+          <button 
+            className="navbutton" 
+            onClick={() => { setStep('style'); setIsDrawingMode(false); }} 
+            style={{ backgroundColor: "#9e38fd", color: 'white', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', border: 'none' }}
+          >
+            Next: Style Sigil
+          </button>
+        </div>
+      ) : (
+        <div style={{ marginTop: '1rem', display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <button className="navbutton" onClick={() => setStep('draw')} style={{ background: '#6c757d', color: '#fff', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', border: 'none' }}>
+            ⬅ Back to Draw
+          </button>
+          <NextButton to="/make-sigil/style" />
+        </div>
+      )}
+
     </div>
     </div>
   );

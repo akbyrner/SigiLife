@@ -5,7 +5,7 @@ import ChangeEmotion from '../ChargeSigil/ChargeComponents/ChangeEmotion'
 import { useEffect } from 'react';
 import  DestroyEmotion  from './DestroyComponents/DestroyEmotion'
 
-export default function DestroySigil() {
+export default function DestroySigil({ user }: { user: any }) {
   const { state } = useLocation();
   const { sigilData } = state;
  const navigate = useNavigate();

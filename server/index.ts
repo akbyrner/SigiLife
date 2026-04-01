@@ -22,20 +22,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(compression());
-app.use('/api/auth', authRouter);
-app.use('/api/sigils', sigilRouter);
-app.use('/api/users', userRouter)
 
-const distPath = path.join(process.cwd(), 'dist');
 
-app.use(express.static(distPath));
 
-app.get('/{*path}', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
-});
+
+
+
+
+
+
+
+
 
 dotenv.config({ path: path.resolve(process.cwd(), '.env') });
-import path from 'path';
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Middleware
 app.use(cors({
@@ -57,9 +57,17 @@ app.use(session({
   },
 }));
 
+app.use('/api/auth', authRouter);
+app.use('/api/sigils', sigilRouter);
+app.use('/api/users', userRouter)
 
+const distPath = path.join(process.cwd(), 'dist');
 
+app.use(express.static(distPath));
 
+app.get('/{*path}', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
+});
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Routes
 app.post('/api/character-vectors', async (req, res) => {
