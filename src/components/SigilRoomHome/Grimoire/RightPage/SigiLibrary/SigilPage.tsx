@@ -25,7 +25,11 @@ export default function SigilPage() {
     <br />
     <Link className="navbutton" to="/destroy-sigil"state={{ sigilData }}  >Destroy Sigil</Link>
     <br />
-    <img className="sigilbox" src="src/assets/dummySigil.svg" />
+    {sigilData.imageData ? (
+      <img className="sigilbox" src={sigilData.imageData} alt={sigilData.name} />
+    ) : (
+      <img className="sigilbox" src="src/assets/dummySigil.svg" alt="Dummy Sigil" />
+    )}
     <br />
     <BackButton name={"Go Back"} />
 
