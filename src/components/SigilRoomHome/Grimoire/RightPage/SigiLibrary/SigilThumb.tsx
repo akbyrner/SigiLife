@@ -5,7 +5,11 @@ export default function SigilThumb({ sigilData }: {  sigilData: any }) {
     <Link className="sigilthumb" to="/sigil-page" state={{ sigilData }}>
       <div>
         <p>{sigilData.name}</p>
-        <p>{sigilData.img}</p>
+        {sigilData.imageData ? (
+          <img src={sigilData.imageData} alt={sigilData.name} style={{ width: '100px', height: '100px', objectFit: 'contain' }} />
+        ) : (
+          <p>{sigilData.img || "No Image"}</p>
+        )}
         <p>{sigilData.locationName}</p>
         <p>{sigilData.sigilGroups?.map((g: any) => g.groupMember.join(','))}</p>
       </div>
