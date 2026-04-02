@@ -38,6 +38,8 @@ nope.md
 
 /.ecosystem.config.cjs
 .ecosystem.config.cjs
+/.ecosystem.config
+.ecosystem.config
 ecosystem.config.cjs
 
 src/assets/HomeRoomClickables

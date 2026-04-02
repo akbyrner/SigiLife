@@ -32,7 +32,7 @@ export default function WriteSigil({ user }: { user: any }) {
     navigate('/make-sigil/draw');
   };
 
-  console.log(user)
+  // console.log(user)
   return (
     <div className='maincontainer'>
     <div>

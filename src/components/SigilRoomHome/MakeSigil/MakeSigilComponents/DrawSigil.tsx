@@ -1,9 +1,10 @@
 import BackButton from "../../../Parts/BackButton"
 import { useEffect, useRef, useState, useCallback } from 'react';
-import NextButton from "../../../Parts/NextButton";
+import { useNavigate } from 'react-router-dom';
 import * as fabric from 'fabric';
 
 export default function DrawSigil({ user }: { user: any }) {
+  const navigate = useNavigate();
   // console.log(user)
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -330,6 +331,18 @@ export default function DrawSigil({ user }: { user: any }) {
     saveHistory();
   };
 
+  const handleNextToStyle = () => {
+    if (!fabricCanvasRef.current) return;
+
+    const canvasData = JSON.stringify(fabricCanvasRef.current.toJSON());
+    const imageData = fabricCanvasRef.current.toDataURL({ format: 'png' });
+    localStorage.setItem('sigilCanvasData', canvasData);
+    localStorage.setItem('sigilImageData', imageData);
+    localStorage.setItem('sigilName', sigilName);
+
+    navigate('/make-sigil/style');
+  };
+
   const canUndo = historyIndexRef.current > 0;
   const canRedo = historyIndexRef.current < historyRef.current.length - 1;
 
@@ -434,7 +447,7 @@ export default function DrawSigil({ user }: { user: any }) {
         ref={wrapperRef}
         style={{
           width: '100%',
-          maxWidth: 'calc(100vh - 350px)', // Scale up on desktop (adjusted for new toolbars)
+          maxWidth: 'calc(100vh - 350px)',
           margin: '0 auto',
           aspectRatio: '1 / 1',
           border: '2px solid #ccc',
@@ -465,7 +478,13 @@ export default function DrawSigil({ user }: { user: any }) {
           <button className="navbutton" onClick={() => setStep('draw')} style={{ background: '#6c757d', color: '#fff', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', border: 'none' }}>
             ⬅ Back to Draw
           </button>
-          <NextButton to="/make-sigil/style" />
+                    <button 
+            className="navbutton" 
+            onClick={handleNextToStyle} 
+            style={{ backgroundColor: "#9e38fd", color: 'white', padding: '8px 16px', borderRadius: '4px', cursor: 'pointer', border: 'none' }}
+          >
+            Review & Save
+          </button>
         </div>
       )}
 
