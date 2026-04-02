@@ -7,12 +7,11 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'http://localhost:3000' },
-    host: true,
-    allowedHosts: ['ec2-18-223-34-170.us-east-2.compute.amazonaws.com', 'localhost:5173'],
-    headers: {
-      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      '/api': 'http://localhost:3000'
     },
+    host: true,
+    allowedHosts: ['ec2-18-223-34-170.us-east-2.compute.amazonaws.com', 'localhost'],
+
   },
   plugins: [react(), tailwindcss()],
   resolve: {

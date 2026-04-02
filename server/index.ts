@@ -38,31 +38,37 @@ app.use((req, res, next) => {
 });
 
 app.use(cors({
-  origin: (origin, callback) => {
-    const allowedOrigins = [
-      'http://18.223.34.170',
-      'http://ec2-18-223-34-170.us-east-2.compute.amazonaws.com',
-    ];
-    
-    const devOrigins = [
-      /^http:\/\/localhost:\d+$/,
-      /^http:\/\/127\.0\.0\.1:\d+$/
-    ];
-
-    if (!origin) return callback(null, true);
-
-    const isAllowed = allowedOrigins.includes(origin) || 
-                     (process.env.NODE_ENV !== 'production' && devOrigins.some(regex => regex.test(origin)));
-
-    if (isAllowed) {
-      callback(null, true);
-    } else {
-      console.warn(`CORS blocked for origin: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: true,
   credentials: true,
 }));
+
+
+// app.use(cors({
+//   origin: (origin, callback) => {
+//     const allowedOrigins = [
+//       'http://18.223.34.170',
+//       'http://ec2-18-223-34-170.us-east-2.compute.amazonaws.com',
+//     ];
+    
+//     const devOrigins = [
+//       /^http:\/\/localhost:\d+$/,
+//       /^http:\/\/127\.0\.0\.1:\d+$/
+//     ];
+
+//     if (!origin) return callback(null, true);
+
+//     const isAllowed = allowedOrigins.includes(origin) || 
+//                      (process.env.NODE_ENV !== 'production' && devOrigins.some(regex => regex.test(origin)));
+
+//     if (isAllowed) {
+//       callback(null, true);
+//     } else {
+//       console.warn(`CORS blocked for origin: ${origin}`);
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true,
+// }));
 
 app.use(session({
   secret: process.env.SESSION_SECRET as string,
