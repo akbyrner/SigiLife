@@ -2,7 +2,7 @@ import BackButton from "../../../../Parts/BackButton"
 import { useState } from 'react'
 import * as SwitchPrimitive from "@radix-ui/react-switch"
 import { useUser } from '@/context/UserContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 
 const AvatarSelector = ({ avatarId, onSelect }: { avatarId: string, onSelect: (id: string) => void }) => {
@@ -23,26 +23,30 @@ export default function UserSettings() {
   const { user, setUser } = useUser()
   const navigate = useNavigate()
   const [isDark, setIsDark] = useState(user!.theme === 1)
-const [avatarId, setAvatarId] = useState(String(user?.avatar ?? 0))
+  const [avatarId, setAvatarId] = useState(String(user?.avatar ?? 0))
 
 
   const handleThemeChange = async (checked: boolean) => {
     setIsDark(checked)
     document.documentElement.classList.toggle("dark", checked)
-    await fetch(`/api/users/${user!.id}`, {
+    const res = await fetch(`/api/users/${user!.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ theme: checked ? 1 : 0 })
     })
+    const updated = await res.json()
+    setUser(updated)
   }
 
   const handleAvatarChange = async (id: string) => {
     setAvatarId(id)
-    await fetch(`/api/users/${user!.id}`, {
+    const res = await fetch(`/api/users/${user!.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ avatar: parseInt(id) })
     })
+    const updated = await res.json()
+    setUser(updated)
   }
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
@@ -77,7 +81,8 @@ const [avatarId, setAvatarId] = useState(String(user?.avatar ?? 0))
         <br />
         <br />
         This is where you can delete your account
-
+        <br />
+        <Link to= "/profile">Go to Profile </Link>
         <BackButton name={"Go Back"} />
       </div>
     </div>
