@@ -6,7 +6,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import {useState} from "react"
+import { useState } from "react"
 
 
 export default function changeEmotion() {
@@ -16,8 +16,8 @@ export default function changeEmotion() {
   return (
     <div className="changeemotion">
       <DropdownMenu>
-        <DropdownMenuTrigger >
-          <Button variant="outline">Select Emotion</Button>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline">Choose Emotion</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem onClick={() => { setEmotion("Mad") }}>Mad</DropdownMenuItem>

@@ -1,14 +1,15 @@
 
 import BackButton from "../../../../Parts/BackButton"
+import { Switch } from '@base-ui/react/switch';
 
-const AvatarSelector = ({ avatarId }: { avatarId: any })=> {
-  if (avatarId === "0"){
-    return(
-      <img className= "avatar" src="public/Avatar1.png" />
+const AvatarSelector = ({ avatarId }: { avatarId: any }) => {
+  if (avatarId === "0") {
+    return (
+      <img className="avatar" src="public/Avatar1.png" />
     )
   } else {
     return (
-      <img className= "avatar" src="public/Avatar2.png" />     
+      <img className="avatar" src="public/Avatar2.png" />
     )
   }
 }
@@ -26,13 +27,19 @@ export default function UserProfile({ user }: { user: any }) {
 
         {user.username}
         <br />
-        <AvatarSelector avatarId={user.avatar}/>
+        <AvatarSelector avatarId={user.avatar} />
         <br />
+        <label>
+        Theme picker:
+        <Switch.Root>
+          <Switch.Thumb />
+        </Switch.Root>
+        </label>
         {user.theme}
         <br />
 
         <BackButton name={"Grimiore"} />
       </div>
-      </div>
+    </div>
   )
 };
