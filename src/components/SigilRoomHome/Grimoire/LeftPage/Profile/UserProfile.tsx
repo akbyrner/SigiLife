@@ -1,6 +1,8 @@
 
+import { useState } from "react"
+
 import BackButton from "../../../../Parts/BackButton"
-import { Switch } from '@base-ui/react/switch';
+import * as SwitchPrimitive from "@radix-ui/react-switch"
 
 const AvatarSelector = ({ avatarId }: { avatarId: any }) => {
   if (avatarId === "0") {
@@ -18,6 +20,7 @@ const AvatarSelector = ({ avatarId }: { avatarId: any }) => {
 
 
 export default function UserProfile({ user }: { user: any }) {
+    
   console.log(user)
   return (
     <div className="maincontainer">
@@ -31,9 +34,9 @@ export default function UserProfile({ user }: { user: any }) {
         <br />
         <label>
         Theme picker:
-        <Switch.Root>
-          <Switch.Thumb />
-        </Switch.Root>
+        <SwitchPrimitive.Root>
+          <SwitchPrimitive.Thumb />
+        </SwitchPrimitive.Root>
         </label>
         {user.theme}
         <br />
