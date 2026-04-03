@@ -326,7 +326,8 @@ avatarchoice,
 
 avatar,
 .avatar {
-  max-height: 10%;
+  height: 150px;
+  object-fit: cover;
 }
 
 landingpage,
