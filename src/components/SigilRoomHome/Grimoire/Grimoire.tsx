@@ -1,15 +1,17 @@
 import BackButton from "../../Parts/BackButton"
 import { Link } from 'react-router-dom'
+import { useUser } from '@/context/UserContext'
 
-export default function Grimoire({ user }: { user: any }) {
+
+export default function Grimoire() {
+  const { user } = useUser()
  console.log(user)
   return (
     <div className='maincontainer'>
 
       <div className={'grimoire'}>
         <div className={'usertitle'}>
-          <img className="userpicture" src={user.picture}/>
-          {user.username}'s
+          {user!.username}'s
           <br/>Grimoire
         </div>
         <div className={'bookbox'}>

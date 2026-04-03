@@ -3,11 +3,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import SigilChargeEffect from './ChargeComponents/SigilChargeEffect'
 import ChargeEmotion from './ChargeComponents/ChangeEmotion'
 import { useEffect } from 'react'
+import {useUser} from '@/context/UserContext'
 
-export default function ChargeSigil({ user }: { user: any }) {
+export default function ChargeSigil() {
   const { state } = useLocation();
   const { sigilData } = state;
   const navigate = useNavigate();
+  const { user } = useUser()
+if (!user) { return null }
+
   useEffect(() => {
     setTimeout(() => {
       const scrollableWidth = document.documentElement.scrollWidth - window.innerWidth;

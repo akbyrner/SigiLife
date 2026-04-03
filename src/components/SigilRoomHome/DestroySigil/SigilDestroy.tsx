@@ -3,12 +3,16 @@ import { useLocation, useNavigate } from "react-router-dom"
 //import SigilDestroyEffect from './DestroyComponents/SigilDestroyEffect'
 import ChangeEmotion from '../ChargeSigil/ChargeComponents/ChangeEmotion'
 import { useEffect } from 'react';
-import  DestroyEmotion  from './DestroyComponents/DestroyEmotion'
+import DestroyEmotion from './DestroyComponents/DestroyEmotion'
+import { useUser } from '@/context/UserContext';
 
-export default function DestroySigil({ user }: { user: any }) {
+export default function DestroySigil() {
   const { state } = useLocation();
   const { sigilData } = state;
- const navigate = useNavigate();
+
+  const navigate = useNavigate();
+  const { user } = useUser()
+  if (!user) { return null }
 
   console.log(sigilData)
 
@@ -19,7 +23,7 @@ export default function DestroySigil({ user }: { user: any }) {
     }, 0);
   }, []);
 
-    const handleDestroy = async () => {
+  const handleDestroy = async () => {
     try {
       const res = await fetch(`/api/sigils/${sigilData.id}`, { method: 'DELETE' });
       if (!res.ok) { throw new Error('Failed to destroy sigil'); }
@@ -36,7 +40,7 @@ export default function DestroySigil({ user }: { user: any }) {
         <ChangeEmotion />
         <DestroyEmotion />
 
-        <button className="navbutton" onClick={()=> handleDestroy} >
+        <button className="navbutton" onClick={() => handleDestroy} >
           Destroy Sigil
         </button>
         <div className='footer'>

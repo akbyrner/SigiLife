@@ -1,18 +1,17 @@
 import BackButton from "../../../../Parts/BackButton"
+import { useState } from 'react'
+import * as SwitchPrimitive from "@radix-ui/react-switch"
+import { useUser } from '@/context/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 
-export default function UserSettings({ user }: { user: any }) {
-  console.log(user)
-  const [isDark, setIsDark] = useState(user.theme === 1)
-  const [avatarId, setAvatarId] = useState(user.avatar)
-  
-  const AvatarSelector = ({ avatarId, onSelect }: { avatarId: string, onSelect: (id: string) => void }) => {
+const AvatarSelector = ({ avatarId, onSelect }: { avatarId: string, onSelect: (id: string) => void }) => {
   return (
     <div className="flex gap-4">
       {["0", "1"].map((id) => (
         <img
           key={id}
-          src={`public/Avatar${parseInt(id) + 1}.png`}
+          src={`Avatar${parseInt(id) + 1}.png`}
           className={`avatar cursor-pointer border-4 rounded-full ${avatarId === id ? "border-purple-500" : "border-transparent"}`}
           onClick={() => onSelect(id)}
         />
@@ -20,11 +19,17 @@ export default function UserSettings({ user }: { user: any }) {
     </div>
   )
 }
+export default function UserSettings() {
+  const { user, setUser } = useUser()
+  const navigate = useNavigate()
+  const [isDark, setIsDark] = useState(user!.theme === 1)
+const [avatarId, setAvatarId] = useState(String(user?.avatar ?? 0))
+
 
   const handleThemeChange = async (checked: boolean) => {
     setIsDark(checked)
     document.documentElement.classList.toggle("dark", checked)
-    await fetch(`/api/users/${user.id}`, {
+    await fetch(`/api/users/${user!.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ theme: checked ? 1 : 0 })
@@ -33,27 +38,48 @@ export default function UserSettings({ user }: { user: any }) {
 
   const handleAvatarChange = async (id: string) => {
     setAvatarId(id)
-    await fetch(`/api/users/${user.id}`, {
+    await fetch(`/api/users/${user!.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ avatar: id })
+      body: JSON.stringify({ avatar: parseInt(id) })
     })
+  }
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' })
+    setUser(null)
+    navigate('/')
   }
 
   return (
     <div className="maincontainer">
       <div>
 
-      <h1>User Settings</h1>
-      <br />
-      <br /> This is where you can Log Out
-      <br />
-      <br />
-      <br />
-            This is where you can delete your account
+        <h1>User Settings</h1>
+        <br />
+        <AvatarSelector avatarId={avatarId} onSelect={handleAvatarChange} />
+        <br />
 
-      <BackButton name={"Go Back"}/>
-    </div>
+        <label className="flex items-center gap-2">
+          Theme:
+          <SwitchPrimitive.Root
+            checked={isDark}
+            onCheckedChange={handleThemeChange}
+            className="relative inline-flex h-6 w-11 items-center rounded-full bg-gray-300 data-[state=checked]:bg-purple-500"
+          >
+            <SwitchPrimitive.Thumb className="block h-4 w-4 translate-x-1 rounded-full bg-white transition-transform data-[state=checked]:translate-x-6" />
+          </SwitchPrimitive.Root>
+          {isDark ? "Dark" : "Light"}
+        </label>
+        <br />
+        <button className="navbutton" onClick={handleLogout}>
+          Log Out
+        </button>
+        <br />
+        <br />
+        This is where you can delete your account
+
+        <BackButton name={"Go Back"} />
+      </div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+//import { useState, useEffect } from 'react'
+import { useUser } from '@/context/UserContext';
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Landing Page & Log in
 import ProtectedRoute from './components/LogInAuth/ProtectedRoute'
@@ -35,56 +36,61 @@ import SigilPage from './components/SigilRoomHome/Grimoire/RightPage/SigiLibrary
 
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [authStatus, setAuthStatus]= useState<"loading"|"done">("loading");
+  // const [user, setUser] = useState(null);
+  // const [authStatus, setAuthStatus]= useState<"loading"|"done">("loading");
 
-useEffect(()=> {
-  fetch("/api/auth/me", { credentials: "include" })
-  .then(res => res.json())
-  .then(data => {
-    if(data.user){
-      setUser(data.user);
-    }
-    setAuthStatus("done");
-  })
-  .catch(()=> setAuthStatus("done"));
-}, []);
+// useEffect(()=> {
+//   fetch("/api/auth/me", { credentials: "include" })
+//   .then(res => res.json())
+//   .then(data => {
+//     if(data.user){
+//       setUser(data.user);
+//     }
+//     setAuthStatus("done");
+//   })
+//   .catch(()=> setAuthStatus("done"));
+// }, []);
 
-if (authStatus === "loading"){
-  return <div> Loading Auth... </div>
-}
+// if (authStatus === "loading"){
+//   return <div> Loading Auth... </div>
+// }
+  const { isLoading } = useUser()
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
 
   return (
     <Routes>
       {/* Auth flow */}
-      <Route path="/login" element={<LandingPage setUser={setUser}/>} />
-      <Route path="/" element={<LandingPage setUser={setUser}/>} />
+      <Route path="/login" element={<LandingPage/>} />
+      <Route path="/" element={<LandingPage/>} />
 
       {/* User */}
-      <Route path="/settings" element={<UserSettings user={user} />} />
-      <Route path="/profile" element={<UserProfile user={user} />} />
+      <Route path="/settings" element={<ProtectedRoute><UserSettings/></ProtectedRoute>} />
+      <Route path="/profile" element={<ProtectedRoute><UserProfile/></ProtectedRoute>} />
 
       {/* Main Room Nav */}
-      <Route path="/destroy-sigil" element={<SigilDestroy  />} />
-      <Route path="/home" element={<ProtectedRoute><HomeRoom user={user} /></ProtectedRoute>} />
-      <Route path="/charge-sigil" element={<SigilCharge />} />
-      <Route path="/grimoire" element={<Grimoire user={user} />} />
-      <Route path="/make-sigil" element={<MakeSigil user={user} />} />
+      <Route path="/destroy-sigil" element={<ProtectedRoute><SigilDestroy/></ProtectedRoute>}/>
+      <Route path="/home" element={<ProtectedRoute><HomeRoom/></ProtectedRoute>} />
+      <Route path="/charge-sigil" element={<ProtectedRoute><SigilCharge /></ProtectedRoute>} />
+      <Route path="/grimoire" element={<ProtectedRoute><Grimoire /></ProtectedRoute>} />
+      <Route path="/make-sigil" element={<ProtectedRoute><MakeSigil /></ProtectedRoute>} />
 
 
       {/* Make Sigil flow */}
-      <Route path="/make-sigil/draw" element={<DrawSigil user={user} />} />
-      <Route path="/make-sigil/write" element={<WriteSigil user={user} />} />
-      <Route path="/make-sigil/style" element={<StyleSigil user={user} />} />
+      <Route path="/make-sigil/draw" element={<ProtectedRoute><DrawSigil /></ProtectedRoute>} />
+      <Route path="/make-sigil/write" element={<ProtectedRoute><WriteSigil /></ProtectedRoute>} />
+      <Route path="/make-sigil/style" element={<ProtectedRoute><StyleSigil /></ProtectedRoute>} />
 
       {/* Grimoire flow */}
 
-      <Route path="/map" element={<MapBox user={user} />} />
-      <Route path="/scrye-friends" element={<ScryeFriends user={user} />} />
-      <Route path="/right-page" element={<RightPage user={user} />} />
-      <Route path="/library" element={<RightPage user={user} />} />
-      <Route path="/sigil-page" element={<SigilPage />} />
+      <Route path="/map" element={<ProtectedRoute><MapBox /></ProtectedRoute>} />
+      <Route path="/scrye-friends" element={<ProtectedRoute><ScryeFriends /></ProtectedRoute>} />
+      <Route path="/right-page" element={<ProtectedRoute><RightPage /></ProtectedRoute>} />
+      <Route path="/library" element={<ProtectedRoute><RightPage /></ProtectedRoute>} />
+      <Route path="/sigil-page" element={<ProtectedRoute><SigilPage /></ProtectedRoute>} />
 
     </Routes>
   )

@@ -1,8 +1,11 @@
 import BackButton from "../../../Parts/BackButton"
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useUser } from '@/context/UserContext'
 
-export default function StyleSigil({ user }: { user: any }) {
+export default function StyleSigil() {
+  const { user } = useUser()
+  if (!user) { return null }
   const navigate = useNavigate();
   const [sigilData, setSigilData] = useState<any>(null);
   const [isSaving, setIsSaving] = useState(false);
@@ -47,7 +50,8 @@ export default function StyleSigil({ user }: { user: any }) {
       }
 
       const result = await response.json();
-      
+      console.log(result)
+
       // Clear localStorage
       localStorage.removeItem('sigilName');
       localStorage.removeItem('sigilIntention');
@@ -73,28 +77,28 @@ export default function StyleSigil({ user }: { user: any }) {
         <div style={{ margin: '1rem 0' }}>
           <h3>Name: {sigilData.name}</h3>
           {sigilData.intention && <p style={{ color: '#666', marginBottom: '1rem' }}>Intention: {sigilData.intention}</p>}
-          
+
           {sigilData.imageData && (
             <div style={{ marginTop: '1rem', border: '1px solid #ccc', borderRadius: '8px', padding: '1rem', display: 'inline-block', backgroundColor: '#f5f5f5' }}>
               <img src={sigilData.imageData} alt={sigilData.name} style={{ maxWidth: '100%', maxHeight: '300px' }} />
             </div>
           )}
         </div>
-        
+
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        
+
         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', alignItems: 'center' }}>
           <BackButton name={"Go Back"} />
-          <button 
-            className="navbutton" 
-            onClick={handleSave} 
+          <button
+            className="navbutton"
+            onClick={handleSave}
             disabled={isSaving}
-            style={{ 
-              backgroundColor: isSaving ? '#ccc' : '#9e38fd', 
-              color: 'white', 
-              padding: '10px 20px', 
-              borderRadius: '4px', 
-              cursor: isSaving ? 'not-allowed' : 'pointer', 
+            style={{
+              backgroundColor: isSaving ? '#ccc' : '#9e38fd',
+              color: 'white',
+              padding: '10px 20px',
+              borderRadius: '4px',
+              cursor: isSaving ? 'not-allowed' : 'pointer',
               border: 'none',
               fontSize: '16px'
             }}

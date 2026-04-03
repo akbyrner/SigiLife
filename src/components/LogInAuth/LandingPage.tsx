@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import SigiLifeLogo from '../../assets/SigiLifeLogo.png';
 import GoogleAuth from './GoogleAuth';
 import MapSearchBox from '@/components/SigilRoomHome/Grimoire/LeftPage/Map/MapSearchBox';
+import { useUser } from '@/context/UserContext';
 
-
-export default function LandingPage({ setUser }: { setUser: (user: any) => void }) {
+export default function LandingPage() {
+  const { user, isLoading } = useUser();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [avatar, setAvatar] = useState('0');
@@ -14,32 +15,27 @@ export default function LandingPage({ setUser }: { setUser: (user: any) => void 
   const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(() => {
-    fetch('/api/auth/me', { credentials: 'include' })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.user && !data.needsProfile) {
-          navigate('/home');
-        }
-      });
-  }, []);
+    if (!isLoading && user) {
+      navigate('/home');
+    }
+  }, [user, isLoading]);
 
   return (
     <>
       <div className='maincontainer'>
-
         <div className="landingpage">
           <section id="center">
-            <div >
+            <div>
               <img src={SigiLifeLogo} className="logo" width="75%" height="75%" alt="Sigil-Life-Logo" />
             </div>
             <h1>Coming Soon, SigiLife!</h1>
-            <div >
+            <div>
               An app for creating and sharing magically imbued sigils.
             </div>
 
             {!isNewUser && (
               <div>
-                <GoogleAuth setUser={setUser} formData={{}} />
+                <GoogleAuth formData={{}} />
                 <br />
                 <button className="navbutton" onClick={() => setIsNewUser(true)}>
                   Create an Account
@@ -59,16 +55,16 @@ export default function LandingPage({ setUser }: { setUser: (user: any) => void 
                   />
                 </label>
 
-                <label >Choose a SigiLord:
+                <label>Choose a SigiLord:
                   <div className='avatarchoice'>
                     <img className='avatar'
-                      src='src/assets/Avatar1.png'
+                      src='Avatar1.png'
                       alt='trench-coat-detective'
                       onClick={() => setAvatar('0')}
                       style={{ outline: avatar === '0' ? '3px solid purple' : 'none', cursor: 'pointer', height: 100 }}
                     />
                     <img className='avatar'
-                      src='src/assets/Avatar2.png'
+                      src='Avatar2.png'
                       alt='dress-detective'
                       onClick={() => setAvatar('1')}
                       style={{ outline: avatar === '1' ? '3px solid purple' : 'none', cursor: 'pointer', height: 100 }}
@@ -90,10 +86,11 @@ export default function LandingPage({ setUser }: { setUser: (user: any) => void 
                 <label>Choose a theme:
                   <input value={theme} onChange={(e) => setTheme(e.target.value)} />
                 </label>
+
                 {username && homeLocation && (
                   <GoogleAuth
-                    setUser={setUser}
                     formData={{ username, avatar, theme, homeLocation }}
+                    isNewUser={true}
                   />
                 )}
               </div>

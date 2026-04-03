@@ -1,28 +1,25 @@
 
 //import { useState } from "react"
 import BackButton from "../../../../Parts/BackButton"
+import {Link} from 'react-router-dom'
+import { useUser } from '@/context/UserContext'
 
 
-
-const AvatarSelector = ({ avatarId }: { avatarId: string }) => {
+const AvatarSelector = () => {
+  const { user } = useUser()
+if (!user) { return null }
   return (
     <div className="useravatar">
         <img className="avatar"
-          src={`public/Avatar${parseInt(avatarId)}.png`}/>
+          src={`Avatar${user!.avatar}.png`}/>
     </div>
   )
 }
 
 
-
-
-
-export default function UserProfile({ user }: { user: any }) {
-
-
-
-
-
+export default function UserProfile() {
+const { user } = useUser()
+if (!user) { return null }
 
   console.log(user)
   return (
@@ -30,14 +27,15 @@ export default function UserProfile({ user }: { user: any }) {
       <div>
         <br />
         <h1> UserProfile </h1>
-        <img className="avatar border-4 rounded-full" src={user.picture} />
+        <img className="avatar border-4 rounded-full" />
         {user.username}
         <br />
-        <AvatarSelector avatarId={user.avatarId}  />
+        <AvatarSelector/>
         <br />
         {user.theme}
         <br />
-
+<Link to='/settings'> Go To Settings </Link>
+  <br />
         <BackButton name={"Grimiore"} />
       </div>
     </div>

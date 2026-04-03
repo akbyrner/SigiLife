@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '@/context/UserContext';
 
 declare global {
   interface Window {
@@ -8,12 +9,12 @@ declare global {
   }
 }
 
-export default function GoogleAuth({ setUser, formData }: { setUser: (user: any) => void, formData: any }) {
+export default function GoogleAuth({ formData, isNewUser = false }: { formData: any, isNewUser?: boolean }) {
+  const { setUser } = useUser();
   const navigate = useNavigate();
   const initialized = useRef(false);
   const formDataRef = useRef(formData);
 
-  // Keep ref up to date so the callback has access to current state without re-rendering the button
   useEffect(() => {
     formDataRef.current = formData;
   }, [formData]);
@@ -48,6 +49,8 @@ export default function GoogleAuth({ setUser, formData }: { setUser: (user: any)
         setUser(data.user);
         if (data.needsProfile) {
           navigate('/login');
+        } else if (isNewUser) {
+          navigate('/make-sigil/write');
         } else {
           navigate('/home');
         }
@@ -57,10 +60,8 @@ export default function GoogleAuth({ setUser, formData }: { setUser: (user: any)
     };
 
     const initializeGoogle = () => {
-      if (initialized.current) return;
-
+      if (initialized.current) { return; }
       console.log('[GoogleAuth] Found window.google. Initializing...');
-
       try {
         window.google.accounts.id.initialize({
           client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
@@ -68,20 +69,17 @@ export default function GoogleAuth({ setUser, formData }: { setUser: (user: any)
           auto_select: false,
           cancel_on_tap_outside: true,
         });
-
         console.log('[GoogleAuth] Rendering Google button');
         window.google.accounts.id.renderButton(
           document.getElementById('google-signin-button'),
           { theme: 'outline', size: 'large', shape: 'pill' }
         );
-
         initialized.current = true;
       } catch (err) {
         console.error('[GoogleAuth] Initialization error:', err);
       }
     };
 
-    // Polling for window.google if it hasn't loaded yet
     if (window.google) {
       initializeGoogle();
     } else {
@@ -94,7 +92,7 @@ export default function GoogleAuth({ setUser, formData }: { setUser: (user: any)
       }, 500);
       return () => clearInterval(interval);
     }
-  }, []); // Only once on mount
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
@@ -102,6 +100,3 @@ export default function GoogleAuth({ setUser, formData }: { setUser: (user: any)
     </div>
   );
 }
-
-
-

@@ -1,8 +1,11 @@
 
 
 import { Link } from 'react-router-dom'
+import{useUser} from '@/context/UserContext'
 
-export default function HomeRoom({ user }: { user: any }) {
+export default function HomeRoom() {
+  const {user} = useUser();
+  if(!user){return null;}
   console.log(user)
   return (
     <div className='maincontainer'>
