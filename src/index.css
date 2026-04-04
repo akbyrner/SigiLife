@@ -54,6 +54,21 @@ maincontainer::-webkit-scrollbar-thumb:hover,
   background: #7f64be;
 }
 
+header,
+.header {
+  display: flex;
+  min-height: fit-content;
+  justify-content: center;
+  position: absolute;
+  top: 0%;
+  font-size: x-large;
+  size: fit-content;
+  color: rgb(199, 14, 255);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  font-family: 'Poller One', sans-serif;
+}
+
 footer,
 .footer {
   display: flex;
@@ -83,7 +98,7 @@ homeroom,
 
 destroybutton,
 .destroybutton {
-  position: relative;
+position: relative;
 }
 
 chargebutton,
