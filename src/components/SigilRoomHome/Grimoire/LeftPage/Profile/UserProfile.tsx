@@ -48,6 +48,26 @@ export default function UserProfile() {
     )
 
   }
+
+  //  const handleFollow = async (targetId: number) => {
+  //   await fetch(`/api/users/follow`, {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ followerId: user.id, followingId: targetId })
+  //   })
+  //   setSearchResults(prev => prev.filter(u => u.id !== targetId))
+  //   fetchFollowData()
+  // }
+
+  //   const handleUnfollow = async (targetId: number) => {
+  //   await fetch(`/api/users/unfollow`, {
+  //     method: "PATCH",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ followerId: user.id, followingId: targetId })
+  //   })
+  //   fetchFollowData()
+  // }
+
   console.log(user)
   return (
     <div className="maincontainer">
@@ -61,10 +81,13 @@ export default function UserProfile() {
         <AvatarPicture />
         <br />
         <Themebox />
+                    <br />
+            <Link to="/scrye-friends"> 👥 Scrye Friends </Link>
+            <br />
         <br />
         <Link to='/settings'> Go To Settings </Link>
         <br />
-        <BackButton name={"Grimiore"} />
+        <BackButton name={"Grimoire"} />
       </div>
     </div>
   )

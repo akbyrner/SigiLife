@@ -5,21 +5,19 @@ import { useUser } from '@/context/UserContext'
 
 export default function Grimoire() {
   const { user } = useUser()
-    if (!user) { return null }
- console.log(user)
+  if (!user) { return null }
+  console.log(user)
   return (
     <div className='maincontainer'>
 
       <div className={'grimoire'}>
         <div className={'usertitle'}>
           {user!.username}'s
-          <br/>Grimoire
+          <br />Grimoire
         </div>
         <div className={'bookbox'}>
           <div className={"grimoireleftpage"}>
             <Link to="/map"> 🗺️ Map </Link>
-            <br />
-            <Link to="/scrye-friends"> 👥 Scrye Friends </Link>
             <br />
             <Link to="/profile" > 👤 Profile </Link>
           </div>

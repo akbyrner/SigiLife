@@ -15,7 +15,7 @@ if (!user) { return null }
       <br />
       <br />
 
-      <BackButton name={"Grimiore"}/>
+      <BackButton name={"Grimoire"}/>
     </div>
   )
 }
