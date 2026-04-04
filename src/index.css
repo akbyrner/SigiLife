@@ -278,6 +278,11 @@ avatarface,
   object-fit: cover;
 }
 
+userfriends,
+.userfriends {
+  display: flex;
+}
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Library*/
 sigilibrary,
 .sigilibrary {

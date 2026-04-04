@@ -3,6 +3,7 @@
 import BackButton from "../../../../Parts/BackButton"
 import { Link } from 'react-router-dom'
 import { useUser } from '@/context/UserContext'
+import  UserFriends  from './UserFriends'
 
 export default function UserProfile() {
   const { user } = useUser()
@@ -81,9 +82,10 @@ export default function UserProfile() {
         <AvatarPicture />
         <br />
         <Themebox />
-                    <br />
-            <Link to="/scrye-friends"> 👥 Scrye Friends </Link>
-            <br />
+        <br />
+        <UserFriends/>
+        <Link to="/scrye-friends"> 👥 Scrye Friends </Link>
+        <br />
         <br />
         <Link to='/settings'> Go To Settings </Link>
         <br />
