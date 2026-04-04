@@ -1,17 +1,1 @@
-{
-  "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "outDir": "dist/server",
-    "rootDir": "server",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "noEmitOnError": false,
-    "skipLibCheck": true
-  },
-  "include": ["server/**/*"]
-}
+{ "compilerOptions": { "strict": true, "esModuleInterop": true, "target": "es6", "moduleResolution": "node" }, "include": ["server/**/*"] }

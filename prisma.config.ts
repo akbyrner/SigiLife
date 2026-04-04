@@ -17,4 +17,5 @@ export default defineConfig({
   datasource: {
     url: dbUrl
   },
+  accelerateUrl: dbUrl,
 });

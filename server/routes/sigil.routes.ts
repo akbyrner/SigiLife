@@ -1,5 +1,6 @@
-import { Router } from 'express';
-import prisma from '../prisma/prisma.client.js'
+import { Router, Request, Response, NextFunction } from 'express';
+import prisma from '../prisma/prisma.client.js';
+import '../types/session.d.ts';
 
 const router = Router();
 
@@ -39,17 +40,28 @@ router.get('/user/:userId/sigils', async (req, res) => {
 
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Save Sigil
-router.post('/', async (req, res) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
-    const { name, userId, intention, canvasData, imageData } = req.body;
+    const { name, intention, canvasData, imageData, locationName, latitude, longitude } = req.body;
+    
+    const userId = req.session.userId;
+    
+    if (!userId) {
+      return res.status(401).json({ 
+        error: 'User not authenticated. Please log in to save sigils.' 
+      });
+    }
 
     const sigil = await prisma.sigil.create({
       data: {
         name,
-        userId: userId || 1,
+        userId,
         intention,
         canvasData,
         imageData,
+        locationName,
+        latitude,
+        longitude,
       },
     });
 
@@ -77,7 +89,7 @@ router.patch('/:id/charge', async (req, res) => {
 });
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Delete Sigil
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res) =>{
   try {
 
     await prisma.sigil.delete({ where: { id: parseInt(req.params.id) } });

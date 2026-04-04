@@ -41,3 +41,5 @@ nope.md
 ecosystem.config.cjs
 
 src/assets/HomeRoomClickables
+
+deploy.sh

@@ -40,7 +40,6 @@ model Sigil {
   sigilGroups  SigilGroup[]
   user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, name])
   @@map("sigils")
 }
 
@@ -60,7 +59,7 @@ model SvgVector {
   filename   String   @db.Text
   vectorData String   @map("vector_data") @db.Text
   width      Int
-  height     Int
+  height      Int
   fileSize   Int      @map("file_size")
   createdAt  DateTime @default(now())
 
@@ -72,3 +71,4 @@ model sessions {
   expires    Int     @db.UnsignedInt
   data       String? @db.MediumText
 }
+
