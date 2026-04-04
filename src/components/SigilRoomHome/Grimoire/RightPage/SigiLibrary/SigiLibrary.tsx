@@ -14,7 +14,7 @@ export default function SigiLibrary({ items, }: { items: any[], user: any }) {
         <div className="sigilibrary flex-1 overflow-auto mt-4">
           {items.map((sigil: any) => (
             <SigilThumb
-              key={sigil.name}
+              key={sigil.id}
               sigilData={sigil}
             />
           ))}
