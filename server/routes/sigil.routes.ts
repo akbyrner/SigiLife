@@ -88,6 +88,26 @@ router.patch('/:id/charge', async (req, res) => {
   }
 });
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Update Sigil Location
+router.patch('/:id/location', async (req, res) => {
+  try {
+    const { locationName, latitude, longitude } = req.body;
+    
+    const sigil = await prisma.sigil.update({
+      where: { id: parseInt(req.params.id) },
+      data: { 
+        locationName,
+        latitude,
+        longitude
+      }
+    });
+    res.json(sigil)
+
+  } catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Delete Sigil
 router.delete('/:id', async (req, res) =>{
   try {

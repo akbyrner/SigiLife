@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import Map, { NavigationControl } from 'react-map-gl/mapbox';
+import { useState, useEffect, useMemo } from 'react';
+import Map, { NavigationControl, Marker, Popup } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import axios from 'axios';
 
 import BackButton from "../../../../Parts/BackButton"
 import MapSearchBox from "./MapSearchBox"
@@ -10,6 +11,18 @@ const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || '';
 
 export default function MapBox({ user }: { user: any }) {
   console.log(user)
+  const [sigils, setSigils] = useState<any[]>([]);
+  const [popupInfo, setPopupInfo] = useState<any | null>(null);
+
+  useEffect(() => {
+    if (user?.id) {
+      axios.get(`/api/sigils/user/${user.id}/sigils`)
+        .then(res => {
+          setSigils(res.data);
+        })
+        .catch(err => console.error("Error fetching sigils for map:", err));
+    }
+  }, [user?.id]);
 
 
   const [viewState, setViewState] = useState({
@@ -23,7 +36,7 @@ export default function MapBox({ user }: { user: any }) {
     <div className="flex flex-col items-center w-full">
       <br />
       <h1>This is the MapBox</h1>
-      <div className="relative w-full max-w-4xl h-100 rounded-lg overflow-hidden my-4 border-2 border-purple-500 shadow-xl">
+      <div className="relative w-full max-w-4xl h-100 rounded-lg overflow-hidden my-4 border-2 border-purple-500 shadow-xl" style={{ height: "60vh" }}>
         <Map
           {...viewState}
           onMove={evt => setViewState(evt.viewState)}
@@ -31,6 +44,54 @@ export default function MapBox({ user }: { user: any }) {
           mapboxAccessToken={MAPBOX_TOKEN}
           style={{ width: '100%', height: '100%' }}
         >
+          {sigils.map((sigil) => {
+            if (sigil.longitude && sigil.latitude) {
+              return (
+                <Marker
+                  key={`marker-${sigil.id}`}
+                  longitude={Number(sigil.longitude)}
+                  latitude={Number(sigil.latitude)}
+                  anchor="bottom"
+                  onClick={e => {
+                    e.originalEvent.stopPropagation();
+                    setPopupInfo(sigil);
+                  }}
+                >
+                  <div className="cursor-pointer">
+                    {sigil.imageData ? (
+                      <img src={sigil.imageData} alt={sigil.name} className="w-8 h-8 object-cover rounded-full border-2 border-purple-500 bg-black/50" />
+                    ) : (
+                      <div className="w-6 h-6 bg-purple-500 rounded-full border-2 border-white flex items-center justify-center text-white text-xs">
+                        ✧
+                      </div>
+                    )}
+                  </div>
+                </Marker>
+              );
+            }
+            return null;
+          })}
+
+          {popupInfo && (
+            <Popup
+              anchor="top"
+              longitude={Number(popupInfo.longitude)}
+              latitude={Number(popupInfo.latitude)}
+              onClose={() => setPopupInfo(null)}
+              className="bg-zinc-800 text-white rounded-md p-2"
+            >
+              <div className="flex flex-col items-center p-1 text-black">
+                <h3 className="font-bold text-md text-purple-700">{popupInfo.name}</h3>
+                {popupInfo.locationName && (
+                  <p className="text-xs text-gray-500">{popupInfo.locationName}</p>
+                )}
+                {popupInfo.imageData && (
+                  <img width="80" src={popupInfo.imageData} alt="Sigil" className="mt-2 border-purple-300 border rounded" />
+                )}
+                <p className="text-sm mt-1 italic">{popupInfo.intention || "A mysterious sigil..."}</p>
+              </div>
+            </Popup>
+          )}
 
           <NavigationControl position="bottom-right" />
         </Map>
