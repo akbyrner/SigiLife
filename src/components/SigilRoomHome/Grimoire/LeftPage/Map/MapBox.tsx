@@ -13,16 +13,18 @@ export default function MapBox({ user }: { user: any }) {
   console.log(user)
   const [sigils, setSigils] = useState<any[]>([]);
   const [popupInfo, setPopupInfo] = useState<any | null>(null);
+  const [filterMode, setFilterMode] = useState<"all" | "mine">("all");
 
   useEffect(() => {
-    if (user?.id) {
-      axios.get(`/api/sigils/user/${user.id}/sigils`)
-        .then(res => {
-          setSigils(res.data);
-        })
-        .catch(err => console.error("Error fetching sigils for map:", err));
-    }
-  }, [user?.id]);
+    // Fetch all sigils or just user's sigils based on filterMode
+    const url = filterMode === "all" ? '/api/sigils/allsigils' : `/api/sigils/user/${user.id}/sigils`;
+    
+    axios.get(url)
+      .then(res => {
+        setSigils(res.data);
+      })
+      .catch(err => console.error("Error fetching sigils for map:", err));
+  }, [user?.id, filterMode]);
 
 
   const [viewState, setViewState] = useState({
@@ -36,6 +38,22 @@ export default function MapBox({ user }: { user: any }) {
     <div className="flex flex-col items-center w-full">
       <br />
       <h1>This is the MapBox</h1>
+
+      <div className="flex gap-4 my-2">
+        <button 
+          onClick={() => setFilterMode("all")}
+          className={`px-4 py-2 rounded-md font-bold transition-colors ${filterMode === "all" ? "bg-purple-600 text-white" : "bg-zinc-800 text-purple-300 border border-purple-600"}`}
+        >
+          World Map
+        </button>
+        <button 
+          onClick={() => setFilterMode("mine")}
+          className={`px-4 py-2 rounded-md font-bold transition-colors ${filterMode === "mine" ? "bg-purple-600 text-white" : "bg-zinc-800 text-purple-300 border border-purple-600"}`}
+        >
+          My Sigils
+        </button>
+      </div>
+
       <div className="relative w-full max-w-4xl h-100 rounded-lg overflow-hidden my-4 border-2 border-purple-500 shadow-xl" style={{ height: "60vh" }}>
         <Map
           {...viewState}
