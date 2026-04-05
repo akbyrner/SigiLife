@@ -43,9 +43,6 @@ nope.md
 ecosystem.config.cjs
 
 src/assets/HomeRoomClickables
-<<<<<<< HEAD
 
 deploy.sh
-=======
 src/assets/Flame  
->>>>>>> e7e74c35e7b16e29c304f4cce268f80f84fb8522
