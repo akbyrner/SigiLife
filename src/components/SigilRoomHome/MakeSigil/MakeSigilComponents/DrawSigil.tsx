@@ -51,7 +51,7 @@ export default function DrawSigil() {
     const canvas = new fabric.Canvas(canvasRef.current, {
       width: initialSize,
       height: initialSize,
-      backgroundColor: '#f5f5f5',
+      backgroundColor: 'transparent',
       isDrawingMode: true
     });
 
@@ -177,7 +177,7 @@ export default function DrawSigil() {
   const handleClear = () => {
     if (fabricCanvasRef.current) {
       fabricCanvasRef.current.clear();
-      fabricCanvasRef.current.backgroundColor = '#f5f5f5';
+      fabricCanvasRef.current.backgroundColor = 'transparent';
       fabricCanvasRef.current.renderAll();
       saveHistory();
     }

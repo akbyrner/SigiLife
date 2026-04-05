@@ -43,12 +43,12 @@ router.get('/user/:userId/sigils', async (req, res) => {
 router.post('/', async (req: Request, res: Response) => {
   try {
     const { name, intention, canvasData, imageData, locationName, latitude, longitude } = req.body;
-    
+
     const userId = req.session.userId;
-    
+
     if (!userId) {
-      return res.status(401).json({ 
-        error: 'User not authenticated. Please log in to save sigils.' 
+      return res.status(401).json({
+        error: 'User not authenticated. Please log in to save sigils.'
       });
     }
 
@@ -92,10 +92,10 @@ router.patch('/:id/charge', async (req, res) => {
 router.patch('/:id/location', async (req, res) => {
   try {
     const { locationName, latitude, longitude } = req.body;
-    
+
     const sigil = await prisma.sigil.update({
       where: { id: parseInt(req.params.id) },
-      data: { 
+      data: {
         locationName,
         latitude,
         longitude
@@ -109,7 +109,7 @@ router.patch('/:id/location', async (req, res) => {
 });
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Delete Sigil
-router.delete('/:id', async (req, res) =>{
+router.delete('/:id', async (req, res) => {
   try {
 
     await prisma.sigil.delete({ where: { id: parseInt(req.params.id) } });

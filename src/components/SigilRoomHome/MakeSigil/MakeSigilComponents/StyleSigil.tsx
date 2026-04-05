@@ -79,7 +79,7 @@ export default function StyleSigil() {
           {sigilData.intention && <p style={{ color: '#666', marginBottom: '1rem' }}>Intention: {sigilData.intention}</p>}
 
           {sigilData.imageData && (
-            <div style={{ marginTop: '1rem', border: '1px solid #ccc', borderRadius: '8px', padding: '1rem', display: 'inline-block', backgroundColor: '#f5f5f5' }}>
+            <div style={{ marginTop: '1rem', border: '1px solid #ccc', borderRadius: '8px', padding: '1rem', display: 'inline-block', backgroundColor: 'transparent' }}>
               <img src={sigilData.imageData} alt={sigilData.name} style={{ maxWidth: '100%', maxHeight: '300px' }} />
             </div>
           )}
