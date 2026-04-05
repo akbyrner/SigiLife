@@ -1,8 +1,8 @@
 import BackButton from '../../Parts/BackButton'
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import SigilChargeEffect from './ChargeComponents/SigilChargeEffect'
-import ChargeEmotion from './ChargeComponents/ChangeEmotion'
-import { useEffect } from 'react'
+import ChangeEmotion from './ChargeComponents/ChangeEmotion'
+import { useState } from 'react'
 import {useUser} from '@/context/UserContext'
 
 export default function ChargeSigil() {
@@ -10,14 +10,11 @@ export default function ChargeSigil() {
   const { sigilData } = state;
   const navigate = useNavigate();
   const { user } = useUser()
-if (!user) { return null }
 
-  useEffect(() => {
-    setTimeout(() => {
-      const scrollableWidth = document.documentElement.scrollWidth - window.innerWidth;
-      window.scrollTo(scrollableWidth / 2, 0);
-    }, 0);
-  }, []);
+  const [emotion, setEmotion] = useState("")
+
+  if (!user) { return null }
+
 
   const handleCharge = async () => {
     try {
@@ -29,12 +26,14 @@ if (!user) { return null }
       console.error(error);
     }
   }
+
+
   return (
     <div className='maincontainer'>
       <div className='chargesigil'>
         <h1>ChargeSigil</h1>
 
-        <ChargeEmotion />
+        <ChangeEmotion emotion={emotion} setEmotion={setEmotion} />
         <SigilChargeEffect />
         <button className="navbutton" onClick={handleCharge}>
           Charge Sigil

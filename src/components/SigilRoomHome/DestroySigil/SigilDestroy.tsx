@@ -1,8 +1,8 @@
 import BackButton from '../../Parts/BackButton'
 import { useLocation, useNavigate } from "react-router-dom"
 //import SigilDestroyEffect from './DestroyComponents/SigilDestroyEffect'
-import ChangeEmotion from '../ChargeSigil/ChargeComponents/ChangeEmotion'
-import { useEffect } from 'react';
+import ChargeEmotion from '../ChargeSigil/ChargeComponents/ChangeEmotion'
+import { useState} from 'react';
 import DestroyEmotion from './DestroyComponents/DestroyEmotion'
 import { useUser } from '@/context/UserContext';
 
@@ -14,14 +14,10 @@ export default function DestroySigil() {
   const { user } = useUser()
   if (!user) { return null }
 
+  const [emotion, setEmotion] = useState("");
+
   console.log(sigilData)
 
-  useEffect(() => {
-    setTimeout(() => {
-      const scrollableWidth = document.documentElement.scrollWidth - window.innerWidth;
-      window.scrollTo(scrollableWidth / 2, 0);
-    }, 0);
-  }, []);
 
   const handleDestroy = async () => {
     try {
@@ -37,10 +33,10 @@ export default function DestroySigil() {
     <div className='maincontainer'>
       <div className='destroysigil'>
         <h1> DestroySigil </h1>
-        <ChangeEmotion />
+        <ChargeEmotion emotion={emotion} setEmotion={setEmotion}/>
         <DestroyEmotion />
 
-        <button className="navbutton" onClick={() => handleDestroy} >
+        <button className="navbutton" onClick={handleDestroy} >
           Destroy Sigil
         </button>
         <div className='footer'>

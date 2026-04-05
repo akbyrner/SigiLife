@@ -24,7 +24,7 @@ export default function SigilPage() {
           latitude: lat,
           longitude: lng
         });
-        
+
         setSigilData(response.data);
       } catch (error) {
         console.error("Failed to save location:", error);
@@ -46,19 +46,19 @@ export default function SigilPage() {
       was created on : {sigilData.createdAt}
       <br />
       {sigilData.locationName ? (
-         <span>at {sigilData.locationName}</span>
+        <span>at {sigilData.locationName}</span>
       ) : (
-         <div className="flex flex-col items-center mt-2 p-2 border border-purple-500 rounded bg-black/20">
-            <p className="text-sm mb-2 text-purple-300">Set a location for this sigil:</p>
-            {isSavingLocation ? (
-              <p className="text-xs text-yellow-400">Saving...</p>
-            ) : (
-              <MapSearchBox 
-                accessToken={MAPBOX_TOKEN} 
-                onRetrieve={handleLocationRetrieve} 
-              />
-            )}
-         </div>
+        <div className="flex flex-col items-center mt-2 p-2 border border-purple-500 rounded bg-black/20">
+          <p className="text-sm mb-2 text-purple-300">Set a location for this sigil:</p>
+          {isSavingLocation ? (
+            <p className="text-xs text-yellow-400">Saving...</p>
+          ) : (
+            <MapSearchBox
+              accessToken={MAPBOX_TOKEN}
+              onRetrieve={handleLocationRetrieve}
+            />
+          )}
+        </div>
       )}
       <br />
       {sigilData.isCharged ? "Sigil is Charged" : "Sigil is not Charged"}
@@ -67,7 +67,7 @@ export default function SigilPage() {
 
     <Link className="navbutton" to="/charge-sigil" state={{ sigilData }} >Charge Sigil</Link>
     <br />
-    <Link className="navbutton" to="/destroy-sigil"state={{ sigilData }}  >Destroy Sigil</Link>
+    <Link className="navbutton" to="/destroy-sigil" state={{ sigilData }}  >Destroy Sigil</Link>
     <br />
     {sigilData.imageData ? (
       <img className="sigilbox" src={sigilData.imageData} alt={sigilData.name} />
