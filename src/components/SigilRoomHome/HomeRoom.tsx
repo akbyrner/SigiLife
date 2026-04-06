@@ -19,7 +19,7 @@ export default function HomeRoom() {
 
   if (!user) { return null; }
   console.log(user)
-  
+
   return (
     <div className='maincontainer'>
       <div ref={scrollRef} className='scrollcontainer'>
