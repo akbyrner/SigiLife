@@ -17,13 +17,8 @@ export default function RightPage() {
     }
     el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
   }, []);
-
-
-
-
-
-  if (!user) { return null }
-
+  
+    if (!user) { return null }
   useEffect(() => {
     fetch(`http://localhost:3000/api/sigils/user/${user.id}/sigils`)
       .then(res => res.json())
@@ -32,10 +27,14 @@ export default function RightPage() {
 
 
   return (
-    <div className="rightpage">
-      <SigiLibrary items={sigils} user={user} />
-      <Link to="/make-sigil"> 🪶 MakeSigil </Link>
-      <BackButton name={"Go Back"} />
-    </div>
+    <div className='maincontainer'>
+      <div ref={scrollRef} className='scrollcontainer'>
+      <div className="rightpage">
+        <SigiLibrary items={sigils} user={user} />
+        <Link to="/make-sigil"> 🪶 MakeSigil </Link>
+        <BackButton name={"Go Back"} />
+      </div>
+      </div>
+      </div>
   )
 }

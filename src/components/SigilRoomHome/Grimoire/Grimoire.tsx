@@ -12,7 +12,7 @@ export default function Grimoire() {
     if (!el) {
       return;
     }
-    el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+    el.scrollLeft = (el.scrollWidth - el.clientWidth) /2;
   }, []);
 
   if (!user) { return null; }
@@ -20,12 +20,15 @@ export default function Grimoire() {
 
   return (
     <div className='maincontainer'>
+
       <div ref={scrollRef} className='scrollcontainer'>
         <div className={'grimoire'}>
+
           <div className={'usertitle'}>
             {user!.username}'s
             <br />Grimoire
           </div>
+
           <div className={'bookbox'}>
             <div className={"grimoireleftpage"}>
               <Link to="/map"> 🗺️ Map </Link>

@@ -1,15 +1,25 @@
 import BackButton from "../../../Parts/BackButton"
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '@/context/UserContext'
 
 export default function StyleSigil() {
   const { user } = useUser()
-  if (!user) { return null }
+
   const navigate = useNavigate();
   const [sigilData, setSigilData] = useState<any>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
+  const scrollRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) {
+      return;
+    }
+    el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
+  }, []);
+
 
   useEffect(() => {
     // Load data from localStorage
@@ -21,7 +31,11 @@ export default function StyleSigil() {
     setSigilData({ name, intention, canvasData, imageData });
   }, []);
 
+  
   const handleSave = async () => {
+     if (scrollRef.current) {
+    scrollRef.current.scrollLeft = (scrollRef.current.scrollWidth - scrollRef.current.clientWidth) / 2;
+  }
     if (!user || !user.id) {
       setError("You must be logged in to save a sigil.");
       return;
@@ -70,11 +84,15 @@ export default function StyleSigil() {
 
   if (!sigilData) return <div>Loading...</div>;
 
+
+
   return (
     <div className='maincontainer'>
-      <div>
-        <h1>Review & Save Your Sigil</h1>
-        <div style={{ margin: '1rem 0' }}>
+      <div className="scrollcontainer" ref={scrollRef}>
+      <div className='stylesigilcontainer'>
+
+        <h1 style={{backgroundColor: '#e0e0e0'}}>Review & Save Your Sigil</h1>
+        <div className="stylesigilcontainerbox">
           <h3>Name: {sigilData.name}</h3>
           {sigilData.intention && <p style={{ color: '#666', marginBottom: '1rem' }}>Intention: {sigilData.intention}</p>}
 
@@ -105,8 +123,10 @@ export default function StyleSigil() {
           >
             {isSaving ? "Saving..." : "Save to Account"}
           </button>
-        </div>
+
       </div>
+      </div>
+    </div>
     </div>
   )
 }
