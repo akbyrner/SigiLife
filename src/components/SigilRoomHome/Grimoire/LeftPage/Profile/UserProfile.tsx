@@ -72,7 +72,7 @@ export default function UserProfile() {
   console.log(user)
   return (
     <div className="maincontainer">
-      <div>
+      <div className="profilepage">
         <br />
         <h1> UserProfile </h1>
         <AvatarFace />
@@ -84,7 +84,6 @@ export default function UserProfile() {
         <Themebox />
         <br />
         <UserFriends/>
-        <Link to="/scrye-friends"> 👥 Scrye Friends </Link>
         <br />
         <br />
         <Link to='/settings'> Go To Settings </Link>

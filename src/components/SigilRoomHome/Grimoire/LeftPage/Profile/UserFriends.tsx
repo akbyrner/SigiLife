@@ -1,4 +1,4 @@
-import BackButton from "../../../../Parts/BackButton"
+
 import { useUser } from '@/context/UserContext'
 import { useEffect, useState } from 'react'
 
@@ -84,7 +84,7 @@ export default function UserFriends() {
 
       <div className="userfriends">
         <h1>Find SigiLites to SigilFollow</h1>
-        <div className="sigil-search-box">
+        <div >
           <input
             type="text"
             value={searchQuery}
@@ -145,7 +145,6 @@ export default function UserFriends() {
       <br />
       <br />
 
-      <BackButton name={"Profile"} />
     </div>
   )
 };

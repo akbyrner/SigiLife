@@ -49,7 +49,7 @@ export default function SigilPage() {
         <span>at {sigilData.locationName}</span>
       ) : (
         <div className="flex flex-col items-center mt-2 p-2 border border-purple-500 rounded bg-black/20">
-          <p className="text-sm mb-2 text-purple-300">Set a location for this sigil:</p>
+          <p className="text-sm mb-2 text-black">Set a location for this sigil:</p>
           {isSavingLocation ? (
             <p className="text-xs text-yellow-400">Saving...</p>
           ) : (
