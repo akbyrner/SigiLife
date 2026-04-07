@@ -1,6 +1,6 @@
 generator client {
-    provider = "prisma-client-ts"
-      output   = "./generated"
+provider = "prisma-client-ts"
+output   = "./generated"
 }
 
 datasource db {
@@ -60,23 +60,23 @@ following   User @relation("following", fields: [followingId], references: [id])
 
 
 model SigilGroup {
-    id          Int    @id @default(autoincrement())
-      sigilId     Int
-        groupMember String @db.VarChar(100)
-          sigil       Sigil  @relation(fields: [sigilId], references: [id], onDelete: Cascade)
+id          Int    @id @default(autoincrement())
+sigilId     Int
+groupMember String @db.VarChar(100)
+sigil       Sigil  @relation(fields: [sigilId], references: [id], onDelete: Cascade)
 
-            @@index([sigilId], map: "sigil_groups_sigilId_fkey")
-              @@map("sigil_groups")
+@@index([sigilId], map: "sigil_groups_sigilId_fkey")
+@@map("sigil_groups")
 }
 
 model SvgVector {
-    id         Int      @id @default(autoincrement())
-      sigilId    Int?     @map("sigil_id")
-        filename   String   @db.Text
-          vectorData String   @map("vector_data") @db.Text
-            width      Int
-              height      Int
-                fileSize   Int      @map("file_size")
+id         Int      @id @default(autoincrement())
+sigilId    Int?     @map("sigil_id")
+filename   String   @db.Text
+vectorData String   @map("vector_data") @db.Text
+width      Int
+height      Int
+fileSize   Int      @map("file_size")
 createdAt  DateTime @default(now())
  @@map("svg_vectors")
 }

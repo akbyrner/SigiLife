@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 const UserCard = ({ user, action, actionLabel }: { user: any, action?: () => void, actionLabel?: string }) => {
   return (
     <div className="flex items-center gap-3 p-2">
-      <img src={`Avatar${parseInt(user.avatar) + 1}.png`} className="avatar" />
+      <img src={`Avatar${parseInt(user.avatar) + 1}face.png`} className="avatar" style={{width: "20px", height: "20px", borderRadius: "12px"}}/>
       <span>{user.username}</span>
       {action && (
         <button onClick={action} className="ml-auto text-sm px-3 py-1 rounded-md bg-purple-500 text-white hover:bg-purple-600">
@@ -46,6 +46,9 @@ export default function UserFriends() {
     setMutual(followers.filter((u: any) => followingIds.has(u.id)))
     setOnlyFollowers(followers.filter((u: any) => !followingIds.has(u.id)))
     setOnlyFollowing(following.filter((u: any) => !followerIds.has(u.id)))
+
+    const allFollowingIds = new Set(following.map((u: any) => u.id))
+    setSearchResults(prev => prev.filter((u: any) => !allFollowingIds.has(u.id)))
   }
 
   const handleSearch = async () => {
@@ -62,8 +65,7 @@ export default function UserFriends() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ followerId: user.id, followingId: targetId })
     })
-    setSearchResults(prev => prev.filter(u => u.id !== targetId))
-    fetchFollowData()
+    await fetchFollowData()
   }
 
   const handleUnfollow = async (targetId: number) => {
@@ -72,13 +74,13 @@ export default function UserFriends() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ followerId: user.id, followingId: targetId })
     })
-    fetchFollowData()
+    await fetchFollowData()
   }
 
 
 
   return (
-    <div>
+    <div className='userfriendsbox'>
       <br />
       <h1> UserFriends </h1>
 
@@ -106,44 +108,35 @@ export default function UserFriends() {
         )}
       </div>
 
-      <div className="profilebox" />
-      <h1>SigilFriends</h1>
-      {mutual.length === 0 ? <p className="text-s"> No SigilFriends Yet</p>
-        :
-        mutual.map(u => (
-          <UserCard key={u.id} user={u} action={() => handleUnfollow(u.id)} actionLabel="Unfollow!" />
-        ))
-      }
-      <div className="profilebox">
-        <h3>Followers</h3>
-        {onlyFollowers.length === 0
-          ? <p className="text-sm text-gray-400">No followers yet</p>
-          : onlyFollowers.map(u => (
-            <UserCard key={u.id} user={u} />
-          ))
-        }
+      <div className='profileboxcontainer'>
+        <div className="profilebox">
+          <h3>Followers</h3>
+          {onlyFollowers.length === 0
+            ? <p className="text-sm text-gray-400">No followers yet</p>
+            : onlyFollowers.map(u => (
+              <UserCard key={u.id} user={u} />
+            ))
+          }
+        </div>
+        <div className="profilebox">
+          <h3>SigilFriends</h3>
+          {mutual.length === 0
+            ? <p className="text-sm text-gray-400">No SigilFriends yet!</p>
+            : mutual.map(u => (
+              <UserCard key={u.id} user={u} action={() => handleUnfollow(u.id)} actionLabel="Unfollow" />
+            ))
+          }
+        </div>
+        <div className="profilebox">
+          <h3>Following</h3>
+          {onlyFollowing.length === 0
+            ? <p className="text-sm text-gray-400">Not following anyone yet</p>
+            : onlyFollowing.map(u => (
+              <UserCard key={u.id} user={u} action={() => handleUnfollow(u.id)} actionLabel="Unfollow" />
+            ))
+          }
+        </div>
       </div>
-      <div className="profilebox">
-        <h3>SigilFriends</h3>
-        {mutual.length === 0
-          ? <p className="text-sm text-gray-400">No SigilFriends yet!</p>
-          : mutual.map(u => (
-            <UserCard key={u.id} user={u} action={() => handleUnfollow(u.id)} actionLabel="Unfollow" />
-          ))
-        }
-      </div>
-      <div className="profilebox">
-        <h3>SigilFriends</h3>
-        {mutual.length === 0
-          ? <p className="text-sm text-gray-400">No SigilFriends yet!</p>
-          : mutual.map(u => (
-            <UserCard key={u.id} user={u} action={() => handleUnfollow(u.id)} actionLabel="Unfollow" />
-          ))
-        }
-      </div>
-      <br />
-      <br />
-      <br />
 
     </div>
   )

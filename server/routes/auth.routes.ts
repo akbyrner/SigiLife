@@ -9,8 +9,8 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Checks if User
 
 router.get('/me', async (req, res) => {
-    console.log('[/me] session:', req.session)
-  console.log('[/me] userId:', req.session.userId)
+  //   console.log('[/me] session:', req.session)
+  // console.log('[/me] userId:', req.session.userId)
   if (!req.session.userId) {
     res.json({ user: null });
     return;

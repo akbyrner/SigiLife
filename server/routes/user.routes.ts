@@ -57,6 +57,30 @@ router.patch('/unfollow', async (req, res) => {
 });
 
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Friends Followers/following
+router.get('/:id/followers', async (req, res) => {
+  try {
+    const follows = await prisma.follow.findMany({
+      where: { followingId: parseInt(req.params.id) },
+      include: { follower: { select: { id: true, username: true, avatar: true } } }
+    });
+    res.json(follows.map((f: any) => f.follower));
+  } catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+router.get('/:id/following', async (req, res) => {
+  try {
+    const follows = await prisma.follow.findMany({
+      where: { followerId: parseInt(req.params.id) },
+      include: { following: { select: { id: true, username: true, avatar: true } } }
+    });
+    res.json(follows.map((f: any) => f.following));
+  } catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
 
 
 

@@ -372,16 +372,7 @@ export default function DrawSigil() {
 
             {step === 'draw' ? (
               <>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', backgroundColor: '#e0e0e0' }}>
-                  <label htmlFor="sigilName">Name:</label>
-                  <input
-                    type="text"
-                    id="sigilName"
-                    value={sigilName}
-                    onChange={(e) => setSigilName(e.target.value)}
-                    style={{ padding: '6px', borderRadius: '4px', border: '1px solid #ccc' }}
-                  />
-                </div>
+
                 <button
                   className="navbutton"
                   onClick={() => setIsDrawingMode(!isDrawingMode)}
@@ -401,10 +392,21 @@ export default function DrawSigil() {
                     <input type="file" accept=".svg" style={{ display: 'none' }} onChange={handleSVGUpload} />
                   </label>}
               </>
-            ) : (
+            ) : (<div className='drawsigilmenutoobox'>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px', backgroundColor: '#e0e0e0' }}>
+                  <label htmlFor="sigilName">Name:</label>
+                  <input
+                    type="text"
+                    id="sigilName"
+                    value={sigilName}
+                    onChange={(e) => setSigilName(e.target.value)}
+                    style={{ padding: '6px', borderRadius: '4px', border: '1px solid #ccc' }}
+                  />
+                </div>
+
               <div className='drawsigilmenutoo' >
                 <div className='drawsigilmenutoobox1' >
-                  <label style={{backgroundColor:'#e0e0e0'}}>Style Color:</label>
+                  <label style={{ backgroundColor: '#e0e0e0' }}>Style Color:</label>
                   <input type="color" value={styleColor} onChange={(e) => setStyleColor(e.target.value)} style={{ cursor: 'pointer', width: '30px', height: '30px' }} /><br />
                   <button className="navbutton" onClick={handleChangeColor} style={{ marginLeft: '10px' }}>🎨 Apply Color</button>
                   <br /></div>
@@ -412,6 +414,7 @@ export default function DrawSigil() {
                   <button className="navbutton" onClick={handleAddRing}>⭕ Add Ring</button><br /><br /><br />
                   <button className="navbutton" onClick={handleAddGlow}>✨ Add Glow</button>
                 </div></div>
+              </div>
             )}
 
 

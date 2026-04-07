@@ -26,7 +26,7 @@ export default function LandingPage() {
         <div className="landingpage">
           <section id="center">
             <div>
-              <img src={SigiLifeLogo} className="logo" width="75%" height="75%" alt="Sigil-Life-Logo" />
+              <img src={SigiLifeLogo} className="logo" width="100%" height="100%" alt="Sigil-Life-Logo" />
             </div>
             <h1>Coming Soon, SigiLife!</h1>
             <div>
