@@ -10,7 +10,7 @@
     "strict": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "noEmitOnError": false,
+    "noEmitOnError": true,
     "skipLibCheck": true
   },
   "include": ["server/**/*"]

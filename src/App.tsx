@@ -26,6 +26,7 @@ import StyleSigil from './components/SigilRoomHome/MakeSigil/MakeSigilComponents
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Grimoire
 
 import MapBox from './components/SigilRoomHome/Grimoire/LeftPage/Map/MapBox'
+import PlaceSigilInWorld from './components/SigilRoomHome/Grimoire/LeftPage/Map/PlaceSigilInWorld'
 import ScryeFriends from './components/SigilRoomHome/Grimoire/LeftPage/ScryeFriends/ScryeFriendsHome'
 import RightPage from './components/SigilRoomHome/Grimoire/RightPage/RightPage'
 import SigilPage from './components/SigilRoomHome/Grimoire/RightPage/SigiLibrary/SigilPage'
@@ -87,6 +88,7 @@ function App() {
       {/* Grimoire flow */}
 
       <Route path="/map" element={<ProtectedRoute><MapBox /></ProtectedRoute>} />
+      <Route path="/place-sigil-world" element={<ProtectedRoute><PlaceSigilInWorld /></ProtectedRoute>} />
       <Route path="/scrye-friends" element={<ProtectedRoute><ScryeFriends /></ProtectedRoute>} />
       <Route path="/right-page" element={<ProtectedRoute><RightPage /></ProtectedRoute>} />
       <Route path="/library" element={<ProtectedRoute><RightPage /></ProtectedRoute>} />

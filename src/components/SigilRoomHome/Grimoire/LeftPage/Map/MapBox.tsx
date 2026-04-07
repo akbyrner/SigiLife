@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Map, { NavigationControl, Marker, Popup } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import axios from 'axios';
@@ -12,13 +13,16 @@ const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || '';
 
 export default function MapBox() {
   const { user } = useUser()
-  if (!user) { return null }
-  console.log(user)
+  const navigate = useNavigate();
   const [sigils, setSigils] = useState<any[]>([]);
   const [popupInfo, setPopupInfo] = useState<any | null>(null);
   const [filterMode, setFilterMode] = useState<"all" | "mine">("all");
   const scrollRef = useRef<HTMLDivElement>(null);
-
+  const [viewState, setViewState] = useState({
+    longitude: -95.7129, // Default center over US
+    latitude: 37.0902,
+    zoom: 3.5
+  });
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -28,9 +32,8 @@ export default function MapBox() {
     el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
   }, []);
 
-  if (!user) { return null; }
-  console.log(user)
   useEffect(() => {
+    if (!user) return;
     // Fetch all sigils or just user's sigils based on filterMode
     const url = filterMode === "all" ? '/api/sigils/allsigils' : `/api/sigils/user/${user.id}/sigils`;
 
@@ -41,12 +44,7 @@ export default function MapBox() {
       .catch(err => console.error("Error fetching sigils for map:", err));
   }, [user?.id, filterMode]);
 
-
-  const [viewState, setViewState] = useState({
-    longitude: -95.7129, // Default center over US
-    latitude: 37.0902,
-    zoom: 3.5
-  });
+  if (!user) { return null; }
 
   return (
     <div className='maincontainer'>
@@ -60,7 +58,7 @@ export default function MapBox() {
               onClick={() => setFilterMode("all")}
               className={`px-4 py-2 rounded-md font-bold transition-colors ${filterMode === "all" ? "bg-purple-600 text-white" : "bg-zinc-800 text-purple-300 border border-purple-600"}`}
             >
-              World Map
+              All Sigils
             </button>
             <button
               onClick={() => setFilterMode("mine")}
@@ -123,6 +121,14 @@ export default function MapBox() {
                       <img width="80" src={popupInfo.imageData} alt="Sigil" className="mt-2 border-purple-300 border rounded" />
                     )}
                     <p className="text-sm mt-1 italic">{popupInfo.intention || "A mysterious sigil..."}</p>
+                    <button
+                      className="mt-2 px-3 py-1 bg-purple-600 text-white text-xs font-bold rounded hover:bg-purple-500"
+                      onClick={() => {
+                        navigate('/place-sigil-world', { state: { sigilData: popupInfo } })
+                      }}
+                    >
+                      View in AR
+                    </button>
                   </div>
                 </Popup>
               )}

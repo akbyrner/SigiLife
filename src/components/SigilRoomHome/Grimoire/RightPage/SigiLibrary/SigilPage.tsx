@@ -75,6 +75,15 @@ export default function SigilPage() {
       <img className="sigilbox" src="src/assets/dummySigil.svg" alt="Dummy Sigil" />
     )}
     <br />
+    <Link 
+      className="navbutton" 
+      to="/place-sigil-world" 
+      state={{ sigilData }} 
+      style={{ backgroundColor: '#2b0681', border: '2px solid gold', color: 'gold' }}
+    >
+      View in AR
+    </Link>
+    <br />
     <BackButton name={"Go Back"} />
 
   </div>)

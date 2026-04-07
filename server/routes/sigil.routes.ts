@@ -1,8 +1,27 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import prisma from '../prisma/prisma.client.js';
-import '../types/session.d.ts';
 
 const router = Router();
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Get Sigil Count
+router.get('/user/:userId/count', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const sigilCount = await prisma.sigil.count({
+      where: { userId }
+    });
+    res.json({
+      userId,
+      count: sigilCount,
+      maxSigils: 12,
+      canCreateMore: sigilCount < 12,
+      remainingSlots: 12 - sigilCount,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Get All Sigils
 router.get('/allsigils', async (req, res) => {
@@ -12,7 +31,6 @@ router.get('/allsigils', async (req, res) => {
       orderBy: { createdAt: 'desc' },
       include: { sigilGroups: true },
     });
-
     res.json(sigils);
 
   } catch (error) {
@@ -28,7 +46,6 @@ router.get('/user/:userId/sigils', async (req, res) => {
       orderBy: { createdAt: 'desc' },
       include: { sigilGroups: true },
     });
-
     res.json(sigils);
 
   } catch (error) {
@@ -36,8 +53,6 @@ router.get('/user/:userId/sigils', async (req, res) => {
     res.status(500).json({ error: (error as Error).message });
   }
 });
-
-
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Save Sigil
 router.post('/', async (req: Request, res: Response) => {
@@ -66,7 +81,6 @@ router.post('/', async (req: Request, res: Response) => {
     });
 
     res.json({ id: sigil.id, message: 'Sigil saved successfully' });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: (error as Error).message });
