@@ -199,9 +199,9 @@ chargesigil,
   color: #e0e0e0;
   position: relative;
 }
-.destroysigil > * {
+.destroysigil > *:not(.evileye):not(.ghost-cursor) {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .destroysigil::before {
@@ -218,7 +218,7 @@ chargesigil,
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 2;
   opacity: 0.3;
 }
 
@@ -226,14 +226,9 @@ chargesigil,
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 31;
 }
 
-.ghost-cursor > canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: transparent;
-}
 
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Grimoire*/
