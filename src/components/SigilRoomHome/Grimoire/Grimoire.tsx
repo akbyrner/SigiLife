@@ -30,14 +30,14 @@ export default function Grimoire() {
           </div>
 
           <div className={'bookbox'}>
-            <div className={"grimoireleftpage"}>
+            <div className="grimoire-left-page">
               <Link to="/map"> 🗺️ Map </Link>
               <br />
               <Link to="/profile" > 👤 Profile </Link>
             </div>
           </div>
           <div className="bookbox">
-            <div className={"grimoirerightpage"}>
+            <div className="grimoire-right-page">
               <Link to="/right-page" > 📜 SigiLibrary </Link>
               <br />
               <Link to="/make-sigil"> 🪶 MakeSigil </Link>

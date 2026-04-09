@@ -87,6 +87,54 @@ router.post('/', async (req: Request, res: Response) => {
   }
 });
 
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Share Sigil
+router.post('/share', async (req, res) => {
+  try {
+    const { sigilId, targetUserIds } = req.body;
+
+    const sourceSigil = await prisma.sigil.findUnique({
+      where: { id: parseInt(sigilId) }
+    });
+
+    if (!sourceSigil) {
+      return res.status(404).json({ error: 'Source sigil not found' });
+    }
+
+    const results = [];
+
+    for (const targetId of targetUserIds) {
+      const parsedTargetId = parseInt(targetId);
+
+      const count = await prisma.sigil.count({
+        where: { userId: parsedTargetId }
+      });
+
+      if (count >= 12) {
+        results.push({ targetId: parsedTargetId, status: 'failed', reason: 'Library full' });
+        continue;
+      }
+
+      await prisma.sigil.create({
+        data: {
+          name: sourceSigil.name,
+          userId: parsedTargetId,
+          intention: sourceSigil.intention,
+          canvasData: sourceSigil.canvasData,
+          imageData: sourceSigil.imageData,
+          isCharged: false,
+        }
+      });
+      results.push({ targetId: parsedTargetId, status: 'success' });
+    }
+
+    res.json({ message: 'Sharing complete', results });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Charge Sigil
 router.patch('/:id/charge', async (req, res) => {
   try {

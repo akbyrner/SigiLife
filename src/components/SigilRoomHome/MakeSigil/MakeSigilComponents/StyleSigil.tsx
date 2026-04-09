@@ -10,6 +10,8 @@ export default function StyleSigil() {
   const [sigilData, setSigilData] = useState<any>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
+  const [friends, setFriends] = useState<any[]>([]);
+  const [selectedFriends, setSelectedFriends] = useState<number[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
@@ -30,6 +32,21 @@ export default function StyleSigil() {
 
     setSigilData({ name, intention, canvasData, imageData });
   }, []);
+
+  useEffect(() => {
+    if (user?.id) {
+       fetch(`/api/users/${user.id}/following`)
+        .then(res => res.json())
+        .then(data => setFriends(data))
+        .catch(err => console.error("Error fetching friends:", err));
+    }
+  }, [user]);
+
+  const toggleFriend = (id: number) => {
+    setSelectedFriends(prev => 
+      prev.includes(id) ? prev.filter(fid => fid !== id) : [...prev, id]
+    );
+  };
 
   
   const handleSave = async () => {
@@ -66,6 +83,17 @@ export default function StyleSigil() {
       const result = await response.json();
       console.log(result)
 
+      if (selectedFriends.length > 0) {
+        await fetch('/api/sigils/share', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sigilId: result.id,
+            targetUserIds: selectedFriends
+          })
+        });
+      }
+
       // Clear localStorage
       localStorage.removeItem('sigilName');
       localStorage.removeItem('sigilIntention');
@@ -101,6 +129,33 @@ export default function StyleSigil() {
               <img src={sigilData.imageData} alt={sigilData.name} style={{ maxWidth: '100%', maxHeight: '300px' }} />
             </div>
           )}
+        </div>
+
+        <div className="sharebox" style={{ marginTop: '20px', padding: '15px', border: '1px solid #ccc', borderRadius: '8px', backgroundColor: '#f9f9f9', width: '100%', maxWidth: '400px', margin: '20px auto' }}>
+          <h3 style={{ marginTop: 0 }}>Clone & Share to SigilFriends</h3>
+          <p style={{ fontSize: '0.85rem', color: '#666', marginBottom: '10px' }}>
+            Select users to share this sigil with. It will be added to their library if they have a slot available.
+          </p>
+          <div style={{ maxHeight: '150px', overflowY: 'auto', textAlign: 'left', padding: '5px' }}>
+            {friends.length === 0 ? (
+              <p style={{ fontSize: '0.85rem', color: '#888' }}>You are not following anyone yet.</p>
+            ) : (
+              friends.map(friend => (
+                <div key={friend.id} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '4px 0' }}>
+                  <input 
+                    type="checkbox" 
+                    id={`friend-${friend.id}`}
+                    checked={selectedFriends.includes(friend.id)}
+                    onChange={() => toggleFriend(friend.id)}
+                    style={{ cursor: 'pointer' }}
+                  />
+                  <label htmlFor={`friend-${friend.id}`} style={{ cursor: 'pointer', fontSize: '0.9rem' }}>
+                    {friend.username}
+                  </label>
+                </div>
+              ))
+            )}
+          </div>
         </div>
 
         {error && <p style={{ color: 'red' }}>{error}</p>}
