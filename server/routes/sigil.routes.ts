@@ -125,11 +125,12 @@ router.patch('/:id/location', async (req, res) => {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Delete Sigil
 router.delete('/:id', async (req, res) => {
   try {
-
-    await prisma.sigil.delete({ where: { id: parseInt(req.params.id) } });
-    res.json({ message: 'destroyed sigil' })
-
+    const id = parseInt(req.params.id);
+    console.log('deleting sigil id:', id);
+    await prisma.sigil.deleteMany({ where: { id } });
+    res.json({ message: 'destroyed sigil' });
   } catch (error) {
+    console.error('prisma delete error:', error);  // add this
     res.status(500).json({ error: (error as Error).message });
   }
 })

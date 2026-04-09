@@ -12,6 +12,7 @@ interface EvilEyeProps {
   pupilFollow?: number;
   flameSpeed?: number;
   backgroundColor?: string;
+  externalMouse?: { x: number; y: number }
 }
 
 function hexToVec3(hex: string): [number, number, number] {
@@ -116,7 +117,6 @@ void main() {
 
   float distanceMask = 1.0 - length(uv);
 
-  // Inner ring
   float innerRing = clamp(-1.0 * ((distanceMask - 0.7) / uIrisWidth), 0.0, 1.0);
   innerRing = (innerRing * distanceMask - 0.2) / 0.28;
   innerRing += noiseA.r - 0.5;
@@ -131,11 +131,9 @@ void main() {
 
   innerRing += outerRing;
 
-  // Inner eye
   float innerEye = distanceMask - 0.1 * 2.0;
   innerEye *= noiseB.r * 2.0;
 
-  // Pupil with cursor tracking
   vec2 pupilOffset = uMouse * uPupilFollow * 0.12;
   vec2 pupilUv = uv - pupilOffset;
   float pupil = 1.0 - length(pupilUv * vec2(9.0, 2.3));
@@ -143,7 +141,6 @@ void main() {
   pupil = clamp(pupil, 0.0, 1.0);
   pupil /= 0.35;
 
-  // Outer eye
   float outerEyeGlow = 1.0 - length(uv * vec2(0.5, 1.5));
   outerEyeGlow = clamp(outerEyeGlow + 0.5, 0.0, 1.0);
   outerEyeGlow += noiseC.r - 0.5;
@@ -154,7 +151,6 @@ void main() {
   outerEyeGlow = clamp(outerEyeGlow, 0.0, 1.0);
   outerEyeGlow *= pow(1.0 - distanceMask, 2.0) * 2.5;
 
-  // Outer eye bg glow
   outerBgGlow += distanceMask;
   outerBgGlow = pow(outerBgGlow, 0.5);
   outerBgGlow *= 0.15;
@@ -176,9 +172,18 @@ export default function EvilEye({
   noiseScale = 1.0,
   pupilFollow = 1.0,
   flameSpeed = 1.0,
-  backgroundColor = '#000000'
+  backgroundColor = '#000000',
+  externalMouse,
 }: EvilEyeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const programRef = useRef<Program | null>(null);
+
+  // Sync externalMouse → WebGL uniform whenever prop changes
+  useEffect(() => {
+    if (externalMouse && programRef.current) {
+      programRef.current.uniforms.uMouse.value = [externalMouse.x, externalMouse.y];
+    }
+  }, [externalMouse]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -203,12 +208,14 @@ export default function EvilEye({
     const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
 
     function onMouseMove(e: MouseEvent) {
+      if (externalMouse) return;
       const rect = container.getBoundingClientRect();
       mouse.tx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       mouse.ty = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
     }
 
     function onMouseLeave() {
+      if (externalMouse) return;
       mouse.tx = 0;
       mouse.ty = 0;
     }
@@ -249,6 +256,8 @@ export default function EvilEye({
       }
     });
 
+    programRef.current = program;
+
     const mesh = new Mesh(gl, { geometry, program });
     container.appendChild(gl.canvas);
 
@@ -256,20 +265,25 @@ export default function EvilEye({
 
     function update(time: number) {
       animationFrameId = requestAnimationFrame(update);
-      mouse.x += (mouse.tx - mouse.x) * 0.05;
-      mouse.y += (mouse.ty - mouse.y) * 0.05;
-      program.uniforms.uMouse.value = [mouse.x, mouse.y];
+      if (!externalMouse) {
+        mouse.x += (mouse.tx - mouse.x) * 0.05;
+        mouse.y += (mouse.ty - mouse.y) * 0.05;
+        program.uniforms.uMouse.value = [mouse.x, mouse.y];
+      }
       program.uniforms.uTime.value = time * 0.001;
       renderer.render({ scene: mesh });
     }
     animationFrameId = requestAnimationFrame(update);
 
     return () => {
+      programRef.current = null;
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resize);
       container.removeEventListener('mousemove', onMouseMove);
       container.removeEventListener('mouseleave', onMouseLeave);
-      container.removeChild(gl.canvas);
+      if (gl.canvas.parentElement) {
+        container.removeChild(gl.canvas);
+      }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [eyeColor, intensity, pupilSize, irisWidth, glowIntensity, scale, noiseScale, pupilFollow, flameSpeed, backgroundColor]);
