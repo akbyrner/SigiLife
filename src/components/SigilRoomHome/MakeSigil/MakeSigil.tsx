@@ -22,13 +22,14 @@ export default function MakeSigil() {
       checkSigilCount()
     }
   }, [user])
-  if (!user) return null
 
-  const checkSigilCount = async () => {
+
+const checkSigilCount = async () => {
     try {
       setLoading(true)
       setError(null)
-      const response = await axios.get(`${API_URL}/sigil/user/${user.id}/count`)
+      const response = await axios.get(`${API_URL}/api/sigils/user/${user.id}/count`)
+      console.log('full data object:', JSON.stringify(response.data))  // ← right here
       const data = response.data
       setSigilCount(data.count)
       setCanCreateMore(data.canCreateMore)
@@ -48,7 +49,7 @@ export default function MakeSigil() {
       alert('You have reached the maximum limit of 12 sigils.\n\nPlease destroy an existing sigil before creating a new one.')
     }
   }
-  
+
   const scrollRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = scrollRef.current;
@@ -57,7 +58,7 @@ export default function MakeSigil() {
     }
     el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
   }, []);
-
+  if (!user) return null
 
 
   return (
@@ -65,24 +66,24 @@ export default function MakeSigil() {
       <div ref={scrollRef} className='scrollcontainer'>
         <div className='makesigil'>
           <h1>Make a Sigil</h1>
-          <div className="sigil-info">
-            <p className="info-text">Current Sigils: {sigilCount}/{MAX_SIGILS}</p>
+          <div className="sigilinfo">
+            <p className="infotext">Current Sigils: {sigilCount}/{MAX_SIGILS}</p>
             {remainingSlots < 3 && (
+
               <p className="info-text warning">⚠️ {remainingSlots} slot(s) remaining</p>
             )}
             {error && <p className="info-text error">{error}</p>}
           </div>
 
           <button
-            className="navbutton primary"
+            className="navbutton"
             onClick={handleCreateSigil}
             disabled={loading || !canCreateMore}
           >
             {loading ? 'Loading...' : canCreateMore ? 'Create New Sigil' : 'Max Limit Reached'}
           </button>
 
-          <Link className="navbutton secondary" to="/make-sigil/write">Write It</Link>
-          <Link className="navbutton secondary" to="/library">Sigil Library</Link>
+          <Link className="navbutton" to="/library">Sigil Library</Link>
 
           <BackButton name={"Go Back"} />
         </div>

@@ -8,7 +8,7 @@ export default function SigilThumb({ sigilData }: {  sigilData: any }) {
         {sigilData.imageData ? (
           <img src={sigilData.imageData} alt={sigilData.name} style={{ width: '100px', height: '100px', objectFit: 'contain' }} />
         ) : (
-          <p>{sigilData.img || "No Image"}</p>
+          <p>{sigilData.img}</p>
         )}
         <p>{sigilData.locationName}</p>
         <p>{sigilData.sigilGroups?.map((g: any) => g.groupMember.join(','))}</p>

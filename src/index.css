@@ -23,12 +23,9 @@ textinput,
 .textinput {
   background-color: #e0e0e0;
   border-radius: 12px;
-  border-color:#2b0681;
+  border-color: #2b0681;
   border-width: 1px;
 }
-
-
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Main Container*/
 mainContainer,
@@ -37,7 +34,7 @@ mainContainer,
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  background-image: url('src/assets/Website layout with aspect ratios.svg');
+  background-image: url('/src/assets/Website\ layout\ with\ aspect\ ratios.svg');
   background-size: auto;
   background-position: center;
   background-repeat: no-repeat;
@@ -109,9 +106,21 @@ scrollcontainer,
   height: 100vh;
 }
 
+noscroll,
 .noscroll {
   overflow-x: hidden;
 }
+
+clmnbox .clmnbox {
+  display: flex;
+  flex-direction: column;
+}
+
+rowbox .rowbox {
+  display: flex;
+  flex-direction: row;
+}
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Landing Page*/
 
 landingpage,
@@ -123,8 +132,8 @@ landingpage,
 }
 
 logo,
-.logo{
-  display:flex;
+.logo {
+  display: flex;
   position: relative;
   align-self: center;
   width: 50vw;
@@ -267,8 +276,6 @@ chargesigil,
   pointer-events: none;
   z-index: 1;
 }
-
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Grimoire*/
 usertitle,
@@ -428,11 +435,17 @@ makesigil,
   flex-direction: column;
   background-size: cover;
   align-items: center;
-
   min-width: 1024px;
   position: relative;
   height: 100vh;
 }
+
+sigilinfo,
+.sigilinfo {
+  display: flex;
+  flex-direction: column;
+}
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write Sigil*/
 writesigil,
 .writesigil {
@@ -453,13 +466,11 @@ writesigilbox,
   width: 25%;
 }
 
-
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Draw Sigil*/
 drawsigilcontainer,
 .drawsigilcontainer {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/WritingNoir.png');
   background-size: cover;
   align-items: center;
   min-width: 1024px;
@@ -516,14 +527,12 @@ stylesigilcontainer,
 .stylesigilcontainer {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/WritingNoir.png');
   background-size: cover;
   align-items: center;
   justify-content: space-around;
   min-width: 1024px;
   height: 100vh;
   position: relative;
-  background-color: #e0e0e0;
 }
 stylesigilcontainerbox,
 .stylesigilcontainerbox {
@@ -534,6 +543,17 @@ stylesigilcontainerbox,
   width: 30%;
   top: 10%;
   overflow-x: hidden;
+}
+
+sharebox,
+.sharebox {
+  position: relative;
+}
+
+sharebox,
+.sharebox {
+  display: flex;
+  flex-direction: column;
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  MapBox*/
@@ -586,12 +606,11 @@ userfriendsbox,
   align-items: center;
 }
 profileboxcontainer,
-.profileboxcontainer{
+.profileboxcontainer {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Themes*/
 /*---break---*/
@@ -679,7 +698,7 @@ profileboxcontainer,
 /*---break---*/
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: oklch(1 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
