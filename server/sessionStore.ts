@@ -23,5 +23,15 @@ export const sessionStore = new MySQLStoreSession({
   port: url.port ? parseInt(url.port) : 3306,
   ssl: {
     rejectUnauthorized: false
-  }
+  },
+  // Retry connection on transient failures instead of crashing
+  reconnectDelay: 5000,
+  retries: 5,
+  // Prevent idle connections from being dropped by Aiven's firewall
+  connectionLimit: 3,
+});
+
+// Prevent uncaught session store errors from crashing the process
+sessionStore.on('error', (err: Error) => {
+  console.error('[SessionStore] Connection error (non-fatal):', err.message);
 });
