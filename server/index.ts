@@ -12,6 +12,7 @@ import { Request, Response, NextFunction } from 'express';
 import authRouter from './routes/auth.routes.js';
 import sigilRouter from './routes/sigil.routes.js';
 import userRouter from './routes/user.routes.js';
+import vectorRouter from './routes/vector.routes.js';
 import { sessionStore } from './sessionStore.js';
 import prisma from './prisma/prisma.client.js';
 
@@ -21,7 +22,6 @@ import prisma from './prisma/prisma.client.js';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Trust proxy for secure cookies behind ELB/Nginx
 app.set('trust proxy', 1);
 
 app.use(express.json({ limit: '50mb' }));
@@ -33,6 +33,18 @@ app.use(compression());
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Middleware
 app.use((req, res, next) => {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  
+  // Necessary for 8th Wall Standalone Engine (WASM + SharedArrayBuffer)
+  if (req.path.includes('/xr/')) {
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  }
+  
+  // Ensure WASM files are served with the correct MIME type
+  if (req.path.endsWith('.wasm')) {
+    res.setHeader('Content-Type', 'application/wasm');
+  }
+  
   next();
 });
 
@@ -76,7 +88,6 @@ app.use(session({
   saveUninitialized: false,
   proxy: true,
   cookie: {
-    // Only set secure to true if we are in production AND actually on HTTPS
     secure: process.env.NODE_ENV === 'production' && process.env.ENABLE_HTTPS === 'true',
     httpOnly: true,
     sameSite: 'lax',
@@ -86,49 +97,16 @@ app.use(session({
 
 app.use('/api/auth', authRouter);
 app.use('/api/sigils', sigilRouter);
-app.use('/api/users', userRouter)
+app.use('/api/users', userRouter);
+app.use('/api/vectors', vectorRouter);
 
 const distPath = path.join(process.cwd(), 'dist');
 
 app.use(express.static(distPath));
 
-app.get('/{*path}', (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });
-
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Routes
-app.post('/api/character-vectors', async (req, res) => {
-  try {
-    const { chars } = req.body;
-    if (!chars || typeof chars !== 'string') {
-      return res.json([]);
-    }
-    const charArray = chars.split('');
-    if (charArray.length === 0) {
-      return res.json([]);
-    }
-
-    const vectors = await prisma.svgVector.findMany({
-      where: { filename: { in: charArray } },
-      select: { filename: true, vectorData: true },
-    });
-
-    res.json(vectors);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: (error as Error).message });
-  }
-});
-
-
-app.use(express.static(distPath));
-
-app.get('/{*path}', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
-});
-
-
-
 
 app.get('/', (req, res) => {
   res.send('Hello SigiLife!');
