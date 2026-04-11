@@ -2,6 +2,7 @@ import BackButton from "../../../Parts/BackButton"
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/context/UserContext'
+import Menu from '../../../Parts/Menu'
 
 export default function WriteSigil() {
   const { user } = useUser();
@@ -57,8 +58,8 @@ export default function WriteSigil() {
     <div className='maincontainer'>
       <div ref={scrollRef} className='scrollcontainer'>
         <div className="writesigil">
-          <div className="writesigilbox">
             <h1>Write Your Sigil</h1>
+    <Menu/>
             <p >
               Enter your intention.
             </p>
@@ -85,7 +86,6 @@ export default function WriteSigil() {
                 {isProcessing ? "Processing..." : "Next"}
               </button>
             </div>
-          </div>
         </div>
         <BackButton name={'Go Back'} />
       </div>

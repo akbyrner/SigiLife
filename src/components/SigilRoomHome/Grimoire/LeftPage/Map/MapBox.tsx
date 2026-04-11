@@ -8,6 +8,7 @@ import BackButton from "../../../../Parts/BackButton"
 import MapSearchBox from "./MapSearchBox"
 
 import { useUser } from "@/context/UserContext"
+import Menu from '../../../../Parts/Menu';
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || '';
 
@@ -50,10 +51,9 @@ export default function MapBox() {
     <div className='maincontainer'>
       <div ref={scrollRef} className='scrollcontainer'>
         <div className=" mapbox">
-          <br />
           <h1>This is the MapBox</h1>
-
-          <div className="flex gap-4 my-2 w-90">
+          <Menu/>
+          <div className="rowbox">
             <button
               onClick={() => setFilterMode("all")}
               className={`px-4 py-2 rounded-md font-bold transition-colors ${filterMode === "all" ? "bg-purple-600 text-white" : "bg-zinc-800 text-purple-300 border border-purple-600"}`}

@@ -1,4 +1,3 @@
-import BackButton from "../../../../Parts/BackButton"
 import { useState } from 'react'
 import * as SwitchPrimitive from "@radix-ui/react-switch"
 import { useUser } from '@/context/UserContext'
@@ -56,8 +55,8 @@ export default function UserSettings() {
 
   return (
     <div className="maincontainer">
-      <div>
-
+      <div className="usersettings">
+      <div className='header'></div>
         <h1>User Settings</h1>
         <br />
         <AvatarSelector avatarId={avatarId} onSelect={handleAvatarChange} />
@@ -83,8 +82,7 @@ export default function UserSettings() {
         This is where you can delete your account
         <br />
         <Link to="/profile">Go to Profile </Link>
-        <br />
-        <BackButton name={"Go Back"} />
+
       </div>
     </div>
   )

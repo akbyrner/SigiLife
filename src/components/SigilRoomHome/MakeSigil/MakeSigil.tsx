@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import BackButton from '../../Parts/BackButton'
 import { useUser } from '@/context/UserContext'
+import Menu from '../../Parts/Menu'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
@@ -24,8 +25,8 @@ export default function MakeSigil() {
   }, [user])
 
 
-const checkSigilCount = async () => {
-  if (!user) return null;
+  const checkSigilCount = async () => {
+    if (!user) return null;
     try {
       setLoading(true)
       setError(null)
@@ -67,6 +68,7 @@ const checkSigilCount = async () => {
       <div ref={scrollRef} className='scrollcontainer'>
         <div className='makesigil'>
           <h1>Make a Sigil</h1>
+          <Menu />
           <div className="sigilinfo">
             <p className="infotext">Current Sigils: {sigilCount}/{MAX_SIGILS}</p>
             {remainingSlots < 3 && (

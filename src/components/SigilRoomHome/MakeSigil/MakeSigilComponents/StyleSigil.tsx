@@ -114,6 +114,7 @@ export default function StyleSigil() {
     <div className='maincontainer'>
       <div className="scrollcontainer" ref={scrollCallbackRef}>
         <div className='stylesigilcontainer'>
+          <div className='header'></div>
 
           <h1 >Review & Save Your Sigil</h1>
           <div className="stylesigilcontainerbox">

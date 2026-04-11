@@ -2,6 +2,7 @@ import BackButton from "../../Parts/BackButton"
 import { Link } from 'react-router-dom'
 import { useUser } from '@/context/UserContext'
 import { useEffect, useRef } from 'react';
+import Menu from "@/components/Parts/Menu";
 
 export default function Grimoire() {
   const { user } = useUser();
@@ -23,7 +24,7 @@ export default function Grimoire() {
 
       <div ref={scrollRef} className='scrollcontainer'>
         <div className={'grimoire'}>
-
+    <Menu/>
           <div className={'usertitle'}>
             {user!.username}'s
             <br />Grimoire

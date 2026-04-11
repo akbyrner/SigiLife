@@ -1,4 +1,4 @@
-import BackButton from "../../../../Parts/BackButton"
+
 import { Link, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import axios from 'axios'
@@ -38,6 +38,7 @@ export default function SigilPage() {
   return (
     <div className="maincontainer">
       <div className="sigilpage">
+        <div className='header'></div>
         <h1>This is the SigilPage for 
           <br/>{sigilData.name}</h1>
         <br />
@@ -95,8 +96,6 @@ export default function SigilPage() {
         <br />
         <Link className="navbutton" to="/place-sigil-world" state={{ sigilData }} > View in AR </Link>
         </div>
-        <br />
-        <BackButton name={"Go Back"} />
       </div>
     </div>)
 };

@@ -1,5 +1,5 @@
 import BackButton from '../../Parts/BackButton'
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import SigilChargeEffect from './ChargeComponents/SigilChargeEffect'
 import ChangeEmotion from './ChargeComponents/ChangeEmotion'
 import { useState, useEffect, useRef } from 'react'
@@ -7,10 +7,11 @@ import { useUser } from '@/context/UserContext'
 import SplashCursor from './ChargeComponents/SplashCursor'
 
 export default function ChargeSigil() {
-  const { state } = useLocation();
-  const { sigilData } = state;
+  const [searchParams] = useSearchParams()
+  const sigilId = searchParams.get('sigilId')
   const { user } = useUser()
   const navigate = useNavigate()
+  const [sigilData, setSigilData] = useState<any>(null)
   const [emotion, setEmotion] = useState("")
   const [isCharging, setIsCharging] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -23,7 +24,20 @@ export default function ChargeSigil() {
     el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
   }, []);
 
+  useEffect(()=> {
+    if(!sigilId){return}
+    fetch(`/api/sigils/${sigilId}`)
+    .then(res => res.json())
+    .then(data => setSigilData(data))
+    .catch(err => console.error(err))
+  }, [sigilId])
+
   if (!user) { return null }
+  if (!sigilData){
+    return (
+      <p>Loading Sigil!</p>
+    )
+  }
 
   const handleSave = async () => {
     try {

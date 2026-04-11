@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as fabric from 'fabric';
 import { useUser } from '@/context/UserContext'
+import Menu from '../../../Parts/Menu'
 
 export default function DrawSigil() {
   const { user } = useUser()
@@ -368,8 +369,9 @@ useEffect(() => {
     <div className='maincontainer'>
       <div ref={scrollRef} className='scrollcontainer'>
         <div className="drawsigilcontainer">
-          <h2 >Draw Your Sigil</h2>
 
+          <h2 >Draw Your Sigil</h2>
+                    <Menu />
           {/* Main Control Panel */}
           <div className="drawsigilmenu">
             {step === 'draw' ? (

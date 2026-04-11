@@ -3,6 +3,7 @@
 import { Link } from 'react-router-dom'
 import { useUser } from '@/context/UserContext'
 import { useEffect, useRef } from 'react';
+import Menu from '../Parts/Menu'
 
 
 export default function HomeRoom() {
@@ -24,7 +25,7 @@ export default function HomeRoom() {
     <div className='maincontainer'>
       <div ref={scrollRef} className='scrollcontainer'>
         <div className='homeroom'>
-          <h1>Home Room</h1>
+          <Menu />
 
           <nav>
             <Link className='destroybutton' to="/library">Destroy Sigil</Link>

@@ -56,6 +56,30 @@ router.get('/user/:userId/sigils', async (req, res) => {
     res.status(500).json({ error: (error as Error).message });
   }
 });
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Get One Sigil
+router.get(`/:id`, async (req, res) => {
+  try {
+    const sigil = await prisma.sigil.findUnique({
+      where : { id: parseInt(req.params.id)}
+    });
+    if (!sigil){
+      return res.status(404).json({message: 'sigil not found'})
+    }
+    res.json(sigil);
+  } catch (error){
+    console.error(error);
+    res.status(500).json({error: (error as Error).message})
+  }
+})
+
+
+
+
+
+
+
+
+
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Save Sigil
 router.post('/', async (req: Request, res: Response) => {
