@@ -112,12 +112,13 @@ export default function DestroySigil() {
           }
 
           <h1>Destroy Sigil</h1>
-          <ChangeEmotion emotion={emotion} setEmotion={setEmotion} />
+
           {sigilData.imageData ? (
             <img className="sigilbox" src={sigilData.imageData} alt={sigilData.name} />
           ) : (
             <img className="sigilbox" src="src/assets/dummySigil.svg" alt="Dummy Sigil" />
           )}
+                    <ChangeEmotion emotion={emotion} setEmotion={setEmotion} />
           {!isDestroying && (
             <button className="navbutton" onClick={handleDestroy} disabled={!emotion || isSubmitting}>
               Destroy Sigil

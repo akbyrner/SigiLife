@@ -67,14 +67,14 @@ export default function ChargeSigil() {
           <Menu />
           <h1>ChargeSigil</h1>
 
-          <ChangeEmotion emotion={emotion} setEmotion={setEmotion} />
+
 
           {sigilData.imageData ? (
             <img className="sigilbox" src={sigilData.imageData} alt={sigilData.name} />
           ) : (
             <img className="sigilbox" src="src/assets/dummySigil.svg" alt="placeholderSigil" />
           )}
-
+          <ChangeEmotion emotion={emotion} setEmotion={setEmotion} />
           {!isCharging && (
             <button
               className='navbutton'

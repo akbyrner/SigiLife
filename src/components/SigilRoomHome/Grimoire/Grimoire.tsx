@@ -40,8 +40,7 @@ export default function Grimoire() {
           <div className="bookbox">
             <div className="grimoire-right-page">
               <Link to="/right-page" > 📜 SigiLibrary </Link>
-              <br />
-              <Link to="/make-sigil"> 🪶 MakeSigil </Link>
+
             </div>
 
           </div>
