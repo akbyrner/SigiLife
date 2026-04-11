@@ -65,12 +65,12 @@ const { credential, username, avatar, theme, homeLocation } = req.body;
         },
 
       });
-      await prisma.sigil.createMany({
-        data: Array.from({ length: 12 }, (_, i) => ({
-          name: `sigil-${user!.id}-${i + 1}`,
-          userId: user!.id,
-        })),
-      });
+      // await prisma.sigil.createMany({
+      //   data: Array.from({ length: 12 }, (_, i) => ({
+      //     name: `sigil-${user!.id}-${i + 1}`,
+      //     userId: user!.id,
+      //   })),
+      // });
     } else if (username || homeLocation) {
       user = await prisma.user.update({
         where: { id: user.id },

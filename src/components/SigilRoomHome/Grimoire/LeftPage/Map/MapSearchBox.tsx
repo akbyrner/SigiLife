@@ -2,7 +2,7 @@ import { SearchBox } from '@mapbox/search-js-react';
 
 export default function MapSearchBox({ onRetrieve, accessToken }: { onRetrieve: (res: any) => void, accessToken: string }) {
   return (
-    <div className="w-full max-w-4xl px-4 mb-4" style={{ minHeight: '50px' }}>
+    <div className="w-full px-4 mb-4" style={{ minHeight: '50px', width: "250px"}}>
       <SearchBox
         accessToken={accessToken}
         onRetrieve={(res) => {

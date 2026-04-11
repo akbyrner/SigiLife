@@ -1,15 +1,27 @@
-import BackButton from "../../../../Parts/BackButton"
-import { Link, useLocation } from 'react-router-dom'
-import { useState } from 'react'
+
+import { Link, useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import MapSearchBox from '../../LeftPage/Map/MapSearchBox'
+import Menu from '../../../../Parts/Menu'
 
 const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || '';
 
 export default function SigilPage() {
-  const { state } = useLocation();
-  const [sigilData, setSigilData] = useState(state?.sigilData);
+  const [searchParams] = useSearchParams()
+  const sigilId = searchParams.get('sigilId')
+  const [sigilData, setSigilData] = useState<any>(null);
   const [isSavingLocation, setIsSavingLocation] = useState(false);
+
+  useEffect(() => {
+    if (!sigilId) { return }
+    fetch(`/api/sigils/${sigilId}`)
+      .then(res => res.json())
+      .then(data => setSigilData(data))
+      .catch(err => console.error(err))
+  }, [sigilId])
+  if (!sigilData) { return <p>Loading sigil...</p> }
+
 
   const handleLocationRetrieve = async (res: any) => {
     if (res.features && res.features.length > 0) {
@@ -35,56 +47,64 @@ export default function SigilPage() {
     }
   };
 
-  return (<div className="sigilpage">
-    <h1>This is the SigilPage for {sigilData.name}</h1>
-    <br />
+  return (
+    <div className="maincontainer">
+      <div className="sigilpage">
+        <Menu />
 
-    <div className="sigildetails">
-
-      {sigilData.name}
-      <br />
-      was created on : {sigilData.createdAt}
-      <br />
-      {sigilData.locationName ? (
-        <span>at {sigilData.locationName}</span>
-      ) : (
-        <div className="flex flex-col items-center mt-2 p-2 border border-purple-500 rounded bg-black/20">
-          <p className="text-sm mb-2 text-black">Set a location for this sigil:</p>
-          {isSavingLocation ? (
-            <p className="text-xs text-yellow-400">Saving...</p>
+        <div className="sigildetails">
+          Sigil Name : <br />
+          {sigilData.name}
+          <br />
+          was created on :
+          <br />
+          {new Date(sigilData.createdAt).toLocaleDateString()}
+          <br />
+          {sigilData.locationName ? (
+            <div className="sigildetailslocation">
+              at:
+              <br />
+              {sigilData.locationName}</div>
           ) : (
-            <MapSearchBox
-              accessToken={MAPBOX_TOKEN}
-              onRetrieve={handleLocationRetrieve}
-            />
+            <div className="sigilpageaddlocation">
+              <p>Set a location for this sigil:</p>
+              {isSavingLocation ? (
+                <p >Saving...</p>
+              ) : (
+                <MapSearchBox
+                  accessToken={MAPBOX_TOKEN}
+                  onRetrieve={handleLocationRetrieve}
+                />
+              )}
+            </div>
           )}
+          <br />
+          {sigilData.isCharged ? "Sigil is Charged" : "Sigil is not Charged"}
+          <br />
         </div>
-      )}
-      <br />
-      {sigilData.isCharged ? "Sigil is Charged" : "Sigil is not Charged"}
-      <br />
-    </div>
 
-    <Link className="navbutton" to="/charge-sigil" state={{ sigilData }} >Charge Sigil</Link>
-    <br />
-    <Link className="navbutton" to="/destroy-sigil" state={{ sigilData }}  >Destroy Sigil</Link>
-    <br />
-    {sigilData.imageData ? (
-      <img className="sigilbox" src={sigilData.imageData} alt={sigilData.name} />
-    ) : (
-      <img className="sigilbox" src="src/assets/dummySigil.svg" alt="Dummy Sigil" />
-    )}
-    <br />
-    <Link 
-      className="navbutton" 
-      to="/place-sigil-world" 
-      state={{ sigilData }} 
-      style={{ backgroundColor: '#2b0681', border: '2px solid gold', color: 'gold' }}
-    >
-      View in AR
-    </Link>
-    <br />
-    <BackButton name={"Go Back"} />
+        {
+          sigilData.imageData
+            ?
+            (
+              <img className="sigilbox" src={sigilData.imageData} alt={sigilData.name} />
+            )
 
-  </div>)
+            :
+
+            (
+              <img className="sigilbox" src="src/assets/dummySigil.svg" alt="Dummy Sigil" />
+            )
+        }
+
+        <div className="rowbox">
+
+          <Link className="navbutton" to={`/charge-sigil?sigilId=${sigilData.id}`}>Charge Sigil</Link>
+
+          <Link className="navbutton" to={`/destroy-sigil?sigilId=${sigilData.id}`}>Destroy Sigil</Link>
+
+          <Link className="navbutton" to="/place-sigil-world" state={{ sigilData }} > View in AR </Link>
+        </div>
+      </div>
+    </div>)
 };

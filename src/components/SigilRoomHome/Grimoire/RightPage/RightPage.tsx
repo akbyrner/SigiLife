@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
-import BackButton from "../../../Parts/BackButton"
+
 import SigiLibrary from './SigiLibrary/SigiLibrary'
 import { useEffect, useState, useRef } from 'react'
 import { useUser } from '@/context/UserContext'
+import Menu from '../../../Parts/Menu'
+
 
 export default function RightPage() {
   const [sigils, setSigils] = useState([])
@@ -31,9 +33,9 @@ export default function RightPage() {
     <div className='maincontainer'>
       <div ref={scrollRef} className='scrollcontainer'>
       <div className="rightpage">
+                <Menu/>
         <SigiLibrary items={sigils} user={user} />
         <Link to="/make-sigil"> 🪶 MakeSigil </Link>
-        <BackButton name={"Go Back"} />
       </div>
       </div>
       </div>

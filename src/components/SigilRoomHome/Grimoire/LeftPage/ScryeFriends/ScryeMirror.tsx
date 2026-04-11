@@ -1,4 +1,4 @@
-import BackButton from "../../../../Parts/BackButton"
+
 import ScryeFriendsHome from "./ScryeFriendsHome"
 import { useUser } from '@/context/UserContext'
 
@@ -15,7 +15,6 @@ if (!user) { return null }
       <br />
       <br />
 
-      <BackButton name={"Grimoire"}/>
     </div>
   )
 }

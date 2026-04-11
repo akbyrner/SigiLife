@@ -1,4 +1,4 @@
-import BackButton from "../../../../Parts/BackButton"
+
 import {useUser} from  '@/context/UserContext'
 
 export default function ScryeFriendsHome() {
@@ -13,7 +13,7 @@ if (!user) { return null }
       <br />
       <br />
 
-      <BackButton name={"Grimoire"}/>
+
     </div></div>
   )
 };

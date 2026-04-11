@@ -1,19 +1,14 @@
-import { Link } from 'react-router-dom'
-
-export default function SigilThumb({ sigilData }: {  sigilData: any }) {
+export default function SigilThumb({ sigilData, onClick }: { sigilData: any, onClick?: () => void }) {
   return (
-    <Link className="sigilthumb" to="/sigil-page" state={{ sigilData }}>
-      <div>
+    <div className="sigilthumb" onClick={onClick}>
+
         <p>{sigilData.name}</p>
         {sigilData.imageData ? (
           <img src={sigilData.imageData} alt={sigilData.name} style={{ width: '100px', height: '100px', objectFit: 'contain' }} />
         ) : (
-          <p>{sigilData.img || "No Image"}</p>
+          <p>{sigilData.img}</p>
         )}
-        <p>{sigilData.locationName}</p>
         <p>{sigilData.sigilGroups?.map((g: any) => g.groupMember.join(','))}</p>
-      </div>
-    </Link>
+    </div>
   )
-
-};
+}

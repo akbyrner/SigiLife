@@ -1,26 +1,42 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
 import SigilThumb from "./SigilThumb"
 
 
+
 export default function SigiLibrary({ items, }: { items: any[], user: any }) {
+  const [searchParams] = useSearchParams();
+  const action = searchParams.get('action')
+  const navigate = useNavigate();
+
+
+  const handleSigilClick = (sigil:any) => {
+    if (action === 'charge'){
+      navigate(`/charge-sigil?sigilId=${sigil.id}`)
+    } else if (action === 'destroy'){
+      navigate(`/destroy-sigil?sigilId=${sigil.id}`)
+    } else {
+      navigate(`/sigil-page?sigilId=${sigil.id}`)
+    }
+  }
+
   if (!items) {
     return (
       <p>loading...</p>
     )
   }
 
- return (
-      <div className="flex flex-col w-full p-4 pb-20">
 
-        <div className="sigilibrary flex-1 overflow-auto mt-4">
+
+ return (
+        <div className="sigilibrary">
           {items.map((sigil: any) => (
             <SigilThumb
               key={sigil.id}
               sigilData={sigil}
+                        onClick={() => handleSigilClick(sigil)}
             />
           ))}
         </div>
 
-
-      </div>
     );
   };

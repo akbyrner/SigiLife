@@ -1,36 +1,49 @@
-import BackButton from '../../Parts/BackButton'
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import SigilChargeEffect from './ChargeComponents/SigilChargeEffect'
+import Menu from '../../Parts/Menu'
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
+
 import ChangeEmotion from './ChargeComponents/ChangeEmotion'
 import { useState, useEffect, useRef } from 'react'
 import { useUser } from '@/context/UserContext'
 import SplashCursor from './ChargeComponents/SplashCursor'
 
 export default function ChargeSigil() {
-  const { state } = useLocation();
-  const { sigilData } = state;
+  const [searchParams] = useSearchParams()
+  const sigilId = searchParams.get('sigilId')
   const { user } = useUser()
   const navigate = useNavigate()
+  const [sigilData, setSigilData] = useState<any>(null)
   const [emotion, setEmotion] = useState("")
   const [isCharging, setIsCharging] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!sigilData) { return }
     const el = scrollRef.current;
-    if (!el) {
-      return;
-    }
+    if (!el) { return; }
     el.scrollLeft = (el.scrollWidth - el.clientWidth) / 2;
-  }, []);
+  }, [sigilData])
+
+  useEffect(() => {
+    if (!sigilId) { return }
+    fetch(`/api/sigils/${sigilId}`)
+      .then(res => res.json())
+      .then(data => setSigilData(data))
+      .catch(err => console.error(err))
+  }, [sigilId])
 
   if (!user) { return null }
+  if (!sigilData) {
+    return (
+      <p>Loading Sigil!</p>
+    )
+  }
 
   const handleSave = async () => {
     try {
       const res = await fetch(`/api/sigils/${sigilData.id}/charge`, { method: 'PATCH' });
       if (!res.ok) { throw new Error('Failed to charge sigil'); }
       const updatedSigil = await res.json();
-      navigate('/sigil-page', { state: { sigilData: updatedSigil } });
+      navigate(`/sigil-page?sigilId=${updatedSigil.id}`)
     } catch (error) {
       console.error(error);
     }
@@ -38,6 +51,7 @@ export default function ChargeSigil() {
 
   return (
     <div className='maincontainer'>
+                <Menu />
       <div ref={scrollRef} className={`scrollcontainer ${isCharging ? 'noscroll' : ''}`}>
         {isCharging && (
           <SplashCursor
@@ -50,17 +64,17 @@ export default function ChargeSigil() {
           />
         )}
         <div className='chargesigil'>
+          <Menu />
           <h1>ChargeSigil</h1>
 
-          <ChangeEmotion emotion={emotion} setEmotion={setEmotion} />
-          <SigilChargeEffect />
+
 
           {sigilData.imageData ? (
             <img className="sigilbox" src={sigilData.imageData} alt={sigilData.name} />
           ) : (
             <img className="sigilbox" src="src/assets/dummySigil.svg" alt="placeholderSigil" />
           )}
-
+          <ChangeEmotion emotion={emotion} setEmotion={setEmotion} />
           {!isCharging && (
             <button
               className='navbutton'
@@ -82,11 +96,6 @@ export default function ChargeSigil() {
             </Link>
           )}
 
-          {!isCharging && (
-            <div className='footer'>
-              <BackButton name={"Go Back"} />
-            </div>
-          )}
         </div>
       </div>
     </div>

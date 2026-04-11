@@ -18,14 +18,49 @@
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 12px;
 }
+
+textinput,
+.textinput {
+  background-color: #e0e0e0;
+  border-radius: 12px;
+  border-color: #2b0681;
+  border-width: 1px;
+}
+
+menu,
+.menu {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  width: fit-content;
+  background-color:beige;
+  border-radius: 12px;
+
+}
+
+
+navmenu,
+.navmenu {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index:1000;
+    top: 10px;
+  left: 10px;
+}
+
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Main Container*/
 mainContainer,
 .maincontainer {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  align-items: center;
   width: 100vw;
+  background-image: url('/src/assets/Website\ layout\ with\ aspect\ ratios.svg');
+  background-size: auto;
+  background-position: center;
+  background-repeat: no-repeat;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-color: #6915c9 #136d2a;
@@ -61,6 +96,7 @@ header,
   display: flex;
   min-height: fit-content;
   justify-content: center;
+  justify-self: center;
   position: absolute;
   top: 0%;
   font-size: x-large;
@@ -94,8 +130,46 @@ scrollcontainer,
   height: 100vh;
 }
 
+noscroll,
 .noscroll {
   overflow-x: hidden;
+}
+
+clmnbox,
+.clmnbox {
+  display: flex;
+  flex-direction: column;
+}
+
+rowbox,
+.rowbox {
+  display: flex;
+  flex-direction: row;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Landing Page*/
+
+landingpage,
+.landingpage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+logo,
+.logo {
+  display: flex;
+  position: relative;
+  align-self: center;
+  width: 50vw;
+}
+makeprofile,
+.makeprofile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  HomeRoom*/
@@ -177,9 +251,6 @@ chargesigil,
 .chargesigil {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/Altar.png');
-  background-size: cover;
-  background-position: center;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -196,7 +267,6 @@ chargesigil,
   justify-content: space-around;
   height: 100vh;
   min-width: 1024px;
-  color: #e0e0e0;
   position: relative;
 }
 .destroysigil > *:not(.evileye):not(.ghost-cursor) {
@@ -208,7 +278,7 @@ chargesigil,
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url('./assets/Pyre.png');
+
   background-size: cover;
   z-index: 0;
 }
@@ -228,8 +298,6 @@ chargesigil,
   pointer-events: none;
   z-index: 1;
 }
-
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Grimoire*/
 usertitle,
@@ -256,7 +324,7 @@ userpicture,
 grimoire,
 .grimoire {
   display: flex;
-  background-image: url('./assets/GrimoireNoir.png');
+
   background-size: cover;
   background-position: center;
   justify-content: center;
@@ -309,7 +377,7 @@ rightpage,
 .rightpage {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/RightPage.png');
+
   background-size: cover;
   min-width: 1024px;
   height: 100vh;
@@ -323,12 +391,10 @@ sigilibrary,
 .sigilibrary {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  height: 75vh;
-  width: fit-content;
+  height: 80vh;
+  width: 75vw;
   align-self: center;
   position: relative;
-  row-gap: 15px;
-  column-gap: 15px;
 }
 sigilthumb,
 .sigilthumb {
@@ -340,25 +406,24 @@ sigilthumb,
   border-radius: 12px;
   font-family: 'New Rocker', system-ui;
   color: black;
-  min-height: 10%0;
   width: fit-content;
+  height: 15vh;
+  padding:15px;
 }
+
 sigilthumb:hover,
 .sigilthumb:hover {
   transform: scale(1.05);
   filter: drop-shadow(0 0 6px gold);
 }
 
+
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Sigil Page*/
 sigilpage,
 .sigilpage {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/RightPage.png');
-  background-position: fixed;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
   justify-content: space-evenly;
   align-items: center;
   width: 100vw;
@@ -367,11 +432,34 @@ sigilpage,
   font-family: 'New Rocker', system-ui;
 }
 
+sigildetails,
+.sigildetails {
+  display: flex;
+  flex-direction: column;
+  width: 90vw;
+  align-items: center;
+}
+
+sigildetailslocation,
+.sigildetailslocation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 sigilbox,
 .sigilbox {
-  height: 50%;
+  height: 35%;
   display: flex;
   position: relative;
+}
+
+sigilpageaddlocation,
+.sigilpageaddlocation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  LeftPage*/
@@ -379,20 +467,6 @@ leftpage,
 .leftpage {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/LeftPage.png');
-}
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Landing Page*/
-
-landingpage,
-.landingpage {
-  display: flex;
-  align-items:center;
-  align-self: center;
-}
-.logo{
-  display:flex;
-  position: relative;
-  align-self: center;
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  MakeSigil*/
@@ -400,20 +474,24 @@ makesigil,
 .makesigil {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/WritingNoir.png');
   background-size: cover;
   align-items: center;
-  justify-content: center;
   min-width: 1024px;
-  height: 100vh;
   position: relative;
+  height: 100vh;
 }
+
+sigilinfo,
+.sigilinfo {
+  display: flex;
+  flex-direction: column;
+}
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Write Sigil*/
 writesigil,
 .writesigil {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/WritingNoir.png');
   background-size: cover;
   align-items: center;
   justify-content: space-evenly;
@@ -421,19 +499,13 @@ writesigil,
   height: 100vh;
   position: relative;
 }
-writesigilbox,
-.writesigilbox {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 25%;
-}
+
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Draw Sigil*/
 drawsigilcontainer,
 .drawsigilcontainer {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/WritingNoir.png');
   background-size: cover;
   align-items: center;
   min-width: 1024px;
@@ -463,7 +535,7 @@ drawsigilmenutoobox,
   position: relative;
 }
 drawsigilmenutoo,
-.drawsigilmenutoo {
+.drawsigilmenu {
   display: flex;
   flex-direction: row;
   height: fit-content;
@@ -478,7 +550,7 @@ drawsigilmenutoobox1,
 }
 
 drawsigilmenutoobox2,
-.drawsigilmenutoobo2 {
+.drawsigilmenutoobox2 {
   display: flex;
   flex-direction: column;
   height: fit-content;
@@ -490,14 +562,12 @@ stylesigilcontainer,
 .stylesigilcontainer {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/WritingNoir.png');
   background-size: cover;
   align-items: center;
   justify-content: space-around;
   min-width: 1024px;
   height: 100vh;
   position: relative;
-  background-color: #e0e0e0;
 }
 stylesigilcontainerbox,
 .stylesigilcontainerbox {
@@ -510,12 +580,28 @@ stylesigilcontainerbox,
   overflow-x: hidden;
 }
 
+sharebox,
+.sharebox {
+  position: relative;
+}
+
+sharebox,
+.sharebox {
+  display: flex;
+  flex-direction: column;
+
+
+
+
+
+
+}
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  MapBox*/
 mapbox,
 .mapbox {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/LeftPage.png');
   background-size: cover;
   background-position: center;
   align-items: center;
@@ -560,12 +646,11 @@ userfriendsbox,
   align-items: center;
 }
 profileboxcontainer,
-.profileboxcontainer{
+.profileboxcontainer {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Themes*/
 /*---break---*/
@@ -616,7 +701,7 @@ profileboxcontainer,
 /*---break---*/
 
 :root {
-  --background: oklch(1 0 0);
+  --background: transparent;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -653,11 +738,11 @@ profileboxcontainer,
 /*---break---*/
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: transparent;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+  --popover: oklch(47.971% 0.02098 17.766);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);

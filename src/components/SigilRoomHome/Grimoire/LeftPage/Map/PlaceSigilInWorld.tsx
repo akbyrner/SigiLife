@@ -259,11 +259,11 @@ export default function PlaceSigilInWorld() {
             Status: {status}
         </div>
       </div>
-      
+
       {/* Back Button */}
       <div style={{ position: 'absolute', bottom: '40px', left: '20px', zIndex: 10 }}>
-        <button 
-          className="grimoirebutton" 
+        <button
+          className="grimoirebutton"
           onClick={() => navigate(-1)}
           style={{ padding: '10px 20px', fontSize: '1.2rem', cursor: 'pointer', background: '#4a148c', color: 'white', border: '2px solid gold', borderRadius: '8px' }}
         >
