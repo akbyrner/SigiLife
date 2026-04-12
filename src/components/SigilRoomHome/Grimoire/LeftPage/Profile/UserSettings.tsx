@@ -23,6 +23,7 @@ export default function UserSettings() {
   const navigate = useNavigate()
   const [isDark, setIsDark] = useState(user!.theme === 1)
   const [avatarId, setAvatarId] = useState(String(user?.avatar ?? 0))
+  const [colorTheme, setColorTheme] = useState(user?.color_theme ?? 'cyber')
 
 
   const handleThemeChange = (checked: boolean) => {
@@ -37,6 +38,21 @@ export default function UserSettings() {
       .then(updated => setUser(updated))
   }
 
+  const handleColorThemeChange = (checked: boolean) => {
+    const next = checked ? 'foliage' : 'cyber'
+    setColorTheme(next)
+    document.documentElement.classList.remove('theme-foliage')
+    if (next === 'foliage') document.documentElement.classList.add('theme-foliage');
+    fetch(`/api/users/${user!.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ color_theme: next })
+    })
+      .then(res => res.json())
+      .then(updated => setUser(updated))
+  }
+
+
   const handleAvatarChange = async (id: string) => {
     setAvatarId(id)
     const res = await fetch(`/api/users/${user!.id}`, {
@@ -47,6 +63,7 @@ export default function UserSettings() {
     const updated = await res.json()
     setUser(updated)
   }
+
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' })
     setUser(null)
@@ -56,7 +73,7 @@ export default function UserSettings() {
   return (
     <div className="maincontainer">
       <div className="usersettings">
-      <div className='header'></div>
+        <div className='header'></div>
         <h1>User Settings</h1>
         <br />
         <AvatarSelector avatarId={avatarId} onSelect={handleAvatarChange} />
@@ -74,6 +91,17 @@ export default function UserSettings() {
           {isDark ? "Dark" : "Light"}
         </label>
         <br />
+        <label className="flex items-center gap-2">
+          Colour Theme:
+          <SwitchPrimitive.Root
+            checked={colorTheme === 'foliage'}
+            onCheckedChange={handleColorThemeChange}
+            className="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-400 data-[state=checked]:bg-green-500"
+          >
+            <SwitchPrimitive.Thumb className="block h-4 w-4 translate-x-1 rounded-full bg-white transition-transform data-[state=checked]:translate-x-6" />
+          </SwitchPrimitive.Root>
+          {colorTheme === 'foliage' ? "Foliage" : "Cyber"}
+        </label>
         <button className="navbutton" onClick={handleLogout}>
           Log Out
         </button>

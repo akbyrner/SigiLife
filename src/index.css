@@ -33,22 +33,19 @@ menu,
   flex-direction: column;
   height: fit-content;
   width: fit-content;
-  background-color:beige;
+  background-color: beige;
   border-radius: 12px;
-
 }
-
 
 navmenu,
 .navmenu {
   display: flex;
   flex-direction: column;
   position: fixed;
-  z-index:1000;
-    top: 10px;
+  z-index: 1000;
+  top: 10px;
   left: 10px;
 }
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Main Container*/
 mainContainer,
@@ -67,6 +64,8 @@ mainContainer,
   scrollbar-width: thick;
   color: rgb(0, 0, 0);
   font-family: 'New Rocker', system-ui;
+  background-color: var(--theme-bg-1);
+  transition: background-color 0.6s ease;
 }
 
 maincontainer::-webkit-scrollbar,
@@ -182,6 +181,8 @@ homeroom,
   min-width: 1024px;
   height: 100vh;
   position: relative;
+  background-color: var(--theme-bg-1);
+  transition: background-color 0.6s ease;
 }
 
 destroybutton,
@@ -256,6 +257,13 @@ chargesigil,
   height: 100vh;
   min-width: 1024px;
   position: relative;
+  background-color: var(--theme-bg-1);
+  background-image: linear-gradient(
+    160deg,
+    var(--theme-bg-1),
+    var(--theme-bg-2)
+  );
+  transition: background-color 0.6s ease;
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Destroy Sigil*/
@@ -268,6 +276,13 @@ chargesigil,
   height: 100vh;
   min-width: 1024px;
   position: relative;
+  background-color: var(--theme-bg-1);
+  background-image: linear-gradient(
+    160deg,
+    var(--theme-bg-1),
+    var(--theme-bg-2)
+  );
+  transition: background-color 0.6s ease;
 }
 .destroysigil > *:not(.evileye):not(.ghost-cursor) {
   position: relative;
@@ -332,6 +347,13 @@ grimoire,
   height: 100vh;
   min-width: 1024px;
   position: relative;
+  background-color: var(--theme-bg-1);
+  background-image: linear-gradient(
+    160deg,
+    var(--theme-bg-1),
+    var(--theme-bg-2)
+  );
+  transition: background-color 0.6s ease;
 }
 
 bookbox,
@@ -408,7 +430,7 @@ sigilthumb,
   color: black;
   width: fit-content;
   height: 15vh;
-  padding:15px;
+  padding: 15px;
 }
 
 sigilthumb:hover,
@@ -416,8 +438,6 @@ sigilthumb:hover,
   transform: scale(1.05);
   filter: drop-shadow(0 0 6px gold);
 }
-
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Sigil Page*/
 sigilpage,
@@ -479,6 +499,13 @@ makesigil,
   min-width: 1024px;
   position: relative;
   height: 100vh;
+  background-color: var(--theme-bg-1);
+  background-image: linear-gradient(
+    160deg,
+    var(--theme-bg-1),
+    var(--theme-bg-2)
+  );
+  transition: background-color 0.6s ease;
 }
 
 sigilinfo,
@@ -498,8 +525,14 @@ writesigil,
   min-width: 1024px;
   height: 100vh;
   position: relative;
+  background-color: var(--theme-bg-1);
+  background-image: linear-gradient(
+    160deg,
+    var(--theme-bg-1),
+    var(--theme-bg-2)
+  );
+  transition: background-color 0.6s ease;
 }
-
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Draw Sigil*/
 drawsigilcontainer,
@@ -589,12 +622,6 @@ sharebox,
 .sharebox {
   display: flex;
   flex-direction: column;
-
-
-
-
-
-
 }
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  MapBox*/
@@ -652,7 +679,15 @@ profileboxcontainer,
   align-items: center;
 }
 
-/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Themes*/
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Sigil Art */
+.sigil-art {
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 8px var(--theme-glow));
+  transition: filter 0.6s ease;
+}
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Themes */
 /*---break---*/
 
 @theme inline {
@@ -698,8 +733,6 @@ profileboxcontainer,
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/*---break---*/
-
 :root {
   --background: transparent;
   --foreground: oklch(0.145 0 0);
@@ -733,9 +766,13 @@ profileboxcontainer,
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-}
 
-/*---break---*/
+  /* Cyber light theme colors */
+  --theme-bg-1: #c8d8f0;
+  --theme-bg-2: #a0bcee;
+  --theme-accent: #1a4fc4;
+  --theme-glow: #4d9fff;
+}
 
 .dark {
   --background: transparent;
@@ -769,6 +806,26 @@ profileboxcontainer,
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Cyber dark theme colors */
+  --theme-bg-1: #0a0f2e;
+  --theme-bg-2: #0d1a4a;
+  --theme-accent: #4d9fff;
+  --theme-glow: #00d4ff;
+}
+
+.theme-foliage {
+  --theme-bg-1: #d4ebd0;
+  --theme-bg-2: #b2d9a8;
+  --theme-accent: #2d7a3a;
+  --theme-glow: #66bb6a;
+}
+
+.theme-foliage.dark {
+  --theme-bg-1: #0a1f0d;
+  --theme-bg-2: #122b14;
+  --theme-accent: #66bb6a;
+  --theme-glow: #a5d6a7;
 }
 
 /*---break---*/

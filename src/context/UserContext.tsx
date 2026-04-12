@@ -9,6 +9,7 @@ interface User {
   picture: string | null;
   avatar: number;
   theme: number;
+  color_theme: string;
   homeLocation: string | null;
   isAdmin: boolean;
 }

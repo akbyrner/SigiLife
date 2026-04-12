@@ -16,6 +16,7 @@ picture      String?  @db.VarChar(500)
 googleId     String?  @unique @db.VarChar(255)
 avatar       Int      @default(0)
 theme        Int      @default(1)
+color_theme  String   @default("cyber") @db.VarChar(50)
 isAdmin      Boolean  @default(false)
 createdAt    DateTime @default(now())
 updatedAt    DateTime @updatedAt
@@ -46,15 +47,15 @@ user         User         @relation(fields: [userId], references: [id], onDelete
 }
 
 model Follow {
-id          Int      @id @default(autoincrement())
-followerId  Int
-followingId Int
-createdAt   DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  followerId  Int
+  followingId Int
+  createdAt   DateTime @default(now())
 
-follower    User @relation("follower", fields: [followerId], references: [id])
-following   User @relation("following", fields: [followingId], references: [id])
+  follower    User @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)  // ← add
+  following   User @relation("following", fields: [followingId], references: [id], onDelete: Cascade) // ← add
 
-@@unique([followerId, followingId])
+  @@unique([followerId, followingId])
 }
 
 
