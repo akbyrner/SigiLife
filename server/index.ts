@@ -33,18 +33,18 @@ app.use(compression());
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Middleware
 app.use((req, res, next) => {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  
+
   // Necessary for 8th Wall Standalone Engine (WASM + SharedArrayBuffer)
   if (req.path.includes('/xr/')) {
     res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
     res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
   }
-  
+
   // Ensure WASM files are served with the correct MIME type
   if (req.path.endsWith('.wasm')) {
     res.setHeader('Content-Type', 'application/wasm');
   }
-  
+
   next();
 });
 
@@ -60,7 +60,7 @@ app.use(cors({
 //       'http://18.223.34.170',
 //       'http://ec2-18-223-34-170.us-east-2.compute.amazonaws.com',
 //     ];
-    
+
 //     const devOrigins = [
 //       /^http:\/\/localhost:\d+$/,
 //       /^http:\/\/127\.0\.0\.1:\d+$/
