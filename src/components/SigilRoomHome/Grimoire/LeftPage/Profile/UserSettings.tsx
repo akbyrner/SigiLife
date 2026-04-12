@@ -73,7 +73,6 @@ export default function UserSettings() {
   return (
     <div className="maincontainer">
       <div className="usersettings">
-        <div className='header'></div>
         <h1>User Settings</h1>
         <br />
         <AvatarSelector avatarId={avatarId} onSelect={handleAvatarChange} />

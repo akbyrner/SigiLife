@@ -25,6 +25,7 @@ textinput,
   border-radius: 12px;
   border-color: #2b0681;
   border-width: 1px;
+  text-align: center;
 }
 
 menu,
@@ -54,10 +55,10 @@ mainContainer,
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  background-image: url('/src/assets/Website\ layout\ with\ aspect\ ratios.svg');
   background-size: auto;
   background-position: center;
   background-repeat: no-repeat;
+  align-items: center;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-color: #6915c9 #136d2a;
@@ -66,6 +67,7 @@ mainContainer,
   font-family: 'New Rocker', system-ui;
   background-color: var(--theme-bg-1);
   transition: background-color 0.6s ease;
+  text-align: center;
 }
 
 maincontainer::-webkit-scrollbar,
@@ -153,7 +155,13 @@ landingpage,
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  background-color: #9f6bdb;
+  background-image: url('../src/assets/OutsideLino.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
 }
 
 logo,
@@ -161,7 +169,10 @@ logo,
   display: flex;
   position: relative;
   align-self: center;
-  width: 50vw;
+  width: 85vw;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+
 }
 makeprofile,
 .makeprofile {
@@ -171,12 +182,71 @@ makeprofile,
   justify-content: center;
 }
 
+slidebox,
+.slidebox {
+  display: flex;
+  position: relative;
+  padding: 30px;
+  align-items: center;
+  bottom: 0;
+  font-size: 32;
+}
+
+displaypitch,
+.displaypitch {
+  display: flex;
+  flex-direction: column;
+  background-color: #6d8b00;
+  border-radius: 12px;
+}
+landingrowbox,
+.landingrowbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  gap: '16px';
+  flex-wrap: 'wrap';
+}
+
+createaccountbutton,
+.createaccountbutton {
+  border-radius: 20px;
+  background-color: 'white';
+  border-color: '#e0e0e0';
+  border-width: '1 px';
+  height: '40px';
+}
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Make Profile*/
+makeprofile,
+.makeprofile {
+  display: flex;
+  position: relative;
+  align-self: center;
+  align-items: center;
+  justify-content: space-around;
+  width: 85vw;
+  height: 90vh;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+  padding: 25px;
+}
+
+avatarchoicebox,
+.avatarchoicebox {
+  display:flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+
+}
+
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  HomeRoom*/
 homeroom,
 .homeroom {
   display: flex;
   flex-direction: column;
-  background-image: url('./assets/HomeRoomClickables.png');
+  background-image: url('./assets/InsideLino.svg');
   background-size: cover;
   min-width: 1024px;
   height: 100vh;
@@ -275,6 +345,7 @@ chargesigil,
   justify-content: space-around;
   height: 100vh;
   min-width: 1024px;
+  background-image: url('./assets/PyreLino.svg');
   position: relative;
   background-color: var(--theme-bg-1);
   background-image: linear-gradient(
@@ -339,7 +410,7 @@ userpicture,
 grimoire,
 .grimoire {
   display: flex;
-
+  background-image: url('./assets/GrimoireLino.svg');
   background-size: cover;
   background-position: center;
   justify-content: center;
@@ -373,6 +444,7 @@ grimoirerightpage,
 .grimoire-right-page {
   display: flex;
   flex-direction: column;
+
   align-items: center;
   justify-content: space-evenly;
 }
@@ -413,6 +485,7 @@ sigilibrary,
 .sigilibrary {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  background-image: url('./assets/SigilWallLino.svg');
   height: 80vh;
   width: 75vw;
   align-self: center;
@@ -492,6 +565,7 @@ leftpage,
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  MakeSigil*/
 makesigil,
 .makesigil {
+  background-image: url('./assets/WritingLino.svg');
   display: flex;
   flex-direction: column;
   background-size: cover;

@@ -14,6 +14,10 @@ export default function GoogleAuth({ formData, isNewUser = false }: { formData: 
   const navigate = useNavigate();
   const initialized = useRef(false);
   const formDataRef = useRef(formData);
+  const buttonId = isNewUser ? 'google-signin-button-new' : 'google-signin-button';
+
+
+
 
   useEffect(() => {
     formDataRef.current = formData;
@@ -46,14 +50,17 @@ export default function GoogleAuth({ formData, isNewUser = false }: { formData: 
         const data = await res.json();
         console.log('[GoogleAuth] Backend response successful:', data.success);
 
+
         setUser(data.user);
-        if (data.needsProfile) {
-          navigate('/login');
-        } else if (isNewUser) {
-          navigate('/make-sigil/write');
-        } else {
-          navigate('/home');
-        }
+        setTimeout(() => {
+          if (data.needsProfile) {
+            navigate('/login');
+          } else if (isNewUser) {
+            navigate('/make-sigil/write');
+          } else {
+            navigate('/home');
+          }
+        }, 300);
       } catch (error) {
         console.error('[GoogleAuth] Error in handleSuccess:', error);
       }
@@ -71,7 +78,7 @@ export default function GoogleAuth({ formData, isNewUser = false }: { formData: 
         });
         console.log('[GoogleAuth] Rendering Google button');
         window.google.accounts.id.renderButton(
-          document.getElementById('google-signin-button'),
+          document.getElementById(buttonId),
           { theme: 'outline', size: 'large', shape: 'pill' }
         );
         initialized.current = true;
@@ -96,7 +103,7 @@ export default function GoogleAuth({ formData, isNewUser = false }: { formData: 
 
   return (
     <div className="flex flex-col items-center justify-center p-4">
-      <div id="google-signin-button"></div>
+      <div id={buttonId} style={{ width: '100%' }}></div>
     </div>
   );
 }
