@@ -19,8 +19,8 @@ async function seed() {
     const fontPath = path.join(
       __dirname,
       '..',
-      'server',
-      'assets',
+      '..',
+      'public',
       'fonts',
       'UncialAntiqua-Regular.ttf',
     );

@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   // Necessary for 8th Wall Standalone Engine (WASM + SharedArrayBuffer)
   if (req.path.includes('/xr/')) {
     res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
   }
   
   // Ensure WASM files are served with the correct MIME type

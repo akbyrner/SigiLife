@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as fabric from 'fabric';
+import axios from 'axios';
 import { useUser } from '@/context/UserContext'
 import Menu from '../../../Parts/Menu'
 
@@ -65,66 +66,68 @@ export default function DrawSigil() {
 
     fabricCanvasRef.current = canvas;
 
-    // Initial blank state for history
     saveHistory();
 
-    // Setup history listeners
     canvas.on('path:created', saveHistory);
     canvas.on('object:modified', saveHistory);
     canvas.on('object:removed', () => {
-      // Prevent duplicate history entries when clearing the canvas programmatically
       if (!isRestoringHistory.current) saveHistory();
     });
 
-    // Load characters directly from localStorage and render them using the native browser font
     const loadCharacters = async () => {
       const uniqueChars = localStorage.getItem('sigilUniqueChars');
-      if (uniqueChars) {
+      if (uniqueChars && fabricCanvasRef.current) {
+        const canvas = fabricCanvasRef.current;
         try {
-          // Force the browser to load your custom font
-          const customFont = new FontFace('UncialAntiqua', 'url(/fonts/UncialAntiqua-Regular.ttf)');
-          const loadedFont = await customFont.load();
-          document.fonts.add(loadedFont);
+          console.log("Fetching vectors for unique chars:", uniqueChars);
+          
+          const response = await axios.post('/api/vectors/character-vectors', { chars: uniqueChars });
+          const vectors = response.data;
+          
+          if (!vectors || vectors.length === 0) {
+            console.warn("No vectors found for these characters.");
+            return;
+          }
 
-          const chars = uniqueChars.split('');
-          for (const char of chars) {
-            console.log("Loading char text:", char);
+          for (const vector of vectors) {
+            console.log("Loading path for char:", vector.filename);
 
-            // Create a Fabric text object to render the loaded font
-            const textObj = new fabric.Text(char, {
-              fontFamily: 'UncialAntiqua',
-              fontSize: 100,
-              fill: 'transparent',
-              stroke: 'black',
-              strokeWidth: 2,
-              left: canvas.width ? (canvas.width / 2) + (Math.random() * 50 - 25) : 250,
-              top: canvas.height ? (canvas.height / 2) + (Math.random() * 50 - 25) : 250,
-              originX: 'center',
-              originY: 'center',
-              selectable: true,
-            });
+            const { objects } = await fabric.loadSVGFromString(vector.vectorData);
+            
+            if (objects && objects.length > 0) {
+              const pathObj = objects[0] as fabric.FabricObject;
+              
+              pathObj.set({
+                fill: 'transparent',
+                stroke: 'black',
+                strokeWidth: 2,
+                left: canvas.width ? (canvas.width / 2) + (Math.random() * 80 - 40) : 250,
+                top: canvas.height ? (canvas.height / 2) + (Math.random() * 80 - 40) : 250,
+                originX: 'center',
+                originY: 'center',
+                selectable: true,
+              });
 
-            // Scale down text if it's too large
-            if (textObj.width && canvas.width && textObj.width > canvas.width * 0.4) {
-              textObj.scaleToWidth(canvas.width * 0.4);
+              if (pathObj.width && canvas.width && pathObj.width > canvas.width * 0.4) {
+                pathObj.scaleToWidth(canvas.width * 0.4);
+              }
+
+              canvas.add(pathObj);
             }
-
-            canvas.add(textObj);
           }
-          if (chars.length > 0) {
-            canvas.renderAll();
-            setIsDrawingMode(false);
-            saveHistory();
-          }
+          
+          canvas.renderAll();
+          setIsDrawingMode(false);
+          saveHistory();
+          
         } catch (error) {
-          console.error("Error loading character text or custom font:", error);
+          console.error("Error loading character vectors:", error);
         }
       }
     };
 
     loadCharacters();
 
-    // Handle keyboard Delete
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Delete' || e.key === 'Backspace') {
         // Do not delete if they are typing in an input field
@@ -134,7 +137,6 @@ export default function DrawSigil() {
     };
     window.addEventListener('keydown', handleKeyDown);
 
-    // Handle responsive resizing
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (fabricCanvasRef.current) {
@@ -169,7 +171,6 @@ export default function DrawSigil() {
     }
   }, [isDrawingMode]);
 
-  // Update brush color and width dynamically
   useEffect(() => {
     if (fabricCanvasRef.current && fabricCanvasRef.current.freeDrawingBrush) {
       fabricCanvasRef.current.freeDrawingBrush.color = brushColor;

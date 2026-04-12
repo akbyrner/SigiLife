@@ -4,7 +4,6 @@ import axios from 'axios'
 import { useUser } from '@/context/UserContext'
 import Menu from '../../Parts/Menu'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 export default function MakeSigil() {
   const { user } = useUser()
@@ -29,8 +28,7 @@ export default function MakeSigil() {
     try {
       setLoading(true)
       setError(null)
-      const response = await axios.get(`${API_URL}/api/sigils/user/${user.id}/count`)
-      console.log('full data object:', JSON.stringify(response.data))  // ← right here
+      const response = await axios.get(`/api/sigils/user/${user.id}/count`)
       const data = response.data
       setSigilCount(data.count)
       setCanCreateMore(data.canCreateMore)

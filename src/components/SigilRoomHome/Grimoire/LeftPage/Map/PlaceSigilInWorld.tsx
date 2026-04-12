@@ -75,12 +75,20 @@ export default function PlaceSigilInWorld() {
     window.addEventListener('resize', handleResize);
 
     const createWorldTrackingModule = () => {
+      let pointCloudMesh: THREE.Points | null = null;
+      let pointCloudGeom: THREE.BufferGeometry | null = null;
+
       return {
         name: 'place-sigil-module',
 
         onStart: () => {
           setStatus("Scanning environment...");
           const { scene, camera } = XR8.Threejs.xrScene();
+
+          // Explicitly tell the SLAM engine to send point cloud data to the CPU loop
+          if (XR8.XrController) {
+            XR8.XrController.configure({ enablePointCloud: true });
+          }
 
           const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
           scene.add(ambientLight);
@@ -103,6 +111,35 @@ export default function PlaceSigilInWorld() {
           } else {
             sigilMaterial.color.setHex(0xc70eff);
           }
+
+          // Setup Pointcloud visualizer
+          pointCloudGeom = new THREE.BufferGeometry();
+          const maxPoints = 3000;
+          const positions = new Float32Array(maxPoints * 3);
+          pointCloudGeom.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+          pointCloudGeom.setDrawRange(0, 0);
+          
+          const pointMaterial = new THREE.PointsMaterial({
+            color: 0x00ffcc, // Cyan dots
+            size: 0.05,      // Increased to 5cm 
+            transparent: true,
+            opacity: 0.8
+          });
+          pointCloudMesh = new THREE.Points(pointCloudGeom, pointMaterial);
+          scene.add(pointCloudMesh);
+
+          // On-screen debug overlay to see what SLAM is actually returning
+          const debugDiv = document.createElement('div');
+          debugDiv.id = "slam-debug-info";
+          debugDiv.style.position = 'absolute';
+          debugDiv.style.top = '100px';
+          debugDiv.style.left = '20px';
+          debugDiv.style.color = 'lime';
+          debugDiv.style.fontFamily = 'monospace';
+          debugDiv.style.zIndex = '9999';
+          debugDiv.style.backgroundColor = 'rgba(0,0,0,0.5)';
+          debugDiv.style.padding = '10px';
+          document.body.appendChild(debugDiv);
 
           const getOrCreateMesh = () => {
             if (!placedSigilMesh) {
@@ -175,7 +212,7 @@ export default function PlaceSigilInWorld() {
             try {
               if (XR8.XrController && XR8.XrController.hitTest) {
                 const hitTestResults = XR8.XrController.hitTest(
-                  tapX, tapY, ['ESTIMATED_SURFACE']
+                  tapX, tapY, ['FEATURE_POINT', 'ESTIMATED_SURFACE', 'DETECTED_SURFACE']
                 );
                 console.log("[AR] hitTest results:", hitTestResults);
                 if (hitTestResults && hitTestResults.length > 0) {
@@ -210,13 +247,58 @@ export default function PlaceSigilInWorld() {
           canvas.addEventListener('click', handleTap);
         },
 
-        onUpdate: () => {
+        onUpdate: (e: any) => {
           if (!slamReady) {
             frameCount++;
             if (frameCount >= SLAM_WARMUP_FRAMES) {
               slamReady = true;
               setStatus("Ready! Tap a surface to place.");
               console.log("[AR] SLAM warmup complete, hit testing enabled.");
+            }
+          }
+
+          // Update the point cloud visualization if data is available
+          if (pointCloudMesh && pointCloudGeom && e.processCpuResult && e.processCpuResult.reality) {
+            const reality = e.processCpuResult.reality;
+            // Support multiple legacy naming conventions
+            const pc = reality.pointCloud || reality.worldPoints;
+            
+            const debugDiv = document.getElementById('slam-debug-info');
+            if (debugDiv) {
+               const keys = Object.keys(reality).join(', ');
+               const type = pc ? (typeof pc[0] === 'number' ? 'Float32Array' : 'ObjectArray') : 'N/A';
+               const length = pc ? pc.length : 0;
+               debugDiv.innerHTML = `
+                 Reality Keys: <br/>${keys}<br/>
+                 PC Type: ${type}<br/>
+                 PC Length: ${length}
+               `;
+            }
+
+            if (pc && pc.length > 0) {
+              const positions = pointCloudGeom.attributes.position.array as Float32Array;
+              
+              if (typeof pc[0] === 'number') {
+                // It's a flat Float32Array: [x,y,z, x,y,z, ...]
+                const numPoints = Math.min(Math.floor(pc.length / 3), 3000);
+                for (let i = 0; i < numPoints * 3; i++) {
+                   positions[i] = pc[i];
+                }
+                pointCloudGeom.attributes.position.needsUpdate = true;
+                pointCloudGeom.setDrawRange(0, numPoints);
+              } else {
+                // Legacy format: Array of objects [{x,y,z}, ...]
+                const count = Math.min(pc.length, 3000);
+                for (let i = 0; i < count; i++) {
+                  const pt = pc[i];
+                  const pos = pt.position || pt;
+                  positions[i*3] = pos.x;
+                  positions[i*3+1] = pos.y;
+                  positions[i*3+2] = pos.z;
+                }
+                pointCloudGeom.attributes.position.needsUpdate = true;
+                pointCloudGeom.setDrawRange(0, count);
+              }
             }
           }
         }

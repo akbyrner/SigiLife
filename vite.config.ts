@@ -13,7 +13,7 @@ export default defineConfig({
     allowedHosts: ['ec2-18-223-34-170.us-east-2.compute.amazonaws.com', 'localhost'],
     headers: {
       'Cross-Origin-Embedder-Policy': 'require-corp',
-      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
     },
   },
   plugins: [react(), tailwindcss()],
