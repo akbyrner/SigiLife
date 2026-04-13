@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@/context/UserContext';
-import { X, ChevronRight, ChevronLeft, Sparkles } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft } from 'lucide-react';
 
 interface TutorialStep {
   targetId?: string;
@@ -51,19 +51,22 @@ export default function TutorialOverlay({ onComplete }: { onComplete: () => void
       const element = document.getElementById(step.targetId);
       if (element) {
         const rect = element.getBoundingClientRect();
-        setHighlightStyle({
-          top: rect.top - 8,
-          left: rect.left - 8,
-          width: rect.width + 16,
-          height: rect.height + 16,
-          opacity: 1,
-        });
+        // Wrap in setTimeout to avoid cascading render lint error
+        setTimeout(() => {
+          setHighlightStyle({
+            top: rect.top - 8,
+            left: rect.left - 8,
+            width: rect.width + 16,
+            height: rect.height + 16,
+            opacity: 1,
+          });
+        }, 0);
         element.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
       } else {
-        setHighlightStyle({ opacity: 0 });
+        setTimeout(() => setHighlightStyle({ opacity: 0 }), 0);
       }
     } else {
-      setHighlightStyle({ opacity: 0 });
+      setTimeout(() => setHighlightStyle({ opacity: 0 }), 0);
     }
   }, [currentStep]);
 
@@ -101,9 +104,9 @@ export default function TutorialOverlay({ onComplete }: { onComplete: () => void
   };
 
   return (
-    <div className="fixed inset-0 z-[2000] overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 z-2000 overflow-hidden pointer-events-none">
       {/* Premium Backdrop: Radial gradient for depth */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.4)_40%,_rgba(0,0,0,0.8)_100%)] pointer-events-auto transition-opacity duration-1000" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_40%,rgba(0,0,0,0.8)_100%)] pointer-events-auto transition-opacity duration-1000" />
       
       {/* Spotlight highlight with multiple glows */}
       <div

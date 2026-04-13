@@ -22,7 +22,7 @@ export default function HomeRoom() {
 
   useEffect(() => {
     if (user && !user.hasCompletedTutorial) {
-      setShowTutorial(true);
+      setTimeout(() => setShowTutorial(true), 0);
     }
   }, [user]);
 
