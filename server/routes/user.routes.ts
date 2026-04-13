@@ -107,7 +107,7 @@ router.get('/:id', async (req, res) => {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  Updates User info from DB
 router.patch('/:id', async (req, res) => {
   try {
-    const { username, avatar, theme, homeLocation } = req.body;
+    const { username, avatar, theme, homeLocation, hasCompletedTutorial } = req.body;
     const user = await prisma.user.update({
       where: { id: parseInt(req.params.id) },
       data: {
@@ -115,6 +115,7 @@ router.patch('/:id', async (req, res) => {
         avatar: avatar != null ? parseInt(avatar) : undefined,
         theme: theme != null ? parseInt(theme) : undefined,
         homeLocation: homeLocation || null,
+        hasCompletedTutorial: hasCompletedTutorial !== undefined ? Boolean(hasCompletedTutorial) : undefined,
       },
     });
     res.json(user)

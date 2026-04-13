@@ -21,6 +21,7 @@ isAdmin      Boolean  @default(false)
 createdAt    DateTime @default(now())
 updatedAt    DateTime @updatedAt
 homeLocation String?  @db.VarChar(500)
+hasCompletedTutorial Boolean @default(false)
 sigils       Sigil[]
 following   Follow[] @relation("follower")
 followers   Follow[] @relation("following")

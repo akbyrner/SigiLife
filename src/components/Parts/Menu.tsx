@@ -29,7 +29,7 @@ export default function Menu() {
 
   return (
     <div className="navmenu">
-      <button onClick={() => setMenuOpen(prev => !prev)}>
+      <button id="menu-btn" onClick={() => setMenuOpen(prev => !prev)}>
         {menuOpen ? '✕ Close Menu' : '☰ Menu'}
       </button>
       {menuOpen && <NavMenu />}

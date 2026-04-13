@@ -12,6 +12,7 @@ interface User {
   color_theme: string;
   homeLocation: string | null;
   isAdmin: boolean;
+  hasCompletedTutorial: boolean;
 }
 
 interface UserContextType {

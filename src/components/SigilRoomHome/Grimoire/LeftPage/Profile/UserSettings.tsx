@@ -70,6 +70,17 @@ export default function UserSettings() {
     navigate('/')
   }
 
+  const handleReplayTutorial = async () => {
+    const res = await fetch(`/api/users/${user!.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ hasCompletedTutorial: false })
+    })
+    const updated = await res.json()
+    setUser(updated)
+    navigate('/home')
+  }
+
   return (
     <div className="maincontainer">
       <div className="usersettings">
@@ -101,9 +112,21 @@ export default function UserSettings() {
           </SwitchPrimitive.Root>
           {colorTheme === 'foliage' ? "Foliage" : "Cyber"}
         </label>
-        <button className="navbutton" onClick={handleLogout}>
-          Log Out
-        </button>
+        <br />
+        
+        <div className="flex flex-col gap-4 items-center">
+          <button 
+            className="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold rounded-xl shadow-lg transition-all hover:scale-105 active:scale-95" 
+            onClick={handleReplayTutorial}
+          >
+            Replay Tutorial
+          </button>
+          
+          <button className="navbutton" onClick={handleLogout}>
+            Log Out
+          </button>
+        </div>
+
         <br />
         <br />
         This is where you can delete your account
